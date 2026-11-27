@@ -1,0 +1,48 @@
+<Project Sdk="Uno.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net10.0-android;net10.0-browserwasm;net10.0-desktop</TargetFrameworks>
+
+    <OutputType>Exe</OutputType>
+    <UnoSingleProject>true</UnoSingleProject>
+
+    <!-- Display name -->
+    <ApplicationTitle>Precision Dial</ApplicationTitle>
+    <!-- App Identifier -->
+    <ApplicationId>com.unoplatform.precisiondial</ApplicationId>
+    <!-- Versions -->
+    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+    <ApplicationVersion>1</ApplicationVersion>
+    <!-- Package Publisher -->
+    <ApplicationPublisher>Uno Platform</ApplicationPublisher>
+    <!-- Package Description -->
+    <Description>A precision knob control drawn with SkiaSharp: physics-based rotation, detents, a radial menu mode and size and shape variants.</Description>
+
+    <!--
+      UnoFeatures are used to quickly add and manage features enabled for your app.
+      https://aka.platform.uno/singleproject-features
+    -->
+    <UnoFeatures>
+      Material;
+      Toolkit;
+      Logging;
+      SkiaRenderer;
+      MediaPlayerElement;
+    </UnoFeatures>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- browserwasm.cs is not auto-excluded by Uno.Sdk, so restrict it explicitly -->
+    <Compile Remove="Controls\PrecisionDial\Haptics\HapticService.browserwasm.cs" />
+    <Compile Condition="$(TargetFramework.Contains('browserwasm'))"
+             Include="Controls\PrecisionDial\Haptics\HapticService.browserwasm.cs" />
+  </ItemGroup>
+
+  <!-- Phosphor Icons font: the default Assets/ pipeline packages it as an Android asset and copies it next to the
+       desktop binaries. PhosphorFont.cs loads it via AssetManager on Android and File.OpenRead elsewhere. -->
+  <ItemGroup>
+    <Content Update="Assets\Fonts\Phosphor.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

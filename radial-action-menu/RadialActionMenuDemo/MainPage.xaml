@@ -1,0 +1,110 @@
+<Page x:Class="RadialActionMenuDemo.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:RadialActionMenuDemo"
+      xmlns:controls="using:RadialActionMenuDemo.Controls"
+      xmlns:utu="using:Uno.Toolkit.UI"
+      Background="{ThemeResource BackgroundBrush}">
+
+    <Grid RowSpacing="{utu:Responsive Narrowest=0, Normal=16}"
+          Padding="{utu:Responsive Narrowest='0', Normal='24'}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- The theme switch: a Toolkit filter chip (a ToggleButton) top right. -->
+        <utu:Chip x:Name="ThemeToggle"
+                  Content="Dark"
+                  Style="{StaticResource FilterChipStyle}"
+                  CanRemove="False"
+                  HorizontalAlignment="Right"
+                  Margin="{utu:Responsive Narrowest='0,12,20,4', Normal='0'}"
+                  Click="OnThemeToggleClick"
+                  AutomationProperties.Name="Dark theme" />
+
+        <!-- The contacts panel from the design, with the menu over it. Full-bleed on a phone. -->
+        <Grid Grid.Row="1"
+              Background="{ThemeResource SurfaceBrush}"
+              BorderBrush="{ThemeResource OutlineVariantBrush}"
+              BorderThickness="{utu:Responsive Narrowest=0, Normal=1}"
+              CornerRadius="{utu:Responsive Narrowest=0, Normal=28}">
+
+            <Grid Padding="{utu:Responsive Narrowest='20,12,20,0', Normal='28,22,28,0'}" RowSpacing="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid ColumnSpacing="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Text="Contacts"
+                               Style="{StaticResource DisplayTitle}"
+                               FontSize="{utu:Responsive Narrowest=32, Normal=26}"
+                               LineHeight="{utu:Responsive Narrowest=38, Normal=32}" />
+                    <TextBlock x:Name="StatusText"
+                               Grid.Column="1"
+                               Text="Ada Moreau selected"
+                               Style="{StaticResource BodySmall}" CharacterSpacing="0"
+                               FontSize="13"
+                               Foreground="{ThemeResource OnSurfaceVariantBrush}"
+                               VerticalAlignment="Bottom"
+                               Visibility="{utu:Responsive Narrowest=Collapsed, Normal=Visible}"
+                               AutomationProperties.LiveSetting="Polite" />
+                </Grid>
+
+                <ItemsControl x:Name="ContactList"
+                              Grid.Row="1"
+                              MaxWidth="{utu:Responsive Narrowest=100000, Normal=440}"
+                              MinWidth="{utu:Responsive Narrowest=0, Normal=440}"
+                              HorizontalAlignment="{utu:Responsive Narrowest=Stretch, Normal=Left}"
+                              HorizontalContentAlignment="Stretch">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate x:DataType="local:Contact">
+                            <Grid MinHeight="58"
+                                  Padding="0,8"
+                                  ColumnSpacing="14"
+                                  Background="{x:Bind RowBackground}"
+                                  BorderBrush="{ThemeResource OutlineVariantBrush}"
+                                  BorderThickness="0,1,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid Width="40" Height="40" VerticalAlignment="Center">
+                                    <Ellipse Fill="{ThemeResource SurfaceVariantBrush}" />
+                                    <TextBlock Text="{x:Bind Initials}"
+                                               Style="{StaticResource LabelLarge}" CharacterSpacing="0"
+                                               FontSize="13"
+                                               FontWeight="SemiBold"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center" />
+                                </Grid>
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="{x:Bind Name}" Style="{StaticResource BodyLarge}" CharacterSpacing="0" FontSize="15" FontWeight="SemiBold" />
+                                    <TextBlock Text="{x:Bind Role}"
+                                               Style="{StaticResource BodySmall}" CharacterSpacing="0"
+                                               FontSize="13"
+                                               Foreground="{ThemeResource OnSurfaceVariantBrush}" />
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+
+            <!-- Pointer layout: 52 px discs with labels on a 208 px arc. Touch (below 600 px): 56 px discs, badges, 172 px arc. -->
+            <controls:RadialActionMenu x:Name="QuickActions"
+                                       Position="BottomRight"
+                                       DiscSize="{utu:Responsive Narrowest=56, Normal=52}"
+                                       Radius="{utu:Responsive Narrowest=172, Normal=208}"
+                                       ShowLabels="{utu:Responsive Narrowest=False, Normal=True}"
+                                       AutomationProperties.Name="Quick actions for Ada Moreau"
+                                       ItemSelected="OnItemSelected"
+                                       Opened="OnMenuOpened"
+                                       Closed="OnMenuClosed" />
+        </Grid>
+    </Grid>
+</Page>

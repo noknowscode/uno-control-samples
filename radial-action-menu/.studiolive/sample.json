@@ -1,0 +1,45 @@
+{
+  "$schema": "https://schemas.platform.uno/sample/v1",
+  "id": "radial-action-menu",
+  "displayName": "Radial Action Menu",
+  "description": "A radial action menu for Uno Platform built to the Control Gallery prototype: an accent trigger that opens up to five actions on a 90° arc, 22.5° apart, with a 30 ms stagger out and the reverse on close, a dotted guide and a scrim. Keys 1 to 5 pick, the arrows move, Esc closes; a finger can slide from the trigger to an item, whose name shows in a readout, and release to pick. Discs are 52 px with label pills and key badges on desktop, 56 px with badges only on a phone; the arc mirrors at the left edge and unavailable actions dim. Archivo is bundled; warm greys with a rust accent, Light and Dark with an in-app switch. The demo is the prototype's Contacts panel.",
+  "platforms": [
+    "desktop",
+    "wasm",
+    "android"
+  ],
+  "sourcePath": "RadialActionMenuDemo/RadialActionMenuDemo.csproj",
+  "iconUrl": "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/radial-action-menu/.studiolive/icon.png",
+  "screenshots": [
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/radial-action-menu/.studiolive/screenshots/open-dark-desktop.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/radial-action-menu/.studiolive/screenshots/open-light-desktop.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/radial-action-menu/.studiolive/screenshots/slide-dark-phone.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/radial-action-menu/.studiolive/screenshots/slide-light-phone.png"
+  ],
+  "showcase": {
+    "summary": "A radial quick-action menu: five actions on a quarter arc, keyboard keys, touch slide-to-pick, labels or badges.",
+    "type": "showcase",
+    "status": "preview",
+    "owner": [
+      "noknowscode"
+    ],
+    "industry": "UI controls",
+    "goals": [
+      "A templated control that places its trigger 24 px from a corner and lays up to five items on a 90° arc, 22.5° apart",
+      "Open and close storyboards from the design: 30 ms stagger and 320 ms settle out, 20 ms and 200 ms back, plus scrim, guide and plus rotation",
+      "Keyboard: Space opens and focuses the first item, 1-5 pick, arrows move, Esc closes and returns focus to the trigger",
+      "Touch: press the trigger, slide to an item (HighlightedIndex, readout), release to pick",
+      "State API: IsOpen, IsHintVisible, HighlightedIndex, ShowLabels, Position (mirrors on the left), per-item IsEnabled, each with visual states",
+      "Bundled static Archivo instances mapped to Material's DefaultFontFamily through a weight manifest"
+    ],
+    "tags": [
+      "control",
+      "fab",
+      "menu",
+      "animation",
+      "storyboard",
+      "material",
+      "theming"
+    ]
+  }
+}

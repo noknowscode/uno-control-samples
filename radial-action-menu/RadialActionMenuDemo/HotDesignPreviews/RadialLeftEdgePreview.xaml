@@ -1,0 +1,11 @@
+<hd:Preview x:Class="RadialActionMenuDemo.HotDesignPreviews.RadialLeftEdgePreview"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:hd="using:Uno.UI.HotDesign"
+            xmlns:controls="using:RadialActionMenuDemo.Controls"
+            Width="320"
+            Height="260">
+  <Grid Background="{ThemeResource SurfaceBrush}">
+    <controls:RadialActionMenu x:Name="Menu" Items="{Binding}" Position="BottomLeft" IsOpen="True" ShowLabels="False" DiscSize="44" Radius="150" TriggerSize="52" />
+  </Grid>
+</hd:Preview>

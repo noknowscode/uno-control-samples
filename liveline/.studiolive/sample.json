@@ -1,0 +1,45 @@
+{
+  "$schema": "https://schemas.platform.uno/sample/v1",
+  "id": "liveline",
+  "displayName": "Liveline",
+  "description": "Liveline is a live metric card control for Uno Platform: the latest value with its change, a stream status chip, a 1, 5 or 15 minute window, pause and resume, a fixed-axis line chart drawn with SkiaSharp with an alert threshold, hover and keyboard inspection, and min, avg and max for the window. One sample a second; the line glides between samples. Its State property drives Connecting, Live, Pausing, Paused and Disconnected (the gap since the last sample is hatched, with Reconnect) through visual states, and the card switches to a phone layout below 560 px. The sample feeds it from a simulated latency stream, with Geist and Geist Mono bundled, a runtime Light/Dark switch and Hot Design previews of every state.",
+  "platforms": [
+    "desktop",
+    "wasm",
+    "android"
+  ],
+  "sourcePath": "Liveline/Liveline.csproj",
+  "iconUrl": "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/liveline/.studiolive/icon.png",
+  "screenshots": [
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/liveline/.studiolive/screenshots/card-dark-desktop.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/liveline/.studiolive/screenshots/card-desktop.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/liveline/.studiolive/screenshots/card-dark-phone.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/liveline/.studiolive/screenshots/card-phone.png"
+  ],
+  "showcase": {
+    "summary": "A live metric card with a gliding SkiaSharp line, inspection, pause and connection states.",
+    "type": "showcase",
+    "status": "preview",
+    "owner": [
+      "noknowscode"
+    ],
+    "industry": "Data visualization",
+    "goals": [
+      "A templated control whose default style carries the whole card, driven by a State enum through VisualStateManager",
+      "A SkiaSharp plot on SKCanvasElement that draws only while something moves (a 33 ms timer during the glide)",
+      "Hover and keyboard inspection (arrows, Home/End, Esc) with automation names",
+      "A layout state from the card's own width, so the card works in a narrow column and at 390 px",
+      "Every colour from palette roles plus one control token, and the design's fonts through the Material font override",
+      "Debug-only Hot Design previews of every state, and a runtime Light/Dark switch"
+    ],
+    "tags": [
+      "skia",
+      "custom-control",
+      "charts",
+      "real-time",
+      "visualstatemanager",
+      "material",
+      "theming"
+    ]
+  }
+}

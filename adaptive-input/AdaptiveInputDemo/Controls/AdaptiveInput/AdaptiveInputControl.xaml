@@ -1,0 +1,891 @@
+<!--
+    AdaptiveInputControl: default style, template, part styles and tokens.
+    Colours alias the palette (Styles/ColorPaletteOverride.xaml): accent = Primary, token tint = PrimaryContainer with
+    OnPrimaryContainer text, field and panel = Surface, raised rows = SurfaceVariant, ink = OnSurface, muted =
+    OnSurfaceVariant, hairline = OutlineVariant, control outline = Outline. The placeholder grey and the avatar disc have
+    no role, so they are tokens here. Merge after MaterialToolkitTheme.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:AdaptiveInputDemo.Controls">
+
+  <ResourceDictionary.ThemeDictionaries>
+    <ResourceDictionary x:Key="Light">
+      <SolidColorBrush x:Key="AdaptiveInputPlaceholderBrush" Color="#7D747A" />
+      <SolidColorBrush x:Key="AdaptiveInputAvatarBrush" Color="#EADFE4" />
+      <SolidColorBrush x:Key="AdaptiveInputSwatchEdgeBrush" Color="#24000000" />
+    </ResourceDictionary>
+    <ResourceDictionary x:Key="Default">
+      <SolidColorBrush x:Key="AdaptiveInputPlaceholderBrush" Color="#7D747A" />
+      <SolidColorBrush x:Key="AdaptiveInputAvatarBrush" Color="#3A3337" />
+      <SolidColorBrush x:Key="AdaptiveInputSwatchEdgeBrush" Color="#24FFFFFF" />
+    </ResourceDictionary>
+  </ResourceDictionary.ThemeDictionaries>
+
+  <!-- DM Mono (OFL, Assets/Fonts/OFL-DMMono.txt) for labels, keys, handles and values; the manifest maps 500. -->
+  <FontFamily x:Key="AdaptiveInputMonoFontFamily">ms-appx:///Assets/Fonts/DMMono-Regular.ttf</FontFamily>
+  <x:Double x:Key="AdaptiveInputFieldHeight">56</x:Double>
+  <CornerRadius x:Key="AdaptiveInputFieldCornerRadius">18</CornerRadius>
+  <x:Double x:Key="AdaptiveInputPanelHeight">300</x:Double>
+  <CornerRadius x:Key="AdaptiveInputPanelCornerRadius">26</CornerRadius>
+
+  <!-- Tabler outline icons, 24 px grid. -->
+  <x:String x:Key="AdaptiveIconCalendar">M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z M16 3v4 M8 3v4 M4 11h16</x:String>
+  <x:String x:Key="AdaptiveIconPalette">M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25 M7.5 10.5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0 M11.5 7.5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0 M15.5 10.5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0</x:String>
+  <x:String x:Key="AdaptiveIconHash">M5 9l14 0 M5 15l14 0 M11 4l-4 16 M17 4l-4 16</x:String>
+  <x:String x:Key="AdaptiveIconCheck">M5 12l5 5l10 -10</x:String>
+
+  <Style x:Key="AdaptiveIconPathStyle" TargetType="Path">
+    <Setter Property="Width" Value="24" />
+    <Setter Property="Height" Value="24" />
+    <Setter Property="StrokeThickness" Value="1.75" />
+    <Setter Property="StrokeStartLineCap" Value="Round" />
+    <Setter Property="StrokeEndLineCap" Value="Round" />
+    <Setter Property="StrokeLineJoin" Value="Round" />
+  </Style>
+
+  <!-- Section label: DM Mono 11 px, tracked, upper case (the text is written in capitals). -->
+  <Style x:Key="AdaptiveInputSectionLabelStyle" TargetType="TextBlock">
+    <Setter Property="FontFamily" Value="{StaticResource AdaptiveInputMonoFontFamily}" />
+    <Setter Property="FontSize" Value="11" />
+    <Setter Property="CharacterSpacing" Value="100" />
+    <Setter Property="Foreground" Value="{ThemeResource OnSurfaceVariantBrush}" />
+  </Style>
+
+  <!-- Keyboard hint chip: 22 px, 6 px radius, raised, DM Mono 11 px. -->
+  <Style x:Key="AdaptiveInputKbdStyle" TargetType="Border">
+    <Setter Property="Height" Value="22" />
+    <Setter Property="Padding" Value="6,0" />
+    <Setter Property="CornerRadius" Value="6" />
+    <Setter Property="Background" Value="{ThemeResource SurfaceVariantBrush}" />
+  </Style>
+
+  <!-- The text box inside the field: no chrome of its own (the field draws it), 17 px. -->
+  <Style x:Key="AdaptiveFieldTextBoxStyle" TargetType="TextBox">
+    <Setter Property="Foreground" Value="{ThemeResource OnSurfaceBrush}" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="FontSize" Value="17" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="UseSystemFocusVisuals" Value="False" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="TextBox">
+          <Grid Background="Transparent">
+            <TextBlock x:Name="PlaceholderTextContentPresenter"
+                       Text="{TemplateBinding PlaceholderText}"
+                       Foreground="{ThemeResource AdaptiveInputPlaceholderBrush}"
+                       FontSize="{TemplateBinding FontSize}"
+                       TextTrimming="CharacterEllipsis"
+                       TextWrapping="NoWrap"
+                       MaxLines="1"
+                       VerticalAlignment="Center"
+                       IsHitTestVisible="False" />
+            <ScrollViewer x:Name="ContentElement"
+                          HorizontalScrollMode="Auto"
+                          HorizontalScrollBarVisibility="Hidden"
+                          VerticalScrollMode="Disabled"
+                          VerticalScrollBarVisibility="Disabled"
+                          ZoomMode="Disabled"
+                          IsTabStop="False"
+                          VerticalAlignment="Center"
+                          AutomationProperties.AccessibilityView="Raw" />
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Quick pick / accessory chip: 36 px, 10 px radius, outline, 13 px Medium; checked = ink fill. -->
+  <Style x:Key="AdaptiveChoiceButtonStyle" TargetType="ToggleButton">
+    <Setter Property="Height" Value="36" />
+    <Setter Property="Padding" Value="12,0" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="HorizontalContentAlignment" Value="Left" />
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="Foreground" Value="{ThemeResource OnSurfaceBrush}" />
+    <Setter Property="BorderBrush" Value="{ThemeResource OutlineBrush}" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="ToggleButton">
+          <Grid x:Name="Root"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="1"
+                CornerRadius="10"
+                Padding="{TemplateBinding Padding}"
+                RenderTransformOrigin="0.5,0.5">
+            <Grid.RenderTransform>
+              <ScaleTransform x:Name="Press" />
+            </Grid.RenderTransform>
+            <ContentPresenter x:Name="Presenter"
+                              Content="{TemplateBinding Content}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                              VerticalAlignment="Center"
+                              Foreground="{TemplateBinding Foreground}"
+                              FontSize="{TemplateBinding FontSize}"
+                              FontWeight="{TemplateBinding FontWeight}" />
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal" />
+                <VisualState x:Name="PointerOver">
+                  <VisualState.Setters>
+                    <Setter Target="Root.Background" Value="{ThemeResource SurfaceVariantBrush}" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Pressed">
+                  <VisualState.Setters>
+                    <Setter Target="Root.Background" Value="{ThemeResource SurfaceVariantBrush}" />
+                    <Setter Target="Press.ScaleX" Value="0.96" />
+                    <Setter Target="Press.ScaleY" Value="0.96" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Checked">
+                  <VisualState.Setters>
+                    <Setter Target="Root.Background" Value="{ThemeResource OnSurfaceBrush}" />
+                    <Setter Target="Root.BorderBrush" Value="{ThemeResource OnSurfaceBrush}" />
+                    <Setter Target="Presenter.Foreground" Value="{ThemeResource BackgroundBrush}" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="CheckedPointerOver">
+                  <VisualState.Setters>
+                    <Setter Target="Root.Background" Value="{ThemeResource OnSurfaceBrush}" />
+                    <Setter Target="Root.BorderBrush" Value="{ThemeResource OnSurfaceBrush}" />
+                    <Setter Target="Presenter.Foreground" Value="{ThemeResource BackgroundBrush}" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="CheckedPressed">
+                  <VisualState.Setters>
+                    <Setter Target="Root.Background" Value="{ThemeResource OnSurfaceBrush}" />
+                    <Setter Target="Presenter.Foreground" Value="{ThemeResource BackgroundBrush}" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Person / tag row: 40 px, 10 px radius; the active row is raised with a 2 px accent bar on the left. -->
+  <Style x:Key="AdaptiveRowButtonStyle" TargetType="ToggleButton">
+    <Setter Property="MinHeight" Value="40" />
+    <Setter Property="Padding" Value="8,0" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="Foreground" Value="{ThemeResource OnSurfaceBrush}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="ToggleButton">
+          <Grid x:Name="Root" Background="Transparent" CornerRadius="10">
+            <Border x:Name="Bar" Width="2" HorizontalAlignment="Left" Background="{ThemeResource PrimaryBrush}" Opacity="0" />
+            <ContentPresenter Content="{TemplateBinding Content}"
+                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                              Padding="{TemplateBinding Padding}"
+                              HorizontalContentAlignment="Stretch"
+                              VerticalContentAlignment="Center"
+                              Foreground="{TemplateBinding Foreground}"
+                              FontSize="{TemplateBinding FontSize}" />
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal" />
+                <VisualState x:Name="PointerOver">
+                  <VisualState.Setters>
+                    <Setter Target="Root.Background" Value="{ThemeResource SurfaceVariantBrush}" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Pressed">
+                  <VisualState.Setters>
+                    <Setter Target="Root.Background" Value="{ThemeResource SurfaceVariantBrush}" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Checked">
+                  <VisualState.Setters>
+                    <Setter Target="Root.Background" Value="{ThemeResource SurfaceVariantBrush}" />
+                    <Setter Target="Bar.Opacity" Value="1" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="CheckedPointerOver">
+                  <VisualState.Setters>
+                    <Setter Target="Root.Background" Value="{ThemeResource SurfaceVariantBrush}" />
+                    <Setter Target="Bar.Opacity" Value="1" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="CheckedPressed">
+                  <VisualState.Setters>
+                    <Setter Target="Root.Background" Value="{ThemeResource SurfaceVariantBrush}" />
+                    <Setter Target="Bar.Opacity" Value="1" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Calendar day: 34 px circle, 14 px; today ringed in ink; selected = accent fill, SemiBold. -->
+  <Style x:Key="AdaptiveDayButtonStyle" TargetType="ToggleButton">
+    <Setter Property="Width" Value="34" />
+    <Setter Property="Height" Value="34" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="Foreground" Value="{ThemeResource OnSurfaceBrush}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="ToggleButton">
+          <Grid x:Name="Root">
+            <Ellipse x:Name="Fill" Fill="Transparent" />
+            <Ellipse x:Name="Ring"
+                     Stroke="{ThemeResource OnSurfaceBrush}"
+                     StrokeThickness="1.5"
+                     Opacity="{Binding RingOpacity}" />
+            <ContentPresenter x:Name="Presenter"
+                              Content="{TemplateBinding Content}"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Foreground="{TemplateBinding Foreground}"
+                              FontSize="{TemplateBinding FontSize}" />
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal" />
+                <VisualState x:Name="PointerOver">
+                  <VisualState.Setters>
+                    <Setter Target="Fill.Fill" Value="{ThemeResource SurfaceVariantBrush}" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Pressed">
+                  <VisualState.Setters>
+                    <Setter Target="Fill.Fill" Value="{ThemeResource SurfaceVariantBrush}" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Disabled">
+                  <VisualState.Setters>
+                    <Setter Target="Root.Opacity" Value="0" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Checked">
+                  <VisualState.Setters>
+                    <Setter Target="Fill.Fill" Value="{ThemeResource PrimaryBrush}" />
+                    <Setter Target="Ring.Visibility" Value="Collapsed" />
+                    <Setter Target="Presenter.Foreground" Value="{ThemeResource OnPrimaryBrush}" />
+                    <Setter Target="Presenter.FontWeight" Value="SemiBold" />
+                    <Setter Target="Presenter.Opacity" Value="1" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="CheckedPointerOver">
+                  <VisualState.Setters>
+                    <Setter Target="Fill.Fill" Value="{ThemeResource PrimaryBrush}" />
+                    <Setter Target="Ring.Visibility" Value="Collapsed" />
+                    <Setter Target="Presenter.Foreground" Value="{ThemeResource OnPrimaryBrush}" />
+                    <Setter Target="Presenter.FontWeight" Value="SemiBold" />
+                    <Setter Target="Presenter.Opacity" Value="1" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="CheckedPressed">
+                  <VisualState.Setters>
+                    <Setter Target="Fill.Fill" Value="{ThemeResource PrimaryBrush}" />
+                    <Setter Target="Presenter.Foreground" Value="{ThemeResource OnPrimaryBrush}" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Small square icon button (clear): 36 px, 10 px radius, muted; hover raised and ink. -->
+  <Style x:Key="AdaptiveGhostButtonStyle" TargetType="Button">
+    <Setter Property="Width" Value="36" />
+    <Setter Property="Height" Value="36" />
+    <Setter Property="Foreground" Value="{ThemeResource OnSurfaceVariantBrush}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Grid x:Name="Root" Background="Transparent" CornerRadius="10">
+            <ContentPresenter x:Name="Presenter" Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{TemplateBinding Foreground}" />
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal" />
+                <VisualState x:Name="PointerOver">
+                  <VisualState.Setters>
+                    <Setter Target="Root.Background" Value="{ThemeResource SurfaceVariantBrush}" />
+                    <Setter Target="Presenter.Foreground" Value="{ThemeResource OnSurfaceBrush}" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Pressed">
+                  <VisualState.Setters>
+                    <Setter Target="Root.Background" Value="{ThemeResource SurfaceVariantBrush}" />
+                    <Setter Target="Presenter.Foreground" Value="{ThemeResource OnSurfaceBrush}" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- Outlined action button ("Use this colour", "Choose a date"): 36 px, 10 px radius, 13 px SemiBold. -->
+  <Style x:Key="AdaptiveOutlineButtonStyle" TargetType="Button">
+    <Setter Property="Height" Value="36" />
+    <Setter Property="Padding" Value="12,0" />
+    <Setter Property="FontSize" Value="13" />
+    <Setter Property="FontWeight" Value="SemiBold" />
+    <Setter Property="HorizontalAlignment" Value="Left" />
+    <Setter Property="Foreground" Value="{ThemeResource OnSurfaceBrush}" />
+    <Setter Property="BorderBrush" Value="{ThemeResource OutlineBrush}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Grid x:Name="Root" Background="Transparent" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="10" Padding="{TemplateBinding Padding}">
+            <ContentPresenter Content="{TemplateBinding Content}" VerticalAlignment="Center" Foreground="{TemplateBinding Foreground}" FontSize="{TemplateBinding FontSize}" FontWeight="{TemplateBinding FontWeight}" />
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal" />
+                <VisualState x:Name="PointerOver">
+                  <VisualState.Setters>
+                    <Setter Target="Root.Background" Value="{ThemeResource SurfaceVariantBrush}" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Pressed">
+                  <VisualState.Setters>
+                    <Setter Target="Root.Background" Value="{ThemeResource SurfaceVariantBrush}" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!-- The suggestion in the field: dashed 1 px outline, 10 px radius; solid accent on hover. -->
+  <Style x:Key="AdaptiveSuggestionButtonStyle" TargetType="Button">
+    <Setter Property="Height" Value="36" />
+    <Setter Property="Padding" Value="12,0,6,0" />
+    <Setter Property="FontSize" Value="14" />
+    <Setter Property="Foreground" Value="{ThemeResource OnSurfaceBrush}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="Button">
+          <Grid>
+            <Rectangle x:Name="Edge"
+                       RadiusX="10" RadiusY="10"
+                       Stroke="{ThemeResource OutlineBrush}"
+                       StrokeThickness="1"
+                       StrokeDashArray="3,3" />
+            <ContentPresenter Content="{TemplateBinding Content}" Padding="{TemplateBinding Padding}" VerticalAlignment="Center" Foreground="{TemplateBinding Foreground}" FontSize="{TemplateBinding FontSize}" />
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal" />
+                <VisualState x:Name="PointerOver">
+                  <VisualState.Setters>
+                    <Setter Target="Edge.Stroke" Value="{ThemeResource PrimaryBrush}" />
+                    <Setter Target="Edge.StrokeDashArray" Value="" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Pressed">
+                  <VisualState.Setters>
+                    <Setter Target="Edge.Stroke" Value="{ThemeResource PrimaryBrush}" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <DataTemplate x:Key="AdaptiveChoiceTemplate">
+    <ToggleButton Content="{Binding Label}"
+                  IsChecked="{Binding IsOn, Mode=OneWay}"
+                  Command="{Binding Pick}"
+                  AutomationProperties.Name="{Binding Label}"
+                  Style="{StaticResource AdaptiveChoiceButtonStyle}" />
+  </DataTemplate>
+
+  <DataTemplate x:Key="AdaptiveAccessoryTemplate">
+    <ToggleButton Content="{Binding Label}"
+                  IsChecked="{Binding IsOn, Mode=OneWay}"
+                  Command="{Binding Pick}"
+                  Height="44"
+                  HorizontalContentAlignment="Center"
+                  AutomationProperties.Name="{Binding Label}"
+                  Style="{StaticResource AdaptiveChoiceButtonStyle}" />
+  </DataTemplate>
+
+  <DataTemplate x:Key="AdaptiveDayTemplate">
+    <ToggleButton Content="{Binding Label}"
+                  IsChecked="{Binding IsOn, Mode=OneWay}"
+                  IsEnabled="{Binding IsAvailable}"
+                  Command="{Binding Pick}"
+                  Opacity="{Binding TextOpacity}"
+                  AutomationProperties.Name="{Binding AutomationName}"
+                  Style="{StaticResource AdaptiveDayButtonStyle}" />
+  </DataTemplate>
+
+  <DataTemplate x:Key="AdaptivePersonTemplate">
+    <ToggleButton IsChecked="{Binding IsOn, Mode=OneWay}"
+                  Command="{Binding Pick}"
+                  AutomationProperties.Name="{Binding AutomationName}"
+                  Style="{StaticResource AdaptiveRowButtonStyle}">
+      <Grid ColumnSpacing="10">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid Width="28" Height="28">
+          <Ellipse Fill="{ThemeResource AdaptiveInputAvatarBrush}" />
+          <TextBlock Text="{Binding Initials}" FontSize="11" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Grid>
+        <TextBlock Grid.Column="1" Text="{Binding Label}" FontSize="14" VerticalAlignment="Center" />
+        <TextBlock Grid.Column="2" Text="{Binding Detail}" FontSize="12" FontFamily="{StaticResource AdaptiveInputMonoFontFamily}"
+                   Foreground="{ThemeResource OnSurfaceVariantBrush}" VerticalAlignment="Center" />
+      </Grid>
+    </ToggleButton>
+  </DataTemplate>
+
+  <DataTemplate x:Key="AdaptiveTagTemplate">
+    <ToggleButton IsChecked="{Binding IsOn, Mode=OneWay}"
+                  Command="{Binding Pick}"
+                  AutomationProperties.Name="{Binding AutomationName}"
+                  Style="{StaticResource AdaptiveRowButtonStyle}">
+      <Grid ColumnSpacing="10">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Viewbox Width="15" Height="15">
+          <Path Data="{StaticResource AdaptiveIconHash}" Stroke="{ThemeResource OnSurfaceVariantBrush}" Style="{StaticResource AdaptiveIconPathStyle}" />
+        </Viewbox>
+        <TextBlock Grid.Column="1" Text="{Binding Label}" FontSize="14" VerticalAlignment="Center" />
+        <TextBlock Grid.Column="2" Text="{Binding Detail}" FontSize="12" Foreground="{ThemeResource OnSurfaceVariantBrush}" VerticalAlignment="Center" />
+      </Grid>
+    </ToggleButton>
+  </DataTemplate>
+
+  <Style TargetType="controls:AdaptiveInputControl">
+    <Setter Property="IsTabStop" Value="False" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="controls:AdaptiveInputControl">
+          <Grid RowSpacing="10">
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Label: 13 px Medium, muted. -->
+            <TextBlock x:Name="HeaderText"
+                       Text="{TemplateBinding Header}"
+                       FontSize="13"
+                       FontWeight="Medium"
+                       Padding="2,0,0,0"
+                       Foreground="{ThemeResource OnSurfaceVariantBrush}" />
+
+            <!-- The field: 56 px, 18 px radius; focus draws a 2 px accent edge. -->
+            <Grid x:Name="Field"
+                  Grid.Row="1"
+                  Height="{StaticResource AdaptiveInputFieldHeight}"
+                  CornerRadius="{StaticResource AdaptiveInputFieldCornerRadius}"
+                  Background="{ThemeResource SurfaceBrush}"
+                  BorderBrush="{ThemeResource OutlineVariantBrush}"
+                  BorderThickness="1"
+                  Padding="12,0,8,0"
+                  ColumnSpacing="10">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+
+              <!-- Accepted token: 32 px, 10 px radius, accent tint, 13 px SemiBold. -->
+              <Border x:Name="PART_Token"
+                      Height="32"
+                      Padding="8,0,10,0"
+                      CornerRadius="10"
+                      Background="{ThemeResource PrimaryContainerBrush}"
+                      VerticalAlignment="Center"
+                      Visibility="Collapsed">
+                <StackPanel Orientation="Horizontal" Spacing="6" VerticalAlignment="Center">
+                  <Border x:Name="TokenSwatch" Width="14" Height="14" CornerRadius="4"
+                          Background="{Binding SwatchBrush, RelativeSource={RelativeSource TemplatedParent}}"
+                          BorderBrush="{ThemeResource AdaptiveInputSwatchEdgeBrush}" BorderThickness="1"
+                          Visibility="Collapsed" />
+                  <TextBlock Text="{Binding TokenText, RelativeSource={RelativeSource TemplatedParent}}"
+                             FontSize="13" FontWeight="SemiBold"
+                             Foreground="{ThemeResource OnPrimaryContainerBrush}"
+                             VerticalAlignment="Center" />
+                </StackPanel>
+              </Border>
+
+              <TextBox x:Name="PART_TextBox"
+                       Grid.Column="1"
+                       PlaceholderText="{TemplateBinding Placeholder}"
+                       Style="{StaticResource AdaptiveFieldTextBoxStyle}"
+                       AutomationProperties.Name="{TemplateBinding Header}"
+                       AutomationProperties.HelpText="{Binding StatusText, RelativeSource={RelativeSource TemplatedParent}}" />
+
+              <!-- The suggestion: what the text reads as, and Tab. -->
+              <Button x:Name="PART_Suggestion"
+                      Grid.Column="2"
+                      Style="{StaticResource AdaptiveSuggestionButtonStyle}"
+                      Visibility="Collapsed"
+                      AutomationProperties.Name="{Binding SuggestionText, RelativeSource={RelativeSource TemplatedParent}}">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                  <Border x:Name="SuggestionSwatch" Width="14" Height="14" CornerRadius="4" VerticalAlignment="Center"
+                          Background="{Binding SwatchBrush, RelativeSource={RelativeSource TemplatedParent}}"
+                          BorderBrush="{ThemeResource AdaptiveInputSwatchEdgeBrush}" BorderThickness="1"
+                          Visibility="Collapsed" />
+                  <TextBlock Text="{Binding SuggestionText, RelativeSource={RelativeSource TemplatedParent}}" VerticalAlignment="Center" />
+                  <Border Style="{StaticResource AdaptiveInputKbdStyle}" VerticalAlignment="Center">
+                    <TextBlock Text="Tab" FontFamily="{StaticResource AdaptiveInputMonoFontFamily}" FontSize="11"
+                               Foreground="{ThemeResource OnSurfaceVariantBrush}" VerticalAlignment="Center" />
+                  </Border>
+                </StackPanel>
+              </Button>
+
+              <Button x:Name="PART_Clear"
+                      Grid.Column="3"
+                      Style="{StaticResource AdaptiveGhostButtonStyle}"
+                      AutomationProperties.Name="Clear">
+                <Viewbox Width="16" Height="16">
+                  <Path Data="M18 6l-12 12 M6 6l12 12"
+                        Stroke="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}"
+                        Style="{StaticResource AdaptiveIconPathStyle}" />
+                </Viewbox>
+              </Button>
+
+              <!-- Add: 40 px ink square with an arrow. -->
+              <Button x:Name="PART_Submit"
+                      Grid.Column="4"
+                      Width="40" Height="40"
+                      Padding="0"
+                      CornerRadius="10"
+                      Background="{ThemeResource OnSurfaceBrush}"
+                      BorderThickness="0"
+                      Style="{StaticResource FilledButtonStyle}"
+                      AutomationProperties.Name="Add task">
+                <Viewbox Width="18" Height="18">
+                  <Path Data="M5 12h14 M13 18l6 -6 M13 6l6 6" Stroke="{ThemeResource BackgroundBrush}" Style="{StaticResource AdaptiveIconPathStyle}" />
+                </Viewbox>
+              </Button>
+            </Grid>
+
+            <!-- Status: announced politely. -->
+            <TextBlock x:Name="StatusLine"
+                       Grid.Row="2"
+                       Text="{Binding StatusText, RelativeSource={RelativeSource TemplatedParent}}"
+                       FontSize="12"
+                       MinHeight="17"
+                       Padding="14,0,0,0"
+                       Foreground="{ThemeResource OnSurfaceVariantBrush}"
+                       AutomationProperties.LiveSetting="Polite" />
+
+            <!-- Picker: anchored under the field at a fixed height. -->
+            <Border x:Name="Panel"
+                    Grid.Row="3"
+                    Height="{StaticResource AdaptiveInputPanelHeight}"
+                    VerticalAlignment="Top"
+                    Padding="16"
+                    CornerRadius="{StaticResource AdaptiveInputPanelCornerRadius}"
+                    Background="{ThemeResource SurfaceBrush}"
+                    BorderBrush="{ThemeResource OutlineVariantBrush}"
+                    BorderThickness="1"
+                    AutomationProperties.Name="Suggestions"
+                    AutomationProperties.LiveSetting="Polite">
+              <Grid>
+                <!-- Date: quick picks and the month. -->
+                <Grid x:Name="DateView" ColumnSpacing="22" Visibility="Collapsed">
+                  <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="140" />
+                    <ColumnDefinition Width="Auto" />
+                  </Grid.ColumnDefinitions>
+                  <StackPanel Spacing="8">
+                    <TextBlock Text="QUICK PICKS" Style="{StaticResource AdaptiveInputSectionLabelStyle}" />
+                    <ItemsControl ItemsSource="{Binding QuickPicks, RelativeSource={RelativeSource TemplatedParent}}"
+                                  ItemTemplate="{StaticResource AdaptiveChoiceTemplate}">
+                      <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                          <StackPanel Spacing="8" />
+                        </ItemsPanelTemplate>
+                      </ItemsControl.ItemsPanel>
+                    </ItemsControl>
+                  </StackPanel>
+                  <Grid Grid.Column="1" BorderBrush="{ThemeResource OutlineVariantBrush}" BorderThickness="1,0,0,0" Padding="22,0,0,0" RowSpacing="8">
+                    <Grid.RowDefinitions>
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                      <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid>
+                      <TextBlock Text="{Binding MonthTitle, RelativeSource={RelativeSource TemplatedParent}}" FontSize="15" FontWeight="SemiBold" />
+                      <TextBlock Text="{Binding TimeNote, RelativeSource={RelativeSource TemplatedParent}}" FontSize="12" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                 Foreground="{ThemeResource OnSurfaceVariantBrush}" />
+                    </Grid>
+                    <Grid Grid.Row="1" ColumnSpacing="3">
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="34" /><ColumnDefinition Width="34" /><ColumnDefinition Width="34" /><ColumnDefinition Width="34" />
+                        <ColumnDefinition Width="34" /><ColumnDefinition Width="34" /><ColumnDefinition Width="34" />
+                      </Grid.ColumnDefinitions>
+                      <TextBlock Grid.Column="0" Text="Su" Style="{StaticResource AdaptiveInputSectionLabelStyle}" CharacterSpacing="0" HorizontalAlignment="Center" />
+                      <TextBlock Grid.Column="1" Text="Mo" Style="{StaticResource AdaptiveInputSectionLabelStyle}" CharacterSpacing="0" HorizontalAlignment="Center" />
+                      <TextBlock Grid.Column="2" Text="Tu" Style="{StaticResource AdaptiveInputSectionLabelStyle}" CharacterSpacing="0" HorizontalAlignment="Center" />
+                      <TextBlock Grid.Column="3" Text="We" Style="{StaticResource AdaptiveInputSectionLabelStyle}" CharacterSpacing="0" HorizontalAlignment="Center" />
+                      <TextBlock Grid.Column="4" Text="Th" Style="{StaticResource AdaptiveInputSectionLabelStyle}" CharacterSpacing="0" HorizontalAlignment="Center" />
+                      <TextBlock Grid.Column="5" Text="Fr" Style="{StaticResource AdaptiveInputSectionLabelStyle}" CharacterSpacing="0" HorizontalAlignment="Center" />
+                      <TextBlock Grid.Column="6" Text="Sa" Style="{StaticResource AdaptiveInputSectionLabelStyle}" CharacterSpacing="0" HorizontalAlignment="Center" />
+                    </Grid>
+                    <ItemsRepeater Grid.Row="2"
+                                   ItemsSource="{Binding Days, RelativeSource={RelativeSource TemplatedParent}}"
+                                   ItemTemplate="{StaticResource AdaptiveDayTemplate}">
+                      <ItemsRepeater.Layout>
+                        <UniformGridLayout MinItemWidth="34" MinItemHeight="34" MinColumnSpacing="3" MinRowSpacing="3" MaximumRowsOrColumns="7" />
+                      </ItemsRepeater.Layout>
+                    </ItemsRepeater>
+                  </Grid>
+                </Grid>
+
+                <!-- Colour: the swatch and the value read. -->
+                <StackPanel x:Name="ColourView" Orientation="Horizontal" Spacing="18" VerticalAlignment="Center" Visibility="Collapsed">
+                  <Border Width="96" Height="96" CornerRadius="14"
+                          Background="{Binding SwatchBrush, RelativeSource={RelativeSource TemplatedParent}}"
+                          BorderBrush="{ThemeResource AdaptiveInputSwatchEdgeBrush}" BorderThickness="1" />
+                  <StackPanel Spacing="10" VerticalAlignment="Center">
+                    <TextBlock Text="COLOUR" Style="{StaticResource AdaptiveInputSectionLabelStyle}" />
+                    <Grid ColumnSpacing="14" RowSpacing="4">
+                      <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                      </Grid.ColumnDefinitions>
+                      <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                      </Grid.RowDefinitions>
+                      <TextBlock Text="HEX" FontFamily="{StaticResource AdaptiveInputMonoFontFamily}" FontSize="13" Foreground="{ThemeResource OnSurfaceVariantBrush}" />
+                      <TextBlock Grid.Column="1" Text="{Binding HexText, RelativeSource={RelativeSource TemplatedParent}}" FontFamily="{StaticResource AdaptiveInputMonoFontFamily}" FontSize="13" />
+                      <TextBlock Grid.Row="1" Text="RGB" FontFamily="{StaticResource AdaptiveInputMonoFontFamily}" FontSize="13" Foreground="{ThemeResource OnSurfaceVariantBrush}" />
+                      <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding RgbText, RelativeSource={RelativeSource TemplatedParent}}" FontFamily="{StaticResource AdaptiveInputMonoFontFamily}" FontSize="13" />
+                    </Grid>
+                    <Button x:Name="PART_UseColour" Style="{StaticResource AdaptiveOutlineButtonStyle}" Padding="12,0,6,0">
+                      <StackPanel Orientation="Horizontal" Spacing="10">
+                        <TextBlock Text="Use this colour" VerticalAlignment="Center" />
+                        <Border Style="{StaticResource AdaptiveInputKbdStyle}">
+                          <TextBlock Text="Tab" FontFamily="{StaticResource AdaptiveInputMonoFontFamily}" FontSize="11" FontWeight="Normal" Foreground="{ThemeResource OnSurfaceVariantBrush}" VerticalAlignment="Center" />
+                        </Border>
+                      </StackPanel>
+                    </Button>
+                  </StackPanel>
+                </StackPanel>
+
+                <!-- People or tags: rows; Up/Down move the active row, Enter inserts. -->
+                <StackPanel x:Name="RowsView" Spacing="6" Visibility="Collapsed">
+                  <TextBlock x:Name="RowsLabel" Text="PEOPLE" Style="{StaticResource AdaptiveInputSectionLabelStyle}" />
+                  <ItemsControl x:Name="RowsList"
+                                ItemsSource="{Binding Rows, RelativeSource={RelativeSource TemplatedParent}}"
+                                ItemTemplate="{StaticResource AdaptivePersonTemplate}" />
+                  <TextBlock x:Name="NoMatch"
+                             Text="{Binding NoMatchText, RelativeSource={RelativeSource TemplatedParent}}"
+                             FontSize="13"
+                             Foreground="{ThemeResource OnSurfaceVariantBrush}"
+                             Visibility="Collapsed" />
+                </StackPanel>
+
+                <!-- Plain text. -->
+                <StackPanel x:Name="PlainView" Spacing="8" Padding="8,0" VerticalAlignment="Center" Visibility="Collapsed">
+                  <TextBlock Text="Kept as plain text" FontSize="15" FontWeight="SemiBold" />
+                  <TextBlock Text="Dates, #colours, @people and #tags turn into tokens as you type." FontSize="13" TextWrapping="Wrap"
+                             Foreground="{ThemeResource OnSurfaceVariantBrush}" />
+                </StackPanel>
+
+                <!-- Not recognised: starts like a date but is not one; stays text and offers the picker. -->
+                <StackPanel x:Name="NotRecognisedView" Spacing="10" Padding="6,4" Visibility="Collapsed">
+                  <TextBlock Text="That doesn’t read as a date, so it stays as text." FontSize="13" TextWrapping="Wrap" />
+                  <Button x:Name="PART_ChooseDate" Style="{StaticResource AdaptiveOutlineButtonStyle}" Height="32" FontWeight="Medium">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                      <Viewbox Width="15" Height="15">
+                        <Path Data="{StaticResource AdaptiveIconCalendar}" Stroke="{ThemeResource OnSurfaceBrush}" Style="{StaticResource AdaptiveIconPathStyle}" />
+                      </Viewbox>
+                      <TextBlock Text="Choose a date" VerticalAlignment="Center" />
+                    </StackPanel>
+                  </Button>
+                </StackPanel>
+
+                <!-- Accepted. -->
+                <StackPanel x:Name="AcceptedView" Spacing="8" Padding="8,0" VerticalAlignment="Center" Visibility="Collapsed">
+                  <StackPanel Orientation="Horizontal" Spacing="10">
+                    <Viewbox Width="18" Height="18">
+                      <Path Data="{StaticResource AdaptiveIconCheck}" Stroke="{ThemeResource PrimaryBrush}" Style="{StaticResource AdaptiveIconPathStyle}" />
+                    </Viewbox>
+                    <TextBlock Text="{Binding AcceptedTitle, RelativeSource={RelativeSource TemplatedParent}}" FontSize="15" FontWeight="SemiBold" />
+                  </StackPanel>
+                  <TextBlock Text="Backspace in the empty field turns it back into the text you typed." FontSize="13" TextWrapping="Wrap"
+                             Foreground="{ThemeResource OnSurfaceVariantBrush}" />
+                </StackPanel>
+              </Grid>
+            </Border>
+
+            <!-- Phone: suggestions ride above the keyboard. -->
+            <Border x:Name="Accessory"
+                    Grid.Row="3"
+                    VerticalAlignment="Bottom"
+                    Padding="16,10"
+                    BorderBrush="{ThemeResource OutlineVariantBrush}"
+                    BorderThickness="0,1,0,0"
+                    Background="{ThemeResource SurfaceBrush}"
+                    Visibility="Collapsed">
+              <ItemsRepeater ItemsSource="{Binding AccessoryItems, RelativeSource={RelativeSource TemplatedParent}}"
+                             ItemTemplate="{StaticResource AdaptiveAccessoryTemplate}">
+                <ItemsRepeater.Layout>
+                  <UniformGridLayout MinItemWidth="80" MinItemHeight="44" MinColumnSpacing="8" MaximumRowsOrColumns="3" ItemsStretch="Fill" />
+                </ItemsRepeater.Layout>
+              </ItemsRepeater>
+            </Border>
+
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroup x:Name="FieldStates">
+                <VisualState x:Name="FieldNormal" />
+                <VisualState x:Name="FieldFocused">
+                  <VisualState.Setters>
+                    <Setter Target="Field.BorderBrush" Value="{ThemeResource PrimaryBrush}" />
+                    <Setter Target="Field.BorderThickness" Value="2" />
+                    <Setter Target="Field.Padding" Value="11,0,7,0" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+
+              <VisualStateGroup x:Name="InputStates">
+                <VisualState x:Name="Empty" />
+                <VisualState x:Name="Recognised" />
+                <VisualState x:Name="Plain" />
+                <VisualState x:Name="NotRecognised" />
+                <VisualState x:Name="Accepted" />
+              </VisualStateGroup>
+
+              <VisualStateGroup x:Name="PanelStates">
+                <VisualState x:Name="DatePanel">
+                  <VisualState.Setters>
+                    <Setter Target="DateView.Visibility" Value="Visible" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="ColourPanel">
+                  <VisualState.Setters>
+                    <Setter Target="ColourView.Visibility" Value="Visible" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="PeoplePanel">
+                  <VisualState.Setters>
+                    <Setter Target="RowsView.Visibility" Value="Visible" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="TagsPanel">
+                  <VisualState.Setters>
+                    <Setter Target="RowsView.Visibility" Value="Visible" />
+                    <Setter Target="RowsLabel.Text" Value="TAGS" />
+                    <Setter Target="RowsList.ItemTemplate" Value="{StaticResource AdaptiveTagTemplate}" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="PlainPanel">
+                  <VisualState.Setters>
+                    <Setter Target="PlainView.Visibility" Value="Visible" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NotRecognisedPanel">
+                  <VisualState.Setters>
+                    <Setter Target="NotRecognisedView.Visibility" Value="Visible" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="AcceptedPanel">
+                  <VisualState.Setters>
+                    <Setter Target="AcceptedView.Visibility" Value="Visible" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+
+              <VisualStateGroup x:Name="SuggestionStates">
+                <VisualState x:Name="NoSuggestion" />
+                <VisualState x:Name="Suggestion">
+                  <VisualState.Setters>
+                    <Setter Target="PART_Suggestion.Visibility" Value="Visible" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+
+              <VisualStateGroup x:Name="SuggestionKindStates">
+                <VisualState x:Name="TextSuggestion" />
+                <VisualState x:Name="ColourSuggestion">
+                  <VisualState.Setters>
+                    <Setter Target="SuggestionSwatch.Visibility" Value="Visible" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+
+              <VisualStateGroup x:Name="TokenStates">
+                <VisualState x:Name="NoToken" />
+                <VisualState x:Name="Token">
+                  <VisualState.Setters>
+                    <Setter Target="PART_Token.Visibility" Value="Visible" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="ColourToken">
+                  <VisualState.Setters>
+                    <Setter Target="PART_Token.Visibility" Value="Visible" />
+                    <Setter Target="TokenSwatch.Visibility" Value="Visible" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+
+              <VisualStateGroup x:Name="MatchStates">
+                <VisualState x:Name="Matches" />
+                <VisualState x:Name="NoMatches">
+                  <VisualState.Setters>
+                    <Setter Target="NoMatch.Visibility" Value="Visible" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+
+              <VisualStateGroup x:Name="PlacementStates">
+                <VisualState x:Name="PanelPlacement" />
+                <VisualState x:Name="AccessoryPlacement">
+                  <VisualState.Setters>
+                    <Setter Target="Panel.Visibility" Value="Collapsed" />
+                    <Setter Target="Accessory.Visibility" Value="Visible" />
+                    <Setter Target="PART_Clear.Visibility" Value="Collapsed" />
+                    <Setter Target="PART_Submit.Visibility" Value="Collapsed" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="AccessoryPickerOpen">
+                  <VisualState.Setters>
+                    <Setter Target="Accessory.Visibility" Value="Visible" />
+                    <Setter Target="PART_Clear.Visibility" Value="Collapsed" />
+                    <Setter Target="PART_Submit.Visibility" Value="Collapsed" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+</ResourceDictionary>

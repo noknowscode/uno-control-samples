@@ -1,0 +1,10 @@
+<hd:Preview x:Class="ReticleLab.HotDesignPreviews.ReticleScanningReducedPreview"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:hd="using:Uno.UI.HotDesign"
+            xmlns:controls="using:ReticleLab.Controls"
+            Width="360"
+            Height="440">
+  <controls:ReticleLoader State="Scanning" IsMotionReduced="True" Telemetry="COUNTING FILES" Detail="Reduced motion: still, with a slow pulse"
+                          AutomationProperties.Name="Syncing workspace" />
+</hd:Preview>

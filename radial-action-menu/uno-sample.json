@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schemas.platform.uno/sample/v1",
+  "id": "radial-action-menu",
+  "displayName": "Radial Action Menu",
+  "description": "A radial action menu for Uno Platform built to the Control Gallery prototype: an accent trigger that opens up to five actions on a 90° arc, 22.5° apart, with a 30 ms stagger out and the reverse on close, a dotted guide and a scrim. Keys 1 to 5 pick, the arrows move, Esc closes; a finger can slide from the trigger to an item, whose name shows in a readout, and release to pick. Discs are 52 px with label pills and key badges on desktop, 56 px with badges only on a phone; the arc mirrors at the left edge and unavailable actions dim. Archivo is bundled; warm greys with a rust accent, Light and Dark with an in-app switch. The demo is the prototype's Contacts panel.",
+  "platforms": [
+    "desktop",
+    "wasm",
+    "android"
+  ],
+  "sourcePath": "RadialActionMenuDemo/RadialActionMenuDemo.csproj",
+  "userConversation": {
+    "messages": [
+      {
+        "role": "user",
+        "content": "Bring my radial action menu in line with the Control Gallery prototype:\n- up to five actions on a 90° arc, 22.5° apart, 30 ms stagger out, reverse on close\n- keys 1-5 pick, arrows move, Esc closes; Space opens from the trigger\n- touch: slide from the trigger to an item, its name shows, release to open\n- discs 52 px on desktop with labels and key badges, 56 px on a phone with badges only\n- the trigger rests 24 px from both edges; the arc mirrors at the left edge; an unavailable action dims\n- the prototype's Archivo type and warm grey palette with a rust accent, Light and Dark\n\nThe demo should be the prototype's Contacts panel."
+      },
+      {
+        "role": "assistant",
+        "content": "The **Radial Action Menu** now follows the prototype: five actions on a quarter arc with the staggered open and close, number keys, arrows and Esc, touch slide-to-pick with a readout, labels or badges by width, a mirrored left-edge arc and dimmed unavailable actions, in Archivo on warm greys with a rust trigger."
+      }
+    ],
+    "suggestedPrompts": [
+      "Add a sixth action on a wider arc",
+      "Open the menu with a long press on a contact row",
+      "Announce the picked action in the status line on phones too",
+      "Remember the chosen theme between launches"
+    ]
+  },
+  "agentContext": {
+    "messages": [
+      {
+        "role": "user",
+        "content": "This is the Radial Action Menu sample: a quick-action menu for Uno Platform built to the Control Gallery prototype, on a Contacts panel."
+      },
+      {
+        "role": "assistant",
+        "content": "Radial Action Menu is one Uno single project, `RadialActionMenuDemo/RadialActionMenuDemo.csproj` (Uno.Sdk 7.0.22 from `global.json`; heads net10.0-android, net10.0-browserwasm and net10.0-desktop; UnoFeatures Material, Toolkit, Logging, SkiaRenderer). No MVVM or Navigation: `App.xaml.cs` navigates a Frame to `MainPage` and stores it in `App.AppRoot`; the app follows the system theme.\n\n**Key files:**\n- `Controls/RadialActionMenu.cs`: templated Control. DPs Items (ObservableCollection<RadialMenuItemData>, max 5), Position (MenuPosition BottomRight/BottomLeft/TopRight/TopLeft/Center), IsOpen, Radius (208), DiscSize (52), TriggerSize (64), EdgeMargin (24), ShowLabels, TriggerLabel, IsHintVisible, HighlightedIndex (+ read-only HighlightedLabel/HighlightedKey); Open/Close/Toggle; events Opening, Opened, Closing, Closed, ItemSelected. Creates one RadialActionMenuItem per data item in PART_Canvas, places each by its disc centre on the arc, builds the dotted guide (ArcSegment) and runs the open/close storyboards in code (KeySplines 0.2,0.9 0.3,1 out and 0.4,0 1,1 back). PreviewKeyDown handles 1-5, arrows and Esc; trigger pointer handlers (handledEventsToo) implement slide-to-pick; hover or keyboard focus shows the hint. Visual state groups OpenStates, HintStates, SlideStates.\n- `Controls/RadialActionMenuItem.cs`: a Button subclass: Label, KeyLabel, IconData (Geometry parsed from path data), DiscSize, IconSize, Placement (LabelPlacement Left/Right/Above/Below/BadgeOnly), IsHighlighted, DiscCenter; visual state groups CommonStates (hover white disc, pressed ink, disabled 40%), KeyboardFocusStates (ring + inverted pill), LabelStates, HighlightStates.\n- `Controls/RadialActionMenu.xaml`: both default styles, the trigger style and tokens (chip, guide, scrim, hover colours per theme; other colours alias PrimaryBrush, OnSurfaceBrush, OnSurfaceVariantBrush, OutlineBrush, OutlineVariantBrush). Shadows are radial-gradient ellipses (the Toolkit ShadowContainer left stale pixels on Skia when the focus look changed).\n- `Controls/RadialMenuItemData.cs` (Icon path data, Label, Command, CommandParameter, IsEnabled), `MenuPosition.cs`, `LabelPlacement.cs`, `RadialMenuIcons.cs` (Tabler paths and the demo's five actions).\n- `Styles/ColorPaletteOverride.xaml` (33 roles; Light from the prototype, Dark derived), `Styles/MaterialFontsOverride.xaml` (DefaultFontFamily = Archivo with `Assets/Fonts/Archivo-Regular.ttf.manifest` for 400/600), `Styles/Typography.xaml` (Archivo Bold Expanded DisplayTitle). Licence: `Assets/Fonts/OFL-Archivo.txt`.\n- `MainPage.xaml(.cs)`: the Contacts panel, a status line (LiveSetting Polite) and the menu; `{utu:Responsive}` sets DiscSize 56/52, Radius 172/208 and ShowLabels False/True below/above 600 px; a Toolkit filter Chip is the Dark switch (`SystemThemeHelper.SetRootTheme(App.AppRoot ?? page, ...)`).\n- `HotDesignPreviews/` (Debug only): RadialClosedPreview, RadialHintPreview, RadialOpeningPreview, RadialOpenPreview, RadialLeftEdgePreview, RadialTouchSlidePreview; each gets the items from `RadialMenuIcons.ContactActions` through LoadDataContext.\n\n**Build:** `dotnet build RadialActionMenuDemo/RadialActionMenuDemo.csproj -f net10.0-desktop`.\n\nThe app is built and running. The user may ask me to modify it."
+      }
+    ]
+  }
+}

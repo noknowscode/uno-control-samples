@@ -1,0 +1,11 @@
+<hd:Preview x:Class="HorizontalCalendar.HotDesignPreviews.CalendarErrorPreview"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:hd="using:Uno.UI.HotDesign"
+            xmlns:controls="using:HorizontalCalendar.Controls"
+            Width="1000"
+            Height="560">
+  <Grid Background="{ThemeResource BackgroundBrush}" Padding="24">
+    <controls:HorizontalCalendar x:Name="Calendar" AutomationProperties.Name="Calendar" AgendaState="Error" />
+  </Grid>
+</hd:Preview>

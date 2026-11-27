@@ -1,0 +1,18 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Build a carousel control for Uno Platform that could ship in the Uno Toolkit, matching our Control Gallery \"Carousel\" sheet:\n- mounted plates on a track that glides 700 ms with the next plate peeking in\n- the caption (\"PLATE 02 OF 05\", serif title, description, medium) beside the plates, thumbnails with a progress bar each, previous / pause / next and an \"Auto · 6 s\" status\n- auto-play every 6 s that holds on hover and focus; arrows, Home, End, Space pauses; swipe\n- Loading and Image failed states for a plate (Try again), long titles clamped to two lines\n- a phone layout at 390 px with the caption below and 56 × 48 thumbnails\n\nUse the sheet's palette and Instrument Serif / Instrument Sans, in Light and Dark with a switch, and add Hot Design previews of each state."
+    },
+    {
+      "role": "assistant",
+      "content": "The **Carousel** is restyled after the sheet and running: the Low Tide Series plates glide on a peeking track with the caption, thumbnails and transport beside them, and the plate states are in the Hot Design previews."
+    }
+  ],
+  "suggestedPrompts": [
+    "Add a fullscreen view that opens the current plate",
+    "Let thumbnails scroll when there are more plates than fit",
+    "Add a reduced-motion setting that drops the glide but keeps the fades",
+    "Show the plate's caption over the image in a compact mode"
+  ]
+}

@@ -1,0 +1,26 @@
+<!--
+	Material entry points for the snackbar. The look (template and tokens) lives in Controls/Snackbar/Snackbar.xaml
+	and SnackbarHost.xaml; this file adds the keyed Material styles to base your own on, and implicit styles so a
+	Snackbar or SnackbarHost without a Style works out of the box.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:utu="using:Uno.Toolkit.UI">
+
+	<Style x:Key="MaterialSnackbarStyle"
+		   TargetType="utu:Snackbar"
+		   BasedOn="{StaticResource DefaultSnackbar}" />
+
+	<Style x:Key="MaterialSnackbarHostStyle"
+		   TargetType="utu:SnackbarHost"
+		   BasedOn="{StaticResource DefaultSnackbarHost}">
+		<Setter Property="SnackbarStyle" Value="{StaticResource MaterialSnackbarStyle}" />
+	</Style>
+
+	<Style TargetType="utu:Snackbar"
+		   BasedOn="{StaticResource MaterialSnackbarStyle}" />
+
+	<Style TargetType="utu:SnackbarHost"
+		   BasedOn="{StaticResource MaterialSnackbarHostStyle}" />
+
+</ResourceDictionary>

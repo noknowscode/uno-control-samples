@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="450" height="450" viewBox="0 0 50.369617 49.826836" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <!-- An adaptive input: a text field with a detected-type badge, and the picker it opened below (a small calendar) -->
+  <rect x="11.6" y="12.6" width="27.2" height="8.2" rx="2.2" fill="none" stroke="#FFFFFF" stroke-width="1.3" />
+  <rect x="13.8" y="14.6" width="6.4" height="4.2" rx="1.2" fill="#FFFFFF" />
+  <rect x="22.4" y="15.9" width="10.6" height="1.6" rx="0.8" fill="#FFFFFF" fill-opacity="0.6" />
+  <rect x="11.6" y="23.4" width="27.2" height="14.0" rx="2.2" fill="#FFFFFF" fill-opacity="0.45" />
+  <circle cx="15.6" cy="27.0" r="0.8" fill="#FFFFFF" fill-opacity="0.9" />
+  <circle cx="20.4" cy="27.0" r="0.8" fill="#FFFFFF" fill-opacity="0.9" />
+  <circle cx="25.2" cy="27.0" r="0.8" fill="#FFFFFF" fill-opacity="0.9" />
+  <circle cx="30.0" cy="27.0" r="0.8" fill="#FFFFFF" fill-opacity="0.9" />
+  <circle cx="34.8" cy="27.0" r="0.8" fill="#FFFFFF" fill-opacity="0.9" />
+  <circle cx="15.6" cy="30.6" r="0.8" fill="#FFFFFF" fill-opacity="0.9" />
+  <circle cx="20.4" cy="30.6" r="0.8" fill="#FFFFFF" fill-opacity="0.9" />
+  <circle cx="25.2" cy="30.6" r="1.5" fill="#FFFFFF" />
+  <circle cx="30.0" cy="30.6" r="0.8" fill="#FFFFFF" fill-opacity="0.9" />
+  <circle cx="34.8" cy="30.6" r="0.8" fill="#FFFFFF" fill-opacity="0.9" />
+  <circle cx="15.6" cy="34.2" r="0.8" fill="#FFFFFF" fill-opacity="0.9" />
+  <circle cx="20.4" cy="34.2" r="0.8" fill="#FFFFFF" fill-opacity="0.9" />
+  <circle cx="25.2" cy="34.2" r="0.8" fill="#FFFFFF" fill-opacity="0.9" />
+  <circle cx="30.0" cy="34.2" r="0.8" fill="#FFFFFF" fill-opacity="0.9" />
+  <circle cx="34.8" cy="34.2" r="0.8" fill="#FFFFFF" fill-opacity="0.9" />
+</svg>

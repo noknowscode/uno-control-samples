@@ -1,0 +1,65 @@
+namespace CarouselDemo;
+
+public partial class App : Application
+{
+    public App()
+    {
+        this.InitializeComponent();
+    }
+
+    protected Window? MainWindow { get; private set; }
+
+    /// <summary>
+    /// The app's root element. The theme switch sets the theme on it rather than on the window's XamlRoot, because
+    /// Studio and the Gallery can host this content under a XamlRoot the app doesn't own.
+    /// </summary>
+    internal static FrameworkElement? AppRoot { get; private set; }
+
+    protected override void OnLaunched(LaunchActivatedEventArgs args)
+    {
+        MainWindow = new Window();
+#if DEBUG
+        MainWindow.UseStudio();
+#endif
+
+        if (MainWindow.Content is not Frame rootFrame)
+        {
+            rootFrame = new Frame();
+            MainWindow.Content = rootFrame;
+            AppRoot = rootFrame;
+            rootFrame.NavigationFailed += OnNavigationFailed;
+        }
+
+        if (rootFrame.Content == null)
+        {
+            rootFrame.Navigate(typeof(MainPage), args.Arguments);
+        }
+
+        MainWindow.Activate();
+    }
+
+    void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+    {
+        throw new InvalidOperationException($"Failed to load {e.SourcePageType.FullName}: {e.Exception}");
+    }
+
+    public static void InitializeLogging()
+    {
+#if DEBUG
+        var factory = LoggerFactory.Create(builder =>
+        {
+            builder.AddConsole();
+            builder.SetMinimumLevel(LogLevel.Information);
+            builder.AddFilter("Uno", LogLevel.Warning);
+            builder.AddFilter("Windows", LogLevel.Warning);
+            builder.AddFilter("Microsoft", LogLevel.Warning);
+        });
+
+        global::Uno.Extensions.LogExtensionPoint.AmbientLoggerFactory = factory;
+
+#if HAS_UNO
+        global::Uno.UI.Adapter.Microsoft.Extensions.Logging.LoggingAdapter.Initialize();
+#endif
+#endif
+    }
+}

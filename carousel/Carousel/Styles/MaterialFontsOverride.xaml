@@ -1,0 +1,10 @@
+<!--
+    Instrument Sans for the Material type ramp (the Carousel sheet's UI face). Static instances cut from the variable
+    font, one file per weight, because the Skia text stack renders a variable font's default instance only.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <FontFamily x:Key="MaterialLightFontFamily">ms-appx:///Assets/Fonts/InstrumentSans-Regular.ttf#Instrument Sans</FontFamily>
+  <FontFamily x:Key="MaterialRegularFontFamily">ms-appx:///Assets/Fonts/InstrumentSans-Regular.ttf#Instrument Sans</FontFamily>
+  <FontFamily x:Key="MaterialMediumFontFamily">ms-appx:///Assets/Fonts/InstrumentSans-Medium.ttf#Instrument Sans Medium</FontFamily>
+</ResourceDictionary>

@@ -1,0 +1,11 @@
+<hd:Preview x:Class="PrecisionDial.HotDesignPreviews.DialCompactPreview"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:hd="using:Uno.UI.HotDesign"
+            xmlns:controls="using:PrecisionDial.Controls"
+            Width="180" Height="180">
+  <Grid Background="{ThemeResource DialStageBackgroundBrush}">
+    <controls:PrecisionDial Value="25" Minimum="0" Maximum="100" DetentCount="20" Width="120" Height="120"
+                            AccentBrush="{ThemeResource PrimaryBrush}" AutomationProperties.Name="Value" />
+  </Grid>
+</hd:Preview>

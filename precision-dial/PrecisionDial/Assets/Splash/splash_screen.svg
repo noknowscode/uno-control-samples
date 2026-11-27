@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="450" height="450" viewBox="0 0 50.369617 49.826836" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <!-- A precision dial: a knob with its indicator inside a dashed 270-degree arc, lit up to the current value -->
+  <path d="M 13.87 36.21 A 16.0 16.0 0 1 1 36.49 36.21" fill="none" stroke="#D9A441" stroke-opacity="0.35" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="2.2 1.4" />
+  <path d="M 13.87 36.21 A 16.0 16.0 0 0 1 33.18 11.04" fill="none" stroke="#D9A441" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="2.2 1.4" />
+  <circle cx="25.18" cy="24.9" r="12.2" fill="#D9A441" />
+  <line x1="28.78" y1="18.66" x2="30.28" y2="16.07" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" />
+</svg>

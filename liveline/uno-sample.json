@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schemas.platform.uno/sample/v1",
+  "id": "liveline",
+  "displayName": "Liveline",
+  "description": "Liveline is a live metric card control for Uno Platform: the latest value with its change, a stream status chip, a 1, 5 or 15 minute window, pause and resume, a fixed-axis line chart drawn with SkiaSharp with an alert threshold, hover and keyboard inspection, and min, avg and max for the window. One sample a second; the line glides between samples. Its State property drives Connecting, Live, Pausing, Paused and Disconnected (the gap since the last sample is hatched, with Reconnect) through visual states, and the card switches to a phone layout below 560 px. The sample feeds it from a simulated latency stream, with Geist and Geist Mono bundled, a runtime Light/Dark switch and Hot Design previews of every state.",
+  "platforms": [
+    "desktop",
+    "wasm",
+    "android"
+  ],
+  "sourcePath": "Liveline/Liveline.csproj",
+  "userConversation": {
+    "messages": [
+      {
+        "role": "user",
+        "content": "Build a live metric card control for Uno Platform (Geist and Geist Mono, green on pale green):\n- header: \"API latency · p95\", the latest value with its unit and its change against the start of the window, a Live chip, a 1m / 5m / 15m selector and a pause button;\n- a SkiaSharp line chart with a fixed 40–70 axis, an alert line at 65, time labels counting back from now, a live dot with a value tag, one sample a second with the line gliding between samples;\n- hover, or focus and use the arrow keys, to inspect a point; Esc closes;\n- pause stops at the next sample and shows the time;\n- states Connecting (axes reserved), Paused (grey line) and Disconnected (the gap is hatched, Reconnect);\n- min, avg, max, window and samples below; a phone layout with the controls at the bottom;\n- a page that feeds it from a simulated stream, with a Light/Dark switch, and Hot Design previews of every state.\n\nStack: Uno Platform single project, SkiaSharp on SKCanvasElement, Material, Toolkit."
+      },
+      {
+        "role": "assistant",
+        "content": "**Liveline** is built and running: the card connects, then follows a simulated latency stream one sample a second. Hover the line, pause it, switch the window, or drop the connection."
+      }
+    ],
+    "suggestedPrompts": [
+      "Add a second card for error rate under this one",
+      "Colour the line red while it is above the alert threshold",
+      "Add a 1 hour window",
+      "Add a Hot Design preview with the alert threshold hidden"
+    ]
+  },
+  "agentContext": {
+    "messages": [
+      {
+        "role": "user",
+        "content": "This is Liveline, a live metric card control for Uno Platform, shown on a simulated latency stream."
+      },
+      {
+        "role": "assistant",
+        "content": "Liveline is one Uno single project, `Liveline/Liveline.csproj` (Uno.Sdk 7.0.22 from `global.json`; heads net10.0-android, net10.0-browserwasm and net10.0-desktop; UnoFeatures Material, Toolkit, Skia, SkiaRenderer). There is no Navigation, MVUX or MVVM: `App.xaml.cs` navigates a Frame to `MainPage` and keeps it as `App.AppRoot`. The app's namespace is `Liveline.Demo`; the control's is `Liveline`.\n\n**Key files:**\n- `Controls/Liveline/LivelineChart.cs`: the templated control. Dependency properties: `Title`, `Unit`, `Data` (`IList<LivelinePoint>`, an observable list is watched), `State` (`LivelineState`: Connecting, Live, Pausing, Paused, Disconnected), `Window` (TimeSpan), `AxisMinimum`/`AxisMaximum`/`AxisStep`, `AlertThreshold`/`AlertLabel`, `IsMotionReduced`, `AccentBrush`/`MutedBrush`/`GridBrush`, `ReconnectCommand` (plus `ReconnectRequested` and `StateChanged` events), read-only `PausedTime` and display texts (`ValueText`, `DeltaText`, `StatusText`, `MinText`, `AvgText`, `MaxText`, `WindowText`, `SamplesText`). Template parts: `PART_Canvas`, `PART_Plot` (focusable, arrows/Home/End/Esc), `PART_PauseButton`, `PART_CompactPauseButton`, `PART_ReconnectButton`, `PART_Window1/5/15` and `PART_CompactWindow1/5/15`. Visual state groups `StreamStates` and `LayoutStates` (Regular, Compact below 560 px of card width).\n- `Controls/Liveline/LivelineChartCanvas.cs`: the `SKCanvasElement` that draws a `LivelineFrame`: grid, labels, alert line, area and line, now line, live dot and tag, hatched gap, inspect crosshair and tooltip. It loads Geist / Geist Mono from the package once.\n- `Controls/Liveline/LivelineChart.xaml`: the default style (the card), `LivelineGridBrush` (Light/Dark), segment and outline button styles; merged through `Themes/Generic.xaml`.\n- `Styles/ColorPaletteOverride.xaml`: the palette (Light is the prototype's: #EEF2EC, #F8FAF6, #11251B, #4E6356, #D2DBD0, #7E8F83, #11805A). `Styles/MaterialFontsOverride.xaml`: Geist and Geist Mono (static TTFs in `Assets/Fonts/`, OFL) as `DefaultFontFamily`, `Ui*FontFamily` and `Mono*FontFamily`.\n- `MainPage.xaml(.cs)`: one card fed by an `ObservableCollection<LivelinePoint>` (15 min of history, then one sample a second from a seeded walk), Connecting for 2 s, a \"Drop connection\" toggle and the theme switch.\n- `HotDesignPreviews/`: Debug-only previews of Connecting, Live, Paused, Disconnected and the 390 px layout, on `LivelinePreviewData.Walk()`.\n\n**Conventions:** colours only from palette roles and the control's token; fonts through the override keys; frames run only while the line glides (or once a second while disconnected), never on CompositionTarget.Rendering.\n\n**Build:** `dotnet build Liveline/Liveline.csproj -f net10.0-desktop` (or `-f net10.0-browserwasm`). There are no tests.\n\nThe app is built and running. The user may ask me to modify it."
+      }
+    ]
+  }
+}

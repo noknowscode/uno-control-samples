@@ -1,0 +1,21 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:utu="using:Uno.Toolkit.UI">
+
+  <DataTemplate x:Key="PreviewPlateTemplate">
+    <utu:CarouselPlate Source="{Binding Image}" />
+  </DataTemplate>
+
+  <DataTemplate x:Key="PreviewPlateThumbnailTemplate">
+    <Image Source="{Binding Thumbnail}" Stretch="UniformToFill" />
+  </DataTemplate>
+
+  <DataTemplate x:Key="PreviewPlateCaptionTemplate">
+    <StackPanel Spacing="12">
+      <TextBlock Text="{Binding Title}" Style="{StaticResource CarouselTitleTextStyle}" />
+      <TextBlock Text="{Binding Description}" Style="{StaticResource CarouselBodyTextStyle}" />
+      <TextBlock Text="{Binding Medium}" Style="{StaticResource CarouselMetaTextStyle}" />
+    </StackPanel>
+  </DataTemplate>
+
+</ResourceDictionary>

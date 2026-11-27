@@ -1,0 +1,83 @@
+<Page x:Class="PrecisionDial.Presentation.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:controls="using:PrecisionDial.Controls"
+      xmlns:utu="using:Uno.Toolkit.UI"
+      xmlns:ut="using:Uno.Themes"
+      Background="{ThemeResource DialStageBackgroundBrush}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Header: the Light / Dark switch -->
+        <Grid Padding="{StaticResource Space200HorizontalThickness}"
+              BorderBrush="{ThemeResource DialDividerBrush}" BorderThickness="0,0,0,1">
+            <TextBlock Text="PRECISION DIAL"
+                       VerticalAlignment="Center"
+                       Foreground="{ThemeResource DialLabelBrush}"
+                       Style="{StaticResource LabelSmall}" />
+            <ToggleButton x:Name="ThemeToggle"
+                          HorizontalAlignment="Right"
+                          VerticalAlignment="Center"
+                          Style="{StaticResource IconToggleButtonStyle}"
+                          UseSystemFocusVisuals="True"
+                          AutomationProperties.Name="Dark theme"
+                          ToolTipService.ToolTip="Dark theme"
+                          Click="OnThemeToggleClick">
+                <ut:ControlExtensions.AlternateContent>
+                    <FontIcon Glyph="&#xE708;" />
+                </ut:ControlExtensions.AlternateContent>
+                <FontIcon Glyph="&#xE706;" />
+            </ToggleButton>
+        </Grid>
+
+        <!-- One dial; the switch flips it between a volume knob (Value mode) and a menu dial (Menu mode). -->
+        <utu:AutoLayout Grid.Row="1"
+                        Spacing="{StaticResource Space400}"
+                        Padding="{StaticResource Space300Thickness}"
+                        PrimaryAxisAlignment="Center"
+                        CounterAxisAlignment="Center">
+
+            <!-- TopTabBarStyle: Toolkit 11.0.1 ships no segmented TabBar style (MaterialSegmentedStyle fell back to an
+                 unthemed full-width bar). A fixed width keeps the switch and the column centred. -->
+            <utu:TabBar x:Name="ModeSwitch"
+                        Style="{StaticResource TopTabBarStyle}"
+                        Background="Transparent"
+                        Width="240"
+                        HorizontalAlignment="Center"
+                        SelectedIndex="0"
+                        AutomationProperties.Name="Dial mode"
+                        Loaded="OnModeSwitchLoaded">
+                <utu:TabBarItem Content="VOLUME" AutomationProperties.Name="Volume knob" />
+                <utu:TabBarItem Content="MENU" AutomationProperties.Name="Menu dial" />
+            </utu:TabBar>
+
+            <controls:PrecisionDial x:Name="Dial"
+                                    Width="{utu:Responsive Narrowest=240, Normal=300}"
+                                    Height="{utu:Responsive Narrowest=240, Normal=300}"
+                                    DialMode="{x:Bind ModeFor(ModeSwitch.SelectedIndex), Mode=OneWay}"
+                                    Value="65" Minimum="0" Maximum="100" DetentCount="20" ValueStep="1"
+                                    IsHapticEnabled="True"
+                                    AccentBrush="{ThemeResource PrimaryBrush}"
+                                    HotBrush="{ThemeResource TertiaryBrush}"
+                                    AutomationProperties.Name="{x:Bind LabelFor(Dial.DialMode), Mode=OneWay}" />
+
+            <utu:AutoLayout Spacing="{StaticResource Space100}" CounterAxisAlignment="Center">
+                <TextBlock Text="{x:Bind LabelFor(Dial.DialMode), Mode=OneWay}"
+                           Foreground="{ThemeResource DialLabelBrush}"
+                           Style="{StaticResource LabelSmall}" />
+                <TextBlock Text="{x:Bind ReadoutFor(Dial.DialMode, Dial.Value, Dial.SelectedItem), Mode=OneWay}"
+                           Foreground="{ThemeResource PrimaryBrush}"
+                           FontFamily="{StaticResource DialMonoFontFamily}"
+                           Style="{StaticResource DisplaySmall}"
+                           AutomationProperties.LiveSetting="Polite" />
+                <TextBlock Text="{x:Bind HintFor(Dial.DialMode), Mode=OneWay}"
+                           Foreground="{ThemeResource DialHintBrush}"
+                           Style="{StaticResource LabelSmall}" />
+            </utu:AutoLayout>
+        </utu:AutoLayout>
+    </Grid>
+</Page>

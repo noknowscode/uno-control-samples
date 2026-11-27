@@ -1,0 +1,48 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--
+        Theme-aware colours of the demo surfaces around the dials: the stage background, labels, hints, dividers,
+        the unlit readout digits and the unlit segment-bar cells. Default is the original dark design (also used for
+        Dark); Light is derived from it. Text brushes (labels, hints, values) reach 4.5:1 on the stage in both themes.
+        Use them with ThemeResource. The dial accent is the palette's Primary
+        (PrimaryBrush, Styles/ColorPaletteOverride.xaml); the knob's own drawing (metal, ticks) is in the Skia
+        renderers, which pick their ink colour from the control's ActualTheme (see DialInk.cs).
+    -->
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Light">
+            <SolidColorBrush x:Key="DialStageOuterBrush" Color="#E4E1DB" />
+            <SolidColorBrush x:Key="DialLabelBrush" Color="#A81C1B1F" />
+            <SolidColorBrush x:Key="DialLabelStrongBrush" Color="#C21C1B1F" />
+            <SolidColorBrush x:Key="DialHintBrush" Color="#A41C1B1F" />
+            <SolidColorBrush x:Key="DialValueTextBrush" Color="#CC1C1B1F" />
+            <SolidColorBrush x:Key="DialDividerBrush" Color="#1F1C1B1F" />
+            <SolidColorBrush x:Key="DialReadoutDimBrush" Color="#40707070" />
+            <SolidColorBrush x:Key="DialSegmentCellOffBrush" Color="#1A1C1B1F" />
+            <RadialGradientBrush x:Key="DialStageBackgroundBrush" Center="0.5,0.4" RadiusX="0.7" RadiusY="0.7">
+                <GradientStop Color="#F6F4F0" Offset="0" />
+                <GradientStop Color="#E4E1DB" Offset="1" />
+            </RadialGradientBrush>
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Default">
+            <SolidColorBrush x:Key="DialStageOuterBrush" Color="#121212" />
+            <SolidColorBrush x:Key="DialLabelBrush" Color="#80FFFFFF" />
+            <SolidColorBrush x:Key="DialLabelStrongBrush" Color="#99FFFFFF" />
+            <SolidColorBrush x:Key="DialHintBrush" Color="#7AFFFFFF" />
+            <SolidColorBrush x:Key="DialValueTextBrush" Color="#CCFFFFFF" />
+            <SolidColorBrush x:Key="DialDividerBrush" Color="#14FFFFFF" />
+            <SolidColorBrush x:Key="DialReadoutDimBrush" Color="#33787878" />
+            <SolidColorBrush x:Key="DialSegmentCellOffBrush" Color="#0AFFFFFF" />
+            <RadialGradientBrush x:Key="DialStageBackgroundBrush" Center="0.5,0.4" RadiusX="0.7" RadiusY="0.7">
+                <GradientStop Color="#181818" Offset="0" />
+                <GradientStop Color="#121212" Offset="1" />
+            </RadialGradientBrush>
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+
+    <!-- The sheet's type: IBM Plex Mono for the readout, Barlow Condensed for the title. -->
+    <FontFamily x:Key="DialMonoFontFamily">ms-appx:///Assets/Fonts/IBMPlexMono-Regular.ttf#IBM Plex Mono</FontFamily>
+    <FontFamily x:Key="DialDisplayFontFamily">ms-appx:///Assets/Fonts/BarlowCondensed-Medium.ttf#Barlow Condensed Medium</FontFamily>
+
+</ResourceDictionary>

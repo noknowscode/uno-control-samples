@@ -1,0 +1,9 @@
+<hd:Preview x:Class="SalesHeatmap.HotDesignPreviews.SalesHeatmapEmptyPreview"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:hd="using:Uno.UI.HotDesign"
+            xmlns:controls="using:SalesHeatmap.Controls"
+            Width="992"
+            Height="560">
+  <controls:SalesHeatmapWidget Snapshot="{Binding Snapshot}" State="Empty" FilterText="Region: Canada · Online" />
+</hd:Preview>

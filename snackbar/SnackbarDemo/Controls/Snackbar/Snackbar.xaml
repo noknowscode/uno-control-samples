@@ -1,0 +1,325 @@
+<!--
+	Snackbar: default style, template and lightweight-styling tokens.
+	The colours alias the palette's inverse roles (Styles/ColorPaletteOverride.xaml): the slip is SurfaceInverse,
+	the text OnSurfaceInverse, the action PrimaryInverse. The muted close icon and the countdown track have no
+	Material role, so they live here per theme. Merge after MaterialToolkitTheme.
+-->
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:utu="using:Uno.Toolkit.UI">
+
+	<ResourceDictionary.ThemeDictionaries>
+		<ResourceDictionary x:Key="Light">
+			<StaticResource x:Key="SnackbarBackground" ResourceKey="SurfaceInverseBrush" />
+			<StaticResource x:Key="SnackbarMessageForeground" ResourceKey="OnSurfaceInverseBrush" />
+			<StaticResource x:Key="SnackbarActionForeground" ResourceKey="PrimaryInverseBrush" />
+			<SolidColorBrush x:Key="SnackbarDismissForeground" Color="#A9A296" />
+			<SolidColorBrush x:Key="SnackbarTrackBackground" Color="#2E2C29" />
+			<SolidColorBrush x:Key="SnackbarTrackForeground" Color="#6E685E" />
+			<SolidColorBrush x:Key="SnackbarBorderBrush" Color="Transparent" />
+		</ResourceDictionary>
+		<ResourceDictionary x:Key="Default">
+			<StaticResource x:Key="SnackbarBackground" ResourceKey="SurfaceInverseBrush" />
+			<StaticResource x:Key="SnackbarMessageForeground" ResourceKey="OnSurfaceInverseBrush" />
+			<StaticResource x:Key="SnackbarActionForeground" ResourceKey="PrimaryInverseBrush" />
+			<SolidColorBrush x:Key="SnackbarDismissForeground" Color="#A9A296" />
+			<SolidColorBrush x:Key="SnackbarTrackBackground" Color="#45413B" />
+			<SolidColorBrush x:Key="SnackbarTrackForeground" Color="#8C8578" />
+			<!-- On a dark page the slip is lifted by a hairline instead of a shadow. -->
+			<SolidColorBrush x:Key="SnackbarBorderBrush" Color="#3A3631" />
+		</ResourceDictionary>
+	</ResourceDictionary.ThemeDictionaries>
+
+	<!-- Sizes from the design: 12 px radius, 52 px row, 16/8 px side padding, 36 px round buttons. -->
+	<CornerRadius x:Key="SnackbarCornerRadius">12</CornerRadius>
+	<Thickness x:Key="SnackbarBorderThickness">1</Thickness>
+	<Thickness x:Key="SnackbarPadding">16,0,8,0</Thickness>
+	<Thickness x:Key="SnackbarMultiLinePadding">16,14,8,10</Thickness>
+	<x:Double x:Key="SnackbarMaxWidth">460</x:Double>
+	<x:Double x:Key="SnackbarMessageFontSize">15</x:Double>
+	<x:Double x:Key="SnackbarMessageLineHeight">21</x:Double>
+	<!-- About 44 characters of the message font: longer messages wrap. -->
+	<x:Double x:Key="SnackbarMessageMaxWidth">370</x:Double>
+	<x:Double x:Key="SnackbarActionFontSize">15</x:Double>
+	<x:Double x:Key="SnackbarButtonSize">36</x:Double>
+	<CornerRadius x:Key="SnackbarButtonCornerRadius">18</CornerRadius>
+	<x:Double x:Key="SnackbarIconSize">18</x:Double>
+	<x:Double x:Key="SnackbarTrackHeight">2</x:Double>
+	<Thickness x:Key="SnackbarTrackMargin">16,0,16,0</Thickness>
+
+	<!-- Icons: Tabler outline geometry on a 24 px grid, 1.75 stroke, as in the design. -->
+	<x:String x:Key="SnackbarAttentionIconData">M12 9v4 M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z M12 16h.01</x:String>
+
+	<!-- Action and close buttons: transparent, round, a state layer of their own colour, a firm press. -->
+	<Style x:Key="SnackbarButtonStyle" TargetType="Button">
+		<Setter Property="Background" Value="Transparent" />
+		<Setter Property="BorderThickness" Value="0" />
+		<Setter Property="Height" Value="{StaticResource SnackbarButtonSize}" />
+		<Setter Property="MinWidth" Value="{StaticResource SnackbarButtonSize}" />
+		<Setter Property="CornerRadius" Value="{StaticResource SnackbarButtonCornerRadius}" />
+		<Setter Property="Padding" Value="12,0" />
+		<Setter Property="VerticalAlignment" Value="Center" />
+		<Setter Property="UseSystemFocusVisuals" Value="True" />
+		<Setter Property="FocusVisualPrimaryThickness" Value="2" />
+		<Setter Property="FocusVisualSecondaryThickness" Value="0" />
+		<Setter Property="FocusVisualMargin" Value="-1" />
+		<Setter Property="FocusVisualPrimaryBrush" Value="{ThemeResource SnackbarActionForeground}" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="Button">
+					<Grid x:Name="RootGrid"
+						  Background="{TemplateBinding Background}"
+						  CornerRadius="{TemplateBinding CornerRadius}"
+						  RenderTransformOrigin="0.5,0.5">
+						<Grid.RenderTransform>
+							<ScaleTransform x:Name="PressScale" />
+						</Grid.RenderTransform>
+						<VisualStateManager.VisualStateGroups>
+							<VisualStateGroup x:Name="CommonStates">
+								<VisualState x:Name="Normal" />
+								<VisualState x:Name="PointerOver">
+									<VisualState.Setters>
+										<Setter Target="StateLayer.Opacity" Value="{StaticResource SnackbarButtonHoverOpacity}" />
+										<Setter Target="Presenter.Foreground" Value="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}" />
+									</VisualState.Setters>
+								</VisualState>
+								<VisualState x:Name="Pressed">
+									<VisualState.Setters>
+										<Setter Target="StateLayer.Opacity" Value="{StaticResource SnackbarButtonHoverOpacity}" />
+										<Setter Target="Presenter.Foreground" Value="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}" />
+										<Setter Target="PressScale.ScaleX" Value="0.96" />
+										<Setter Target="PressScale.ScaleY" Value="0.96" />
+									</VisualState.Setters>
+								</VisualState>
+								<VisualState x:Name="Disabled">
+									<VisualState.Setters>
+										<Setter Target="RootGrid.Opacity" Value="0.4" />
+									</VisualState.Setters>
+								</VisualState>
+							</VisualStateGroup>
+						</VisualStateManager.VisualStateGroups>
+						<Border x:Name="StateLayer"
+								Background="{TemplateBinding BorderBrush}"
+								Opacity="0" />
+						<ContentPresenter x:Name="Presenter"
+										  Content="{TemplateBinding Content}"
+										  ContentTemplate="{TemplateBinding ContentTemplate}"
+										  Padding="{TemplateBinding Padding}"
+										  HorizontalContentAlignment="Center"
+										  VerticalContentAlignment="Center"
+										  Foreground="{TemplateBinding Foreground}"
+										  FontWeight="{TemplateBinding FontWeight}"
+										  FontSize="{TemplateBinding FontSize}" />
+					</Grid>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+	<x:Double x:Key="SnackbarButtonHoverOpacity">0.12</x:Double>
+
+	<Style x:Key="DefaultSnackbar" TargetType="utu:Snackbar">
+		<Setter Property="Background" Value="{ThemeResource SnackbarBackground}" />
+		<Setter Property="Foreground" Value="{ThemeResource SnackbarMessageForeground}" />
+		<Setter Property="BorderBrush" Value="{ThemeResource SnackbarBorderBrush}" />
+		<Setter Property="BorderThickness" Value="{StaticResource SnackbarBorderThickness}" />
+		<Setter Property="CornerRadius" Value="{StaticResource SnackbarCornerRadius}" />
+		<Setter Property="Padding" Value="{StaticResource SnackbarPadding}" />
+		<Setter Property="MaxWidth" Value="{StaticResource SnackbarMaxWidth}" />
+		<Setter Property="FontSize" Value="{StaticResource SnackbarMessageFontSize}" />
+		<Setter Property="HorizontalAlignment" Value="Stretch" />
+		<Setter Property="VerticalAlignment" Value="Bottom" />
+		<Setter Property="IsTabStop" Value="False" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="utu:Snackbar">
+					<Grid x:Name="Slip"
+						  Background="{TemplateBinding Background}"
+						  BorderBrush="{TemplateBinding BorderBrush}"
+						  BorderThickness="{TemplateBinding BorderThickness}"
+						  CornerRadius="{TemplateBinding CornerRadius}"
+						  MinHeight="{utu:Responsive Narrowest=60, Normal=52}">
+						<!-- 52 px row, 60 px on a phone (below the Normal breakpoint, 600 px). -->
+
+						<Grid x:Name="LayoutRoot"
+							  Padding="{TemplateBinding Padding}"
+							  VerticalAlignment="Center"
+							  ColumnSpacing="12">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="*" />
+								<ColumnDefinition Width="Auto" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<Grid.RowDefinitions>
+								<RowDefinition Height="Auto" />
+								<RowDefinition Height="Auto" />
+							</Grid.RowDefinitions>
+
+							<Viewbox x:Name="IconHost"
+									 Width="{StaticResource SnackbarIconSize}"
+									 Height="{StaticResource SnackbarIconSize}"
+									 VerticalAlignment="Center"
+									 Visibility="Collapsed">
+								<Grid Width="24" Height="24">
+									<ContentPresenter x:Name="IconPresenter"
+													  Content="{TemplateBinding Icon}"
+													  Visibility="Collapsed" />
+									<Path x:Name="AttentionIconPath"
+										  Data="{StaticResource SnackbarAttentionIconData}"
+										  Stroke="{ThemeResource SnackbarActionForeground}"
+										  StrokeThickness="1.75"
+										  StrokeStartLineCap="Round"
+										  StrokeEndLineCap="Round"
+										  StrokeLineJoin="Round"
+										  Visibility="Collapsed" />
+								</Grid>
+							</Viewbox>
+
+							<TextBlock x:Name="PART_MessageText"
+									   Grid.Column="1"
+									   Text="{TemplateBinding Message}"
+									   Foreground="{TemplateBinding Foreground}"
+									   FontSize="{TemplateBinding FontSize}"
+									   LineHeight="{StaticResource SnackbarMessageLineHeight}"
+									   LineStackingStrategy="BlockLineHeight"
+									   MaxWidth="{StaticResource SnackbarMessageMaxWidth}"
+									   HorizontalAlignment="Left"
+									   VerticalAlignment="Center"
+									   Margin="0,14"
+									   TextWrapping="WrapWholeWords" />
+
+							<Button x:Name="PART_ActionButton"
+									Grid.Column="2"
+									Content="{TemplateBinding ActionLabel}"
+									Foreground="{ThemeResource SnackbarActionForeground}"
+									BorderBrush="{ThemeResource SnackbarActionForeground}"
+									Tag="{ThemeResource SnackbarActionForeground}"
+									FontSize="{StaticResource SnackbarActionFontSize}"
+									FontWeight="SemiBold"
+									Style="{StaticResource SnackbarButtonStyle}"
+									Visibility="Collapsed" />
+
+							<Button x:Name="PART_DismissButton"
+									Grid.Column="3"
+									Width="{StaticResource SnackbarButtonSize}"
+									Padding="0"
+									Foreground="{ThemeResource SnackbarDismissForeground}"
+									BorderBrush="{ThemeResource SnackbarMessageForeground}"
+									Tag="{ThemeResource SnackbarMessageForeground}"
+									Style="{StaticResource SnackbarButtonStyle}"
+									Visibility="Collapsed"
+									AutomationProperties.Name="Dismiss"
+									ToolTipService.ToolTip="Dismiss">
+								<Viewbox Width="{StaticResource SnackbarIconSize}" Height="{StaticResource SnackbarIconSize}">
+									<Path Width="24" Height="24"
+										  Data="M18 6l-12 12 M6 6l12 12"
+										  Stroke="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}"
+										  StrokeThickness="1.75"
+										  StrokeStartLineCap="Round"
+										  StrokeEndLineCap="Round" />
+								</Viewbox>
+							</Button>
+						</Grid>
+
+						<!-- Countdown: 2 px track that drains left to right while the timer runs. -->
+						<Border x:Name="Track"
+								Height="{StaticResource SnackbarTrackHeight}"
+								Margin="{StaticResource SnackbarTrackMargin}"
+								VerticalAlignment="Bottom"
+								CornerRadius="1"
+								Background="{ThemeResource SnackbarTrackBackground}"
+								Visibility="Collapsed">
+							<Rectangle Fill="{ThemeResource SnackbarTrackForeground}"
+									   RenderTransformOrigin="0,0.5">
+								<Rectangle.RenderTransform>
+									<ScaleTransform x:Name="PART_DrainScale" />
+								</Rectangle.RenderTransform>
+							</Rectangle>
+						</Border>
+
+						<VisualStateManager.VisualStateGroups>
+							<VisualStateGroup x:Name="LayoutStates">
+								<VisualState x:Name="SingleLine" />
+								<!-- Attention or a long message: top-aligned row, the action on its own row below. -->
+								<VisualState x:Name="MultiLine">
+									<VisualState.Setters>
+										<Setter Target="LayoutRoot.Padding" Value="{StaticResource SnackbarMultiLinePadding}" />
+										<Setter Target="PART_MessageText.Margin" Value="0,7,0,0" />
+										<Setter Target="PART_MessageText.VerticalAlignment" Value="Top" />
+										<Setter Target="IconHost.VerticalAlignment" Value="Top" />
+										<Setter Target="IconHost.Margin" Value="0,9,0,0" />
+										<Setter Target="PART_DismissButton.VerticalAlignment" Value="Top" />
+									</VisualState.Setters>
+								</VisualState>
+							</VisualStateGroup>
+
+							<VisualStateGroup x:Name="ActionStates">
+								<VisualState x:Name="NoAction" />
+								<VisualState x:Name="WithAction">
+									<VisualState.Setters>
+										<Setter Target="PART_ActionButton.Visibility" Value="Visible" />
+									</VisualState.Setters>
+								</VisualState>
+								<VisualState x:Name="WithActionOnNewLine">
+									<VisualState.Setters>
+										<Setter Target="PART_ActionButton.Visibility" Value="Visible" />
+										<Setter Target="PART_ActionButton.(Grid.Row)" Value="1" />
+										<Setter Target="PART_ActionButton.(Grid.Column)" Value="1" />
+										<Setter Target="PART_ActionButton.(Grid.ColumnSpan)" Value="3" />
+										<Setter Target="PART_ActionButton.HorizontalAlignment" Value="Right" />
+										<Setter Target="PART_ActionButton.Margin" Value="0,10,0,0" />
+									</VisualState.Setters>
+								</VisualState>
+							</VisualStateGroup>
+
+							<VisualStateGroup x:Name="DismissStates">
+								<VisualState x:Name="NoDismiss" />
+								<VisualState x:Name="WithDismiss">
+									<VisualState.Setters>
+										<Setter Target="PART_DismissButton.Visibility" Value="Visible" />
+									</VisualState.Setters>
+								</VisualState>
+							</VisualStateGroup>
+
+							<VisualStateGroup x:Name="IconStates">
+								<VisualState x:Name="NoIcon" />
+								<VisualState x:Name="CustomIcon">
+									<VisualState.Setters>
+										<Setter Target="IconHost.Visibility" Value="Visible" />
+										<Setter Target="IconPresenter.Visibility" Value="Visible" />
+									</VisualState.Setters>
+								</VisualState>
+								<VisualState x:Name="AttentionIcon">
+									<VisualState.Setters>
+										<Setter Target="IconHost.Visibility" Value="Visible" />
+										<Setter Target="AttentionIconPath.Visibility" Value="Visible" />
+									</VisualState.Setters>
+								</VisualState>
+							</VisualStateGroup>
+
+							<VisualStateGroup x:Name="TimerStates">
+								<VisualState x:Name="Untimed" />
+								<VisualState x:Name="Timed">
+									<VisualState.Setters>
+										<Setter Target="Track.Visibility" Value="Visible" />
+									</VisualState.Setters>
+								</VisualState>
+							</VisualStateGroup>
+
+							<!-- Held: hover, focus or touch paused the countdown; the track stops where it is. -->
+							<VisualStateGroup x:Name="HoldStates">
+								<VisualState x:Name="Running" />
+								<VisualState x:Name="Held" />
+							</VisualStateGroup>
+						</VisualStateManager.VisualStateGroups>
+					</Grid>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<Style x:Key="DefaultSnackbarStyle"
+		   TargetType="utu:Snackbar"
+		   BasedOn="{StaticResource DefaultSnackbar}" />
+
+</ResourceDictionary>

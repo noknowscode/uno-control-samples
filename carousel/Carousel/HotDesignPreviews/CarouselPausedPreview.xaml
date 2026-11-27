@@ -1,0 +1,28 @@
+<hd:Preview x:Class="CarouselDemo.HotDesignPreviews.CarouselPausedPreview"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:hd="using:Uno.UI.HotDesign"
+            xmlns:utu="using:Uno.Toolkit.UI"
+            Width="1104"
+            Height="560">
+
+  <hd:Preview.Resources>
+    <ResourceDictionary Source="ms-appx:///HotDesignPreviews/PreviewResources.xaml" />
+  </hd:Preview.Resources>
+
+  <Grid Background="{ThemeResource BackgroundBrush}" Padding="20">
+    <utu:Carousel ItemsSource="{Binding}"
+                  ItemLabel="Plate"
+                  Header="Low Tide Series"
+                  IsAutoPlayEnabled="True"
+                  AutoPlayInterval="0:0:6"
+                  ItemPeek="52"
+                  ItemSpacing="24"
+                  ThumbnailWidth="44"
+                  ThumbnailHeight="44"
+                  IsPaused="True"
+                  ItemTemplate="{StaticResource PreviewPlateTemplate}"
+                  ThumbnailTemplate="{StaticResource PreviewPlateThumbnailTemplate}"
+                  CaptionTemplate="{StaticResource PreviewPlateCaptionTemplate}" />
+  </Grid>
+</hd:Preview>

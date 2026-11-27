@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schemas.platform.uno/sample/v1",
+  "id": "snackbar",
+  "displayName": "Snackbar",
+  "description": "A Snackbar and SnackbarHost for Uno Platform, proposed for the Uno Toolkit and built to the Control Gallery prototype: three kinds (Confirm 4 s with no action, Undo 7 s with one action, Attention that stays with a warning icon, a close button and the action below), a 2 px track that drains while the countdown runs, a countdown that pauses on hover, keyboard focus or touch and resumes on blur, a 220 ms rise in and 160 ms fade out, replace semantics where the next message waits for the current one to leave, long messages that wrap at about 44 characters with the action moved below, polite status announcements, swipe and Escape to dismiss. Hanken Grotesk and Fraunces are bundled; the palette is warm paper and ink with a gold action, in Light and Dark with an in-app switch. The demo is the prototype's Drafts list: delete a draft and Undo, Save, Export.",
+  "platforms": [
+    "desktop",
+    "wasm",
+    "android"
+  ],
+  "sourcePath": "SnackbarDemo/SnackbarDemo.csproj",
+  "userConversation": {
+    "messages": [
+      {
+        "role": "user",
+        "content": "Bring my Snackbar in line with the Control Gallery prototype:\n- kinds Confirm (4 s, no action), Undo (7 s, one action) and Attention (stays until dismissed, can carry an action and close)\n- 220 ms rise in, 160 ms fade out; a new message waits 160 ms for the current one to leave and never stacks\n- pause on hover, keyboard focus or touch, resume on blur; a draining countdown track\n- docked at the bottom, content keeps its space; announce politely\n- long messages wrap at about 44 characters and the action moves below\n- the prototype's typeface (Hanken Grotesk, Fraunces) and paper-and-ink palette with a gold action, Light and Dark\n\nThe demo page should be the prototype's Drafts list with Save, Export and delete."
+      },
+      {
+        "role": "assistant",
+        "content": "The **Snackbar** now follows the prototype: Confirm, Undo and Attention kinds with their durations, a countdown track that pauses on hover, focus or touch, the 220/160 ms motion, replace hand-off, wrapped long messages with the action below, and the prototype's fonts and palette. The demo is the Drafts list: delete a draft and press Undo, or try Save and Export."
+      }
+    ],
+    "suggestedPrompts": [
+      "Add a Success kind with a check icon",
+      "Move the add button up while a tall Attention message is showing",
+      "Show queued messages one after another instead of replacing",
+      "Remember the chosen theme between launches"
+    ]
+  },
+  "agentContext": {
+    "messages": [
+      {
+        "role": "user",
+        "content": "This is the Snackbar sample: a Snackbar and SnackbarHost for Uno Platform built to the Control Gallery prototype, with a Drafts list demo."
+      },
+      {
+        "role": "assistant",
+        "content": "Snackbar is one Uno single project, `SnackbarDemo/SnackbarDemo.csproj` (Uno.Sdk 7.0.22 from `global.json`; heads net10.0-android, net10.0-browserwasm and net10.0-desktop; UnoFeatures Material, Toolkit, SkiaRenderer; `IS_WINUI` is defined in the csproj because the control source picks WinUI or UWP namespaces with it). There is no Navigation or MVUX: `App.xaml.cs` creates the window, navigates a Frame to `MainPage` and stores the frame in `App.AppRoot` for the theme switch. The app follows the system theme (no `RequestedTheme`).\n\n**Key files:**\n- `Controls/Snackbar/`: the control, namespace `Uno.Toolkit.UI`. `Snackbar.cs` + `Snackbar.Properties.cs`: DPs Message, Kind (`SnackbarKind` Confirm/Undo/Attention), ActionLabel, ActionCommand(+Parameter), ShowDismissButton, IsActionOnNewLine, MultiLineThreshold (44), Icon (object, 24x24 content), Duration (TimeSpan?, null = kind default), Progress (remaining share 0-1), IsHeld; StartCountdown/StopCountdown (a DispatcherTimer + Stopwatch does the timing, a storyboard drains the PART_DrainScale track); hold from PointerEntered/Exited, GotFocus/LostFocus (focus within) and touch press; events ActionClicked, DismissClicked, Expired; visual state groups LayoutStates (SingleLine/MultiLine), ActionStates (NoAction/WithAction/WithActionOnNewLine), DismissStates, IconStates (NoIcon/CustomIcon/AttentionIcon), TimerStates (Untimed/Timed), HoldStates (Running/Held); LiveSetting Polite and Announce() raising LiveRegionChanged; SnackbarAutomationPeer (StatusBar). `SnackbarHost.cs` + `.Properties.cs`: ShowAsync(SnackbarItem) returning `Task<SnackbarDismissReason>`, ShowAsync(message, actionLabel, command, duration, kind), Dismiss, SnackbarStyle, IsSwipeToDismissEnabled, MaxQueueSize, IsShowing, IsReplacing, DisplayStates (Hidden/Visible/Replacing); enter 220 ms (opacity + 12 px rise, KeySpline 0.2,0.8 0.2,1), exit 160 ms (ease); a new message replaces the current one after its exit. `SnackbarItem.cs`, `SnackbarKind.cs`, `SnackbarDuration.cs` (Short 4 s, Long 7 s, Indefinite, For(kind)), `SnackbarDismissReason.cs`.\n- `Controls/Snackbar/Snackbar.xaml`: the template and tokens (12 px radius, 52 px row, 60 px below 600 px wide via utu:Responsive in the template, 460 px max width, 15/21 px message capped at 370 px, 36 px round buttons, Tabler icons at 1.75 stroke); colours alias SurfaceInverseBrush, OnSurfaceInverseBrush and PrimaryInverseBrush, the muted close icon and track colours are per-theme brushes here. `SnackbarHost.xaml`: the host template (content plus a bottom presenter, 20 px margin).\n- `Styles/Controls/Snackbar.xaml`: keyed `MaterialSnackbarStyle` / `MaterialSnackbarHostStyle` and implicit styles based on them.\n- `Styles/ColorPaletteOverride.xaml`: the palette (33 roles, Light from the prototype: paper #FAF7F0, ink #161514, gold #F5C542 as PrimaryInverse; Dark derived). `Styles/MaterialFontsOverride.xaml`: DefaultFontFamily = Hanken Grotesk, with `Assets/Fonts/HankenGrotesk-Regular.ttf.manifest` mapping 400/500/600 to static files. `Styles/Typography.xaml`: DisplayFontFamily (Fraunces Medium) and the DisplayTitle style. Licences: `Assets/Fonts/OFL-*.txt`.\n- `MainPage.xaml` (+ `.cs`): the Drafts card (SnackbarHost inside), delete (Undo kind, Undo restores), Save (Confirm), Export (Attention with Retry), a phone-only add button; a Toolkit filter `Chip` is the Dark switch via `SystemThemeHelper.SetRootTheme(App.AppRoot ?? page, isChecked)`. `{utu:Responsive}`: full-bleed card and icon-only toolbar below Normal (600 px).\n- `HotDesignPreviews/` (Debug only): one preview per state: SnackbarConfirmPreview, SnackbarUndoPreview, SnackbarAttentionPreview, SnackbarLongMessagePreview, SnackbarHeldPreview (Snackbar) and SnackbarReplacePreview (SnackbarHost, drives a replace on Loaded).\n\n**Conventions:** the page uses theme brushes and Material text styles; snackbar colours go into the tokens in `Controls/Snackbar/Snackbar.xaml` as aliases of palette roles.\n\n**Build:** `dotnet build SnackbarDemo/SnackbarDemo.csproj -f net10.0-desktop`.\n\nThe app is built and running. The user may ask me to modify it."
+      }
+    ]
+  }
+}

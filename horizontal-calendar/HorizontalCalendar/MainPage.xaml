@@ -1,0 +1,50 @@
+<Page x:Class="HorizontalCalendar.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:controls="using:HorizontalCalendar.Controls"
+      xmlns:utu="using:Uno.Toolkit.UI"
+      xmlns:ut="using:Uno.Themes"
+      Background="{ThemeResource BackgroundBrush}">
+
+  <Grid MaxWidth="1064"
+        Padding="{utu:Responsive Narrowest='20,8,20,20', Normal='32,16,32,32', Wide='48,24,48,48'}"
+        RowSpacing="{utu:Responsive Narrowest=4, Normal=16}">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <!-- Host chrome: a way to drive the agenda states, and the theme switch. -->
+    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Spacing="8">
+      <ComboBox x:Name="AgendaStatePicker"
+                VerticalAlignment="Center"
+                SelectedIndex="0"
+                AutomationProperties.Name="Agenda state"
+                ToolTipService.ToolTip="Agenda state"
+                SelectionChanged="OnAgendaStateChanged">
+        <x:String>Ready</x:String>
+        <x:String>Loading</x:String>
+        <x:String>Error</x:String>
+      </ComboBox>
+      <ToggleButton x:Name="ThemeToggle"
+                    Style="{StaticResource IconToggleButtonStyle}"
+                    AutomationProperties.Name="Dark theme"
+                    ToolTipService.ToolTip="Dark theme"
+                    Click="OnThemeToggleClick">
+        <ut:ControlExtensions.AlternateContent>
+          <FontIcon Glyph="&#xE708;" />
+        </ut:ControlExtensions.AlternateContent>
+        <FontIcon Glyph="&#xE706;" />
+      </ToggleButton>
+    </StackPanel>
+
+    <controls:HorizontalCalendar x:Name="Calendar"
+                                 Grid.Row="1"
+                                 MaxHeight="{utu:Responsive Narrowest=2000, Wide=520}"
+                                 VerticalAlignment="{utu:Responsive Narrowest=Stretch, Wide=Top}"
+                                 AutomationProperties.Name="Calendar"
+                                 AddEventRequested="OnAddEventRequested"
+                                 EventOptionsRequested="OnEventOptionsRequested"
+                                 RetryRequested="OnRetryRequested" />
+  </Grid>
+</Page>

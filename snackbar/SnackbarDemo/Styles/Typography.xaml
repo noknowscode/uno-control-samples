@@ -1,0 +1,18 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!--
+    Fraunces (SIL OFL 1.1, Assets/Fonts/OFL-Fraunces.txt) for headings: a static Medium (500) instance cut from the
+    variable font at optical size 36.
+  -->
+  <FontFamily x:Key="DisplayFontFamily">ms-appx:///Assets/Fonts/Fraunces-Medium.ttf</FontFamily>
+
+  <!-- The list title: Fraunces 26 px (32 px on a phone, set on the page through utu:Responsive). -->
+  <Style x:Key="DisplayTitle" TargetType="TextBlock" BasedOn="{StaticResource HeadlineSmall}">
+    <Setter Property="FontFamily" Value="{StaticResource DisplayFontFamily}" />
+    <Setter Property="FontWeight" Value="Medium" />
+    <Setter Property="FontSize" Value="26" />
+    <Setter Property="LineHeight" Value="32" />
+  </Style>
+
+</ResourceDictionary>

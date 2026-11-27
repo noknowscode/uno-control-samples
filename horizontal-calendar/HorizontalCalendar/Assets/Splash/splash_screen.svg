@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="450" height="450" viewBox="0 0 50.369617 49.826836" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <!-- A horizontal calendar strip: five days, the middle one selected, with event dots -->
+  <rect x="8.6" y="17.4" width="5.2" height="13.0" rx="1.6" fill="#2B59FF" fill-opacity="0.3" />
+  <rect x="15.6" y="17.4" width="5.2" height="13.0" rx="1.6" fill="#2B59FF" fill-opacity="0.55" />
+  <rect x="21.7" y="15.6" width="7.0" height="16.6" rx="2.2" fill="#2B59FF" />
+  <rect x="29.6" y="17.4" width="5.2" height="13.0" rx="1.6" fill="#2B59FF" fill-opacity="0.55" />
+  <rect x="36.6" y="17.4" width="5.2" height="13.0" rx="1.6" fill="#2B59FF" fill-opacity="0.3" />
+  <circle cx="11.2" cy="35.6" r="0.9" fill="#2B59FF" fill-opacity="0.3" />
+  <circle cx="25.2" cy="35.6" r="0.9" fill="#2B59FF" fill-opacity="1" />
+  <circle cx="32.2" cy="35.6" r="0.9" fill="#2B59FF" fill-opacity="0.55" />
+</svg>

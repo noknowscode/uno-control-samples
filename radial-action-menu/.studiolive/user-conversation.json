@@ -1,0 +1,18 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Bring my radial action menu in line with the Control Gallery prototype:\n- up to five actions on a 90° arc, 22.5° apart, 30 ms stagger out, reverse on close\n- keys 1-5 pick, arrows move, Esc closes; Space opens from the trigger\n- touch: slide from the trigger to an item, its name shows, release to open\n- discs 52 px on desktop with labels and key badges, 56 px on a phone with badges only\n- the trigger rests 24 px from both edges; the arc mirrors at the left edge; an unavailable action dims\n- the prototype's Archivo type and warm grey palette with a rust accent, Light and Dark\n\nThe demo should be the prototype's Contacts panel."
+    },
+    {
+      "role": "assistant",
+      "content": "The **Radial Action Menu** now follows the prototype: five actions on a quarter arc with the staggered open and close, number keys, arrows and Esc, touch slide-to-pick with a readout, labels or badges by width, a mirrored left-edge arc and dimmed unavailable actions, in Archivo on warm greys with a rust trigger."
+    }
+  ],
+  "suggestedPrompts": [
+    "Add a sixth action on a wider arc",
+    "Open the menu with a long press on a contact row",
+    "Announce the picked action in the status line on phones too",
+    "Remember the chosen theme between launches"
+  ]
+}

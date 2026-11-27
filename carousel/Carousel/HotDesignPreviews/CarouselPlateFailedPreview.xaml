@@ -1,0 +1,21 @@
+<hd:Preview x:Class="CarouselDemo.HotDesignPreviews.CarouselPlateFailedPreview"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:hd="using:Uno.UI.HotDesign"
+            xmlns:utu="using:Uno.Toolkit.UI"
+            Width="340"
+            Height="290">
+
+  <hd:Preview.Resources>
+    <ResourceDictionary Source="ms-appx:///HotDesignPreviews/PreviewResources.xaml" />
+  </hd:Preview.Resources>
+
+  <Grid Background="{ThemeResource BackgroundBrush}" Padding="20">
+    <utu:CarouselPlate Height="214"
+                       VerticalAlignment="Top"
+                       Padding="8"
+                       Source="ms-appx:///Assets/Plates/missing.png"
+                       Title="Ridge, Evening"
+                       Subtitle="Gouache on cotton paper · 30 × 20 cm" />
+  </Grid>
+</hd:Preview>

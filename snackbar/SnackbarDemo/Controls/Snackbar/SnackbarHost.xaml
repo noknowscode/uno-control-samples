@@ -1,0 +1,57 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:utu="using:Uno.Toolkit.UI">
+
+	<ResourceDictionary.ThemeDictionaries>
+		<ResourceDictionary x:Key="Default">
+			<Thickness x:Key="SnackbarHostMargin">20,0,20,20</Thickness>
+		</ResourceDictionary>
+		<ResourceDictionary x:Key="Light">
+			<Thickness x:Key="SnackbarHostMargin">20,0,20,20</Thickness>
+		</ResourceDictionary>
+	</ResourceDictionary.ThemeDictionaries>
+
+	<Style x:Key="DefaultSnackbarHost" TargetType="utu:SnackbarHost">
+		<Setter Property="HorizontalAlignment" Value="Stretch" />
+		<Setter Property="VerticalAlignment" Value="Stretch" />
+		<Setter Property="HorizontalContentAlignment" Value="Stretch" />
+		<Setter Property="VerticalContentAlignment" Value="Stretch" />
+		<Setter Property="IsTabStop" Value="False" />
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="utu:SnackbarHost">
+					<Grid>
+						<!-- Main page content -->
+						<ContentPresenter Content="{TemplateBinding Content}"
+										  ContentTemplate="{TemplateBinding ContentTemplate}"
+										  HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+										  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+
+						<!-- Snackbar overlay area (bottom of host) -->
+						<!-- Docked 20 px from the bottom and sides; the snackbar stretches up to its MaxWidth (460) and centres. -->
+						<ContentPresenter x:Name="PART_SnackbarPresenter"
+										  HorizontalAlignment="Stretch"
+										  HorizontalContentAlignment="Stretch"
+										  VerticalAlignment="Bottom"
+										  Margin="{ThemeResource SnackbarHostMargin}"
+										  Visibility="Collapsed" />
+
+						<VisualStateManager.VisualStateGroups>
+							<!-- Hidden, Visible, or Replacing (the 160 ms hand-off while the old message leaves). -->
+							<VisualStateGroup x:Name="DisplayStates">
+								<VisualState x:Name="Hidden" />
+								<VisualState x:Name="Visible" />
+								<VisualState x:Name="Replacing" />
+							</VisualStateGroup>
+						</VisualStateManager.VisualStateGroups>
+					</Grid>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
+
+	<Style x:Key="DefaultSnackbarHostStyle"
+		   TargetType="utu:SnackbarHost"
+		   BasedOn="{StaticResource DefaultSnackbarHost}" />
+
+</ResourceDictionary>

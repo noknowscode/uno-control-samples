@@ -1,0 +1,45 @@
+{
+  "$schema": "https://schemas.platform.uno/sample/v1",
+  "id": "sales-heatmap",
+  "displayName": "Sales Heatmap",
+  "description": "Sales Heatmap is a sales overview control for Uno Platform: a 14-week daily revenue heatmap of one quarter in five steps of one hue, with closed, missing and future days marked apart, a period selector (three months and the quarter), the period's revenue and change, the selected day's figures and the top regions. Days can be hovered, clicked or reached with the arrow keys. Its State property drives Loading, Ready, Empty (no sales in the filter) and Stale (the last refresh failed) through visual states, and it switches to a phone layout below 860 px. An MVUX model feeds it the prototype's Q4 2026 data; Bricolage Grotesque, Figtree and Spline Sans Mono are bundled, with a runtime Light/Dark switch and Hot Design previews of every state.",
+  "platforms": [
+    "desktop",
+    "wasm",
+    "android"
+  ],
+  "sourcePath": "SalesHeatmap/SalesHeatmap.csproj",
+  "iconUrl": "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/sales-heatmap/.studiolive/icon.png",
+  "screenshots": [
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/sales-heatmap/.studiolive/screenshots/overview-desktop.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/sales-heatmap/.studiolive/screenshots/overview-light-desktop.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/sales-heatmap/.studiolive/screenshots/overview-light-phone.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/sales-heatmap/.studiolive/screenshots/overview-phone.png"
+  ],
+  "showcase": {
+    "summary": "A calendar heatmap card with periods, day details, keyboard navigation and loading, empty and stale states.",
+    "type": "showcase",
+    "status": "preview",
+    "owner": [
+      "noknowscode"
+    ],
+    "industry": "Sales and retail analytics",
+    "goals": [
+      "A templated control (and a cell control) whose default styles carry the whole look, driven by a State enum through VisualStateManager",
+      "Per-day cell states (five heat levels, closed, no data, ahead, selected, out of period) in a cell template",
+      "Keyboard and pointer interaction with a tooltip and polite announcements",
+      "An MVUX model with a feed and states, shown through a FeedView",
+      "Every colour from palette roles or the control's Light/Dark tokens, and the design's three families through the Material font override",
+      "A layout state from the card's own width, a runtime Light/Dark switch and Debug-only Hot Design previews"
+    ],
+    "tags": [
+      "mvux",
+      "custom-control",
+      "heatmap",
+      "dashboard",
+      "visualstatemanager",
+      "material",
+      "theming"
+    ]
+  }
+}

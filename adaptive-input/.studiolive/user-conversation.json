@@ -1,0 +1,18 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Bring my adaptive input in line with the Control Gallery prototype:\n- recognise dates (with times), #colours, @people and #tags\n- Tab or click accepts the suggestion, Esc keeps the text, Backspace in the empty field restores it\n- the picker anchored under the field at a fixed height: quick picks and a month, a colour swatch with HEX and RGB, people and tag rows\n- text that starts like a date but isn't one stays text and offers the picker\n- on a phone, suggestions ride above the keyboard\n- the prototype's DM Sans / DM Mono type and near-black palette with a pink accent; keep a Light theme"
+    },
+    {
+      "role": "assistant",
+      "content": "The **Adaptive Input** now follows the prototype: dates, colours, people and tags with a Tab suggestion and a fixed-height picker, tokens with Backspace undo, a Not recognised state for date-like text, and a suggestion bar on phones, in DM Sans and DM Mono on the prototype's dark palette."
+    }
+  ],
+  "suggestedPrompts": [
+    "Recognise relative dates like \"in 3 days\"",
+    "Let a field hold several tokens",
+    "Load people from a service",
+    "Remember the chosen theme between launches"
+  ]
+}

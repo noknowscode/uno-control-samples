@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schemas.platform.uno/sample/v1",
+  "id": "carousel",
+  "displayName": "Carousel",
+  "description": "A carousel control for Uno Platform, proposed for the Uno Toolkit, styled after the Control Gallery \"Carousel\" sheet: mounted plates (a mat, a hairline ring and a soft shadow) on a track that glides 700 ms with the next plate peeking in, the caption kept off the image beside the track (below it under 720 px), a thumbnail strip with auto-play progress bars, and previous / pause / next buttons with a status. Auto-play advances every 6 s and holds on hover and focus; arrows, Home, End and Space work from the keyboard, and swipe moves the track with the finger. Plates have Loading and Image failed states with a Try again button, titles clamp at two lines. Instrument Serif and Instrument Sans are bundled; Light is the sheet's paper palette and Dark keeps it on charcoal. Overlay mode with slide and fade transitions, vertical orientation and an automation peer remain.",
+  "platforms": [
+    "desktop",
+    "wasm",
+    "android"
+  ],
+  "sourcePath": "Carousel/Carousel.csproj",
+  "iconUrl": "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/carousel/.studiolive/icon.png",
+  "screenshots": [
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/carousel/.studiolive/screenshots/plates-dark-desktop.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/carousel/.studiolive/screenshots/plates-desktop.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/carousel/.studiolive/screenshots/plates-dark-phone.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/carousel/.studiolive/screenshots/plates-phone.png"
+  ],
+  "showcase": {
+    "summary": "A plate carousel with a peeking track, captions beside the image, thumbnails with auto-play progress and load states.",
+    "type": "showcase",
+    "status": "preview",
+    "owner": [
+      "noknowscode"
+    ],
+    "industry": "UI controls",
+    "goals": [
+      "A templated control whose default style carries the design: tokens in Light and Default theme dictionaries, bundled fonts, keyed caption text styles",
+      "Track mode (ItemPeek, ItemSpacing) with a 700 ms KeySpline glide, inactive items at 72 % and swipe that follows the finger",
+      "A side or bottom layout chosen from the control's own width (CaptionPlacement Auto), so it works at 390 px",
+      "Auto-play that holds on hover and focus, keeps the remaining time and shows progress on the current thumbnail (PlaybackState, IsPaused)",
+      "Item states as VisualStates on CarouselPlate (Ready, Loading, Failed) with a RetryRequested event",
+      "Keyboard (arrows, Home, End, Space), a polite live position label and named buttons",
+      "Hot Design previews of each state, a runtime Light/Dark switch and {utu:Responsive} sizes on the host page"
+    ],
+    "tags": [
+      "control",
+      "toolkit",
+      "material",
+      "theming",
+      "animation",
+      "accessibility",
+      "gestures",
+      "typography"
+    ]
+  }
+}

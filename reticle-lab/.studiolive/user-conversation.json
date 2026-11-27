@@ -1,0 +1,18 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Build a HUD-style loader control for Uno Platform, monochrome, in JetBrains Mono:\n- a 300-unit reticle: two tick bands that counter-rotate (14 s and 9 s) while the size is unknown, rings, an arc that sweeps every 2.4 s, corner marks and leaders with the percent, the phase and a telemetry line;\n- states: Scanning, Locking (the bands stop and an arc fills with the percent), Locked (the X closes in 480 ms, then nothing moves), Idle (dimmed) and Interrupted (keeps its progress and offers Resume);\n- a status line with three step dots, announced politely; reduced motion makes Scanning still with a slow pulse;\n- the same look as a ProgressRing style at 64, 40 and 24 px;\n- a page that simulates a sync (Scan, then Lock to 100%), with Scan / Lock / Idle, Run again and Interrupt, a Light/Dark switch, and a layout for phone and desktop;\n- Hot Design previews of every state.\n\nStack: Uno Platform single project, Material, Toolkit, CommunityToolkit.Mvvm."
+    },
+    {
+      "role": "assistant",
+      "content": "The **Reticle Loader** is built and running: the page scans for 2.6 s, locks to 100% in bursts, and the X closes. Switch modes, interrupt and resume, or run it again."
+    }
+  ],
+  "suggestedPrompts": [
+    "Add an accent option that tints the live marks with the Secondary colour",
+    "Remember the chosen theme between launches",
+    "Add a 96 px compact ring size",
+    "Show a list of files under the loader, each with its own compact ring"
+  ]
+}

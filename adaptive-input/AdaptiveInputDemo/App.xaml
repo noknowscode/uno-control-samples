@@ -1,0 +1,22 @@
+<Application x:Class="AdaptiveInputDemo.App"
+       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+       xmlns:utum="using:Uno.Toolkit.UI.Material">
+  <!--
+    The palette (Styles/ColorPaletteOverride.xaml) has Light and Default (dark) values. App.xaml.cs starts the app in
+    Dark, the design's default; the page's theme switch changes it at runtime.
+  -->
+
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+        <utum:MaterialToolkitTheme
+          ColorOverrideSource="ms-appx:///Styles/ColorPaletteOverride.xaml"
+          FontOverrideSource="ms-appx:///Styles/MaterialFontsOverride.xaml" />
+        <ResourceDictionary Source="ms-appx:///Controls/AdaptiveInput/AdaptiveInputControl.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+
+</Application>

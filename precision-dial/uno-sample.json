@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schemas.platform.uno/sample/v1",
+  "id": "precision-dial",
+  "displayName": "Precision Dial",
+  "description": "A precision knob control for Uno Platform drawn with SkiaSharp: a brushed-metal knob with physics-based rotation, detents with haptic and audio clicks, and two modes on one control. A segmented switch flips it between a volume knob (a dashed arc with detent ticks, 0 to 100) and a radial menu dial (five Phosphor-icon items with a cone of light). Both modes take the keyboard (arrows, PgUp / PgDn, Home / End; Enter confirms a menu item) and expose an automation peer (a slider, or a spinner whose value is the selected item). The app starts in Dark and Light is complete.",
+  "platforms": [
+    "desktop",
+    "wasm",
+    "android"
+  ],
+  "sourcePath": "PrecisionDial/PrecisionDial.csproj",
+  "userConversation": {
+    "messages": [
+      {
+        "role": "user",
+        "content": "Make the Precision Dial one control on one page: a switch between a volume knob with all the little dash ticks and a menu dial. Keep keyboard and screen-reader support in both modes."
+      },
+      {
+        "role": "assistant",
+        "content": "The **Precision Dial** is now one control: the switch flips `DialMode` between the volume knob and the menu dial, and both modes take the keyboard and expose an automation peer."
+      }
+    ],
+    "suggestedPrompts": [
+      "Add a bipolar mode for pan controls, centred at zero",
+      "Let the menu dial confirm on release with a spring",
+      "Show the continuous ring style as a third option",
+      "Add a long press that toggles the mode"
+    ]
+  },
+  "agentContext": {
+    "messages": [
+      {
+        "role": "user",
+        "content": "This is the Precision Dial sample: a SkiaSharp-drawn precision knob control for Uno Platform and demo pages of its sizes and modes."
+      },
+      {
+        "role": "assistant",
+        "content": "Precision Dial is one Uno single project, `PrecisionDial/PrecisionDial.csproj` (Uno.Sdk 7.0.22 from `global.json`; heads net10.0-android, net10.0-browserwasm and net10.0-desktop; UnoFeatures Material, Toolkit, Logging, SkiaRenderer, MediaPlayerElement). There is no Navigation or MVUX: `App.xaml.cs` creates the window, keeps the root Frame in `App.ThemeRoot`, starts it in Dark with `SystemThemeHelper.SetRootTheme(rootFrame, darkMode: true)` and navigates to `Presentation/MainPage`: a header with the theme `ToggleButton`, a Toolkit `TabBar` (`TopTabBarStyle`: VOLUME, MENU) whose SelectedIndex drives the dial's `DialMode` through an x:Bind function, one `PrecisionDial` and a readout (value, or the selected item's label). The page sets the five `MenuItems` in its constructor.\n\n**Key files (under `Controls/PrecisionDial/`):**\n- `PrecisionDial.cs` + `PrecisionDial.Properties.cs`: the control, a Panel hosting `PrecisionDialCanvas`. Properties: Value, Minimum, Maximum, DetentCount, ArcSweepDegrees, AccentBrush, Sensitivity, IsHapticEnabled, IsAudioEnabled, IsInertiaEnabled, InertiaDecayRate, InteractionMode, DialMode (Value, Menu), MenuItems, SelectedIndex, SelectedItem, SegmentCount, ArcStyle (Dashed, Continuous), HotThreshold, HotBrush, ValueStep, FineStep, IsFineMode, ShowValueTip, IsInputEnabled. Menu mode sets Minimum/Maximum/DetentCount to the item indexes; switching back to Value restores them.\n- `PrecisionDial.Input.cs`: tab stop, system focus visuals, keys (Value: arrows step, PgUp/PgDn a tenth of the range, Home/End; Menu: arrows move the item, Home/End, Enter/Space raise SelectionConfirmed), `MoveTo(double)`, and `PrecisionDialAutomationPeer` (Slider + IRangeValueProvider in Value mode, Spinner + IValueProvider in Menu mode).\n- `PrecisionDialCanvas.cs`: an `SKCanvasElement` that draws the layers through `Renderers/` (DashedArc, InstrumentRing, OrbitingValue, ConeLight, MenuIcon, Knurl, BrushedMetal, Caustic, Particle; `PhosphorFont` loads `Assets/Fonts/Phosphor.ttf`). `Scaling/DialSizeProfile.cs` derives geometry from the size. `Physics/`, `Interaction/`, `Haptics/` (per-platform), `Audio/` (a synthesized click played through MediaPlayer).\n- `Theme/DialInk.cs`: the colour of marks around the knob (white in Dark, near-black in Light).\n- `Theme/PrecisionDialResources.xaml`: the stage's theme brushes and the DialMono / DialDisplay font keys.\n- `HotDesignPreviews/`: DialCompactPreview, DialStandardPreview, DialLargePreview, DialMenuModePreview (Debug only).\n- `Styles/ColorPaletteOverride.xaml`: the Material palette; Primary is the dial brass and the page passes PrimaryBrush as AccentBrush.\n\n**Conventions:** ThemeResource brushes and Uno.Themes Space tokens only; Skia marks use `DialInk.For(ActualTheme)`; build paths with `SKPathBuilder`; breakpoints with `utu:Responsive`.\n\n**Build:** `dotnet build PrecisionDial/PrecisionDial.csproj -f net10.0-desktop`.\n\nThe app is built and running. The user may ask me to modify it."
+      }
+    ]
+  }
+}

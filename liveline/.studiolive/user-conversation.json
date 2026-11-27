@@ -1,0 +1,18 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Build a live metric card control for Uno Platform (Geist and Geist Mono, green on pale green):\n- header: \"API latency · p95\", the latest value with its unit and its change against the start of the window, a Live chip, a 1m / 5m / 15m selector and a pause button;\n- a SkiaSharp line chart with a fixed 40–70 axis, an alert line at 65, time labels counting back from now, a live dot with a value tag, one sample a second with the line gliding between samples;\n- hover, or focus and use the arrow keys, to inspect a point; Esc closes;\n- pause stops at the next sample and shows the time;\n- states Connecting (axes reserved), Paused (grey line) and Disconnected (the gap is hatched, Reconnect);\n- min, avg, max, window and samples below; a phone layout with the controls at the bottom;\n- a page that feeds it from a simulated stream, with a Light/Dark switch, and Hot Design previews of every state.\n\nStack: Uno Platform single project, SkiaSharp on SKCanvasElement, Material, Toolkit."
+    },
+    {
+      "role": "assistant",
+      "content": "**Liveline** is built and running: the card connects, then follows a simulated latency stream one sample a second. Hover the line, pause it, switch the window, or drop the connection."
+    }
+  ],
+  "suggestedPrompts": [
+    "Add a second card for error rate under this one",
+    "Colour the line red while it is above the alert threshold",
+    "Add a 1 hour window",
+    "Add a Hot Design preview with the alert threshold hidden"
+  ]
+}

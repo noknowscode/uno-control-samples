@@ -1,0 +1,94 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="using:ReticleLab.Controls">
+
+  <controls:ReticleArcConverter x:Key="ReticleArcConverter" />
+
+  <!--
+    Compact ring: a keyed restyle of the stock ProgressRing for inline use at 24, 40 and 64 px (the prototype's
+    "ProgressRing template · sizes"). Designed on a 64-unit canvas and scaled by a Viewbox, so the arc is 4.5 px at
+    64, 2.8 at 40 and 1.7 at 24, as drawn in the prototype.
+      Active (indeterminate)  a 72% arc turns once every 2.4 s, linear
+      DeterminateActive       the arc shows Value (0–100) from 150°, clockwise
+      Inactive                the track alone (a queued row)
+    Foreground is the arc, Background the track (drawn at 35%).
+  -->
+  <Style x:Key="ReticleRingCompactStyle" TargetType="ProgressRing">
+    <Setter Property="Foreground" Value="{ThemeResource OnSurfaceBrush}" />
+    <Setter Property="Background" Value="{ThemeResource OnSurfaceBrush}" />
+    <Setter Property="Width" Value="40" />
+    <Setter Property="Height" Value="40" />
+    <Setter Property="IsHitTestVisible" Value="False" />
+    <Setter Property="IsTabStop" Value="False" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="ProgressRing">
+          <Grid x:Name="LayoutRoot" Background="Transparent">
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Active">
+                  <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="SpinRotation" Storyboard.TargetProperty="Angle"
+                                     From="0" To="360" Duration="0:0:2.4" RepeatBehavior="Forever" />
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="IndeterminateArc" Storyboard.TargetProperty="Opacity">
+                      <SplineDoubleKeyFrame KeyTime="0:0:0.2" KeySpline="0.25,0.1 0.25,1" Value="1" />
+                    </DoubleAnimationUsingKeyFrames>
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="DeterminateArc" Storyboard.TargetProperty="Opacity">
+                      <SplineDoubleKeyFrame KeyTime="0:0:0.2" KeySpline="0.25,0.1 0.25,1" Value="0" />
+                    </DoubleAnimationUsingKeyFrames>
+                  </Storyboard>
+                </VisualState>
+                <VisualState x:Name="DeterminateActive">
+                  <Storyboard>
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SpinRotation" Storyboard.TargetProperty="Angle">
+                      <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                    </DoubleAnimationUsingKeyFrames>
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="IndeterminateArc" Storyboard.TargetProperty="Opacity">
+                      <SplineDoubleKeyFrame KeyTime="0:0:0.2" KeySpline="0.25,0.1 0.25,1" Value="0" />
+                    </DoubleAnimationUsingKeyFrames>
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="DeterminateArc" Storyboard.TargetProperty="Opacity">
+                      <SplineDoubleKeyFrame KeyTime="0:0:0.2" KeySpline="0.25,0.1 0.25,1" Value="1" />
+                    </DoubleAnimationUsingKeyFrames>
+                  </Storyboard>
+                </VisualState>
+                <VisualState x:Name="Inactive">
+                  <Storyboard>
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="SpinRotation" Storyboard.TargetProperty="Angle">
+                      <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0" />
+                    </DoubleAnimationUsingKeyFrames>
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="IndeterminateArc" Storyboard.TargetProperty="Opacity">
+                      <SplineDoubleKeyFrame KeyTime="0:0:0.2" KeySpline="0.25,0.1 0.25,1" Value="0" />
+                    </DoubleAnimationUsingKeyFrames>
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="DeterminateArc" Storyboard.TargetProperty="Opacity">
+                      <SplineDoubleKeyFrame KeyTime="0:0:0.2" KeySpline="0.25,0.1 0.25,1" Value="0" />
+                    </DoubleAnimationUsingKeyFrames>
+                  </Storyboard>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+
+            <Viewbox Stretch="Uniform">
+              <Grid Width="64" Height="64">
+                <Ellipse Margin="0.6" Stroke="{TemplateBinding Background}" StrokeThickness="1" Opacity="0.35" />
+                <Path x:Name="IndeterminateArc"
+                      Data="M8.7,45.45 A26.9,26.9 0 1 1 49.65,52.3"
+                      Stroke="{TemplateBinding Foreground}" StrokeThickness="4.5"
+                      StrokeStartLineCap="Round" StrokeEndLineCap="Round">
+                  <Path.RenderTransform>
+                    <RotateTransform x:Name="SpinRotation" CenterX="32" CenterY="32" />
+                  </Path.RenderTransform>
+                </Path>
+                <Path x:Name="DeterminateArc"
+                      Opacity="0"
+                      Data="{Binding Value, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ReticleArcConverter}, ConverterParameter='32,32,26.9'}"
+                      Stroke="{TemplateBinding Foreground}" StrokeThickness="4.5"
+                      StrokeStartLineCap="Round" StrokeEndLineCap="Round" />
+              </Grid>
+            </Viewbox>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+</ResourceDictionary>

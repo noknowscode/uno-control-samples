@@ -1,0 +1,44 @@
+{
+  "$schema": "https://schemas.platform.uno/sample/v1",
+  "id": "reticle-lab",
+  "displayName": "Reticle Lab",
+  "description": "Reticle Lab shows a HUD-style loader for Uno Platform. ReticleLoader is a templated control: a 300-unit reticle with two counter-rotating tick bands, rings, a sweeping arc, a progress arc that fills with the percent and an X that closes when the work is done, read in the order percent, phase, telemetry, with a status line below. Its State property drives Scanning, Locking, Locked, Idle and Interrupted (which keeps its progress and offers Resume) through visual states, with reduced-motion support. A keyed ProgressRing style gives the same look at 64, 40 and 24 px for inline use. The page simulates a workspace sync and has a runtime Light/Dark switch; JetBrains Mono is bundled, and Hot Design previews show every state.",
+  "platforms": [
+    "desktop",
+    "wasm",
+    "android"
+  ],
+  "sourcePath": "ReticleLab/ReticleLab.csproj",
+  "iconUrl": "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/reticle-lab/.studiolive/icon.png",
+  "screenshots": [
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/reticle-lab/.studiolive/screenshots/loader-desktop.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/reticle-lab/.studiolive/screenshots/loader-light-desktop.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/reticle-lab/.studiolive/screenshots/loader-phone.png"
+  ],
+  "showcase": {
+    "summary": "A HUD loader control with Scanning, Locking, Locked, Idle and Interrupted states, plus matching ProgressRing sizes.",
+    "type": "showcase",
+    "status": "preview",
+    "owner": [
+      "noknowscode"
+    ],
+    "industry": "UI controls",
+    "goals": [
+      "A templated control whose default style carries the whole look, driven by a State enum and a Value through VisualStateManager",
+      "Hand off between visual states without snapping, by animating every property in every state with From-less keyframes",
+      "Draw a value-dependent arc in code and everything else as Path and Ellipse in the template",
+      "Restyle the stock ProgressRing as compact 24, 40 and 64 px rings, with a converter for the determinate arc",
+      "Take every colour from the Material palette and bundle the design's typeface through the Material font override",
+      "Switch Light and Dark at runtime with the hosted-safe Toolkit SystemThemeHelper, and lay the page out with utu:Responsive"
+    ],
+    "tags": [
+      "custom-control",
+      "progressring",
+      "controltemplate",
+      "visualstatemanager",
+      "animation",
+      "material",
+      "theming"
+    ]
+  }
+}

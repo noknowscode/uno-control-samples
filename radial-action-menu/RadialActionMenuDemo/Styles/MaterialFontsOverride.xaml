@@ -1,0 +1,11 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!--
+    Archivo (SIL OFL 1.1, Assets/Fonts/OFL-Archivo.txt), the design's one typeface. Every Material type style derives
+    from DefaultFontFamily. The prototype ships a variable font (weight and width); Skia needs static files, so
+    Regular (400) and SemiBold (600) are static instances, and Archivo-Regular.ttf.manifest maps FontWeight to them.
+  -->
+  <FontFamily x:Key="DefaultFontFamily">ms-appx:///Assets/Fonts/Archivo-Regular.ttf</FontFamily>
+
+</ResourceDictionary>

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schemas.platform.uno/sample/v1",
+  "id": "horizontal-calendar",
+  "displayName": "Horizontal Calendar",
+  "description": "A week-strip calendar control for Uno Platform, styled after the Control Gallery \"Horizontal Calendar\" sheet: seven days in a white card with a cobalt pill that slides 380 ms between days, a navy ring on today, one tick per event (up to four) and hatched unavailable days that are focusable but not selectable. The strip pages a week at a time (460 ms slide) and the selected day's agenda sits below it, with Ready, empty-day, Loading (skeleton rows that hold their height) and Error (Retry) states. ← → move a day, PgUp / PgDn a week and T jumps to today. Under 600 px the control switches to its phone layout with a docked Add event button. Schibsted Grotesk and Azeret Mono are bundled; Light is the sheet's palette and Dark keeps the navy and cobalt identity.",
+  "platforms": [
+    "desktop",
+    "wasm",
+    "android"
+  ],
+  "sourcePath": "HorizontalCalendar/HorizontalCalendar.csproj",
+  "iconUrl": "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/horizontal-calendar/.studiolive/icon.png",
+  "screenshots": [
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/horizontal-calendar/.studiolive/screenshots/week-dark-desktop.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/horizontal-calendar/.studiolive/screenshots/week-desktop.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/horizontal-calendar/.studiolive/screenshots/week-dark-phone.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/horizontal-calendar/.studiolive/screenshots/week-phone.png"
+  ],
+  "showcase": {
+    "summary": "A week strip with a sliding selection pill, busy ticks, unavailable days and the day's agenda with loading and error states.",
+    "type": "showcase",
+    "status": "preview",
+    "owner": [
+      "noknowscode"
+    ],
+    "industry": "UI controls",
+    "goals": [
+      "A templated control whose default style carries the design: tokens in Light and Default theme dictionaries, bundled static fonts",
+      "A three-week panel that slides between weeks and a pill that slides between days, both on KeySpline 0.3,0.7 0.2,1",
+      "Agenda states as VisualStates (Events, Empty, Loading, Error) driven by an AgendaState property, with RetryRequested",
+      "Unavailable days from an UnavailableDays map: hatched, struck through, focusable, never selected",
+      "Keyboard (← →, PgUp, PgDn, T), named days and buttons, a polite live week range and an assertive error",
+      "A compact phone layout chosen from the control's own width (DisplayMode Auto)",
+      "Hot Design previews of each state, a runtime Light/Dark switch and {utu:Responsive} on the host page"
+    ],
+    "tags": [
+      "control",
+      "calendar",
+      "material",
+      "theming",
+      "animation",
+      "responsive",
+      "accessibility",
+      "hot-design"
+    ]
+  }
+}

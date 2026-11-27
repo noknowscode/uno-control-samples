@@ -1,0 +1,18 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Build a sales overview control for Uno Platform (dark teal, Bricolage Grotesque, Figtree, Spline Sans Mono):\n- a daily revenue heatmap of Q4 2026, 14 weeks by 7 days, in five steps of one hue with the thresholds in the legend; closed days outlined, missing days hatched, future days dashed;\n- Oct / Nov / Dec / Q4: other months dim but stay in place;\n- the period's revenue and its change (arrow, sign and colour together), the selected day's revenue, orders and change against the daily average, and the top three regions;\n- hover or click a day; arrow keys move a day or a week;\n- states Loading (everything keeps its size), No sales in filter (says so, never draws zeros, Clear filters) and Stale data (keeps the grid, says how old, Retry);\n- a phone layout; a page with a Light/Dark switch and buttons to show the states; Hot Design previews of every state.\n\nStack: Uno Platform single project, MVUX, Navigation, Material, Toolkit."
+    },
+    {
+      "role": "assistant",
+      "content": "**Sales Heatmap** is built and running: the overview loads Q4 2026 with Tuesday, November 24 selected. Hover or click a day, use the arrow keys, switch periods, or try the Stale and No sales states."
+    }
+  ],
+  "suggestedPrompts": [
+    "Add a region filter that drives the Empty state",
+    "Add a fourth region to the list",
+    "Show weekly totals under each column",
+    "Add a Hot Design preview of the December period"
+  ]
+}

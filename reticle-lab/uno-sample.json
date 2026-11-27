@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schemas.platform.uno/sample/v1",
+  "id": "reticle-lab",
+  "displayName": "Reticle Lab",
+  "description": "Reticle Lab shows a HUD-style loader for Uno Platform. ReticleLoader is a templated control: a 300-unit reticle with two counter-rotating tick bands, rings, a sweeping arc, a progress arc that fills with the percent and an X that closes when the work is done, read in the order percent, phase, telemetry, with a status line below. Its State property drives Scanning, Locking, Locked, Idle and Interrupted (which keeps its progress and offers Resume) through visual states, with reduced-motion support. A keyed ProgressRing style gives the same look at 64, 40 and 24 px for inline use. The page simulates a workspace sync and has a runtime Light/Dark switch; JetBrains Mono is bundled, and Hot Design previews show every state.",
+  "platforms": [
+    "desktop",
+    "wasm",
+    "android"
+  ],
+  "sourcePath": "ReticleLab/ReticleLab.csproj",
+  "userConversation": {
+    "messages": [
+      {
+        "role": "user",
+        "content": "Build a HUD-style loader control for Uno Platform, monochrome, in JetBrains Mono:\n- a 300-unit reticle: two tick bands that counter-rotate (14 s and 9 s) while the size is unknown, rings, an arc that sweeps every 2.4 s, corner marks and leaders with the percent, the phase and a telemetry line;\n- states: Scanning, Locking (the bands stop and an arc fills with the percent), Locked (the X closes in 480 ms, then nothing moves), Idle (dimmed) and Interrupted (keeps its progress and offers Resume);\n- a status line with three step dots, announced politely; reduced motion makes Scanning still with a slow pulse;\n- the same look as a ProgressRing style at 64, 40 and 24 px;\n- a page that simulates a sync (Scan, then Lock to 100%), with Scan / Lock / Idle, Run again and Interrupt, a Light/Dark switch, and a layout for phone and desktop;\n- Hot Design previews of every state.\n\nStack: Uno Platform single project, Material, Toolkit, CommunityToolkit.Mvvm."
+      },
+      {
+        "role": "assistant",
+        "content": "The **Reticle Loader** is built and running: the page scans for 2.6 s, locks to 100% in bursts, and the X closes. Switch modes, interrupt and resume, or run it again."
+      }
+    ],
+    "suggestedPrompts": [
+      "Add an accent option that tints the live marks with the Secondary colour",
+      "Remember the chosen theme between launches",
+      "Add a 96 px compact ring size",
+      "Show a list of files under the loader, each with its own compact ring"
+    ]
+  },
+  "agentContext": {
+    "messages": [
+      {
+        "role": "user",
+        "content": "This is the Reticle Lab sample: ReticleLoader, a HUD-style loader control, plus compact ProgressRing styles."
+      },
+      {
+        "role": "assistant",
+        "content": "Reticle Lab is one Uno single project, `ReticleLab/ReticleLab.csproj` (Uno.Sdk 7.0.22 from `global.json`; heads net10.0-android, net10.0-browserwasm and net10.0-desktop; UnoFeatures Material, Toolkit, Logging, Mvvm, SkiaRenderer). `App.xaml.cs` navigates a Frame to `Presentation/MainPage`, keeps it as `App.AppRoot` and starts in Dark.\n\n**Key files:**\n- `Controls/ReticleLoader/ReticleLoader.cs`: the templated control. Dependency properties: `State` (`ReticleState`: Scanning, Locking, Locked, Idle, Interrupted), `Value` (0–100), `IsMotionReduced`, `Telemetry`, `Detail`, `AccentBrush`, `StatusVisibility`, `ResumeCommand` (plus the `ResumeRequested` event), and read-only `PercentText`, `PhaseText`, `StatusText`. It picks the visual states (`ReticleStates`: Scanning, ScanningReduced, Locking, Locked, Idle, Interrupted; `StepStates`: Steps0–3) and draws the progress arc (`PART_ProgressArc`, `PART_ProgressArcInk`) and node (`PART_Node`) from the value. `ReticleLoaderAutomationPeer` reports a progress bar with the status as item status.\n- `Themes/ReticleLoader.xaml`: the default style and template (the prototype's 300-unit SVG as Path/Ellipse in a Viewbox), every state's storyboard, and `ReticleOutlineButtonStyle`. Every state animates every animated property with From-less keyframes so states hand over without a snap.\n- `Themes/ReticleRing.xaml`: `ReticleRingCompactStyle`, a keyed ProgressRing restyle (Active spins a 72% arc, DeterminateActive shows Value through `ReticleArcConverter`, Inactive shows the track).\n- `Themes/Hud.xaml`: the demo page's labels, the mode pill (`HudSegmentStyle`) and the theme switch (`HudToggleStyle`).\n- `Styles/ColorPaletteOverride.xaml`: the palette (Dark is the prototype's: #050505, #000000, #F2F2F2, #8C8C8C, #1E1E1E, #3C3C3C), all 33 roles. `Styles/MaterialFontsOverride.xaml`: JetBrains Mono (static Light/Regular/Medium TTFs in `Assets/Fonts/JetBrainsMono/`, OFL) as `DefaultFontFamily` and `Mono*FontFamily` keys.\n- `Presentation/MainViewModel.cs`: the simulated sync (Scan 2.6 s, then Lock in bursts every 200 ms to 100%, then Locked) with Scan/Lock/Idle/Interrupt/Resume/RunAgain commands. `MainPage.xaml`: the loader, the mode pills, Run again, Interrupt and the three compact rings; `{utu:Responsive}` stacks it below Wide.\n- `HotDesignPreviews/`: Debug-only previews of every state and of the compact rings.\n\n**Conventions:** colours only from palette roles via ThemeResource; fonts only through the font override keys; `CharacterSpacing` is a no-op on Skia, so labels are authored uppercase. Forever storyboards run only in Scanning.\n\n**Build:** `dotnet build ReticleLab/ReticleLab.csproj -f net10.0-desktop` (or `-f net10.0-browserwasm`). There are no tests.\n\nThe app is built and running. The user may ask me to modify it."
+      }
+    ]
+  }
+}

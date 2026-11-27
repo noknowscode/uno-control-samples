@@ -1,0 +1,12 @@
+<hd:Preview x:Class="Liveline.Demo.HotDesignPreviews.LivelineDisconnectedPreview"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:hd="using:Uno.UI.HotDesign"
+            xmlns:liveline="using:Liveline"
+            Width="992"
+            Height="522">
+  <liveline:LivelineChart Data="{Binding Points}" State="Disconnected"
+                          Title="API latency · p95"
+                          AlertThreshold="65"
+                          AlertLabel="Alert above 65" />
+</hd:Preview>

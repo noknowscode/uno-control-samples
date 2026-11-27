@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="450" height="450" viewBox="0 0 50.369617 49.826836" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <!-- A HUD reticle: an open outer arc, a full inner ring, four tick marks and a centre dot -->
+  <g fill="none" stroke="#111111" stroke-linecap="round">
+    <path d="M 25.18 9.41 A 15.5 15.5 0 1 1 11.76 32.66" stroke-width="2.2" />
+    <circle cx="25.18" cy="24.91" r="10.2" stroke-width="1.6" stroke-opacity="0.6" />
+    <path d="M 25.18 11.9 V 15.4 M 25.18 34.4 V 37.9 M 12.2 24.91 H 15.7 M 34.7 24.91 H 38.2" stroke-width="1.6" />
+  </g>
+  <circle cx="25.18" cy="24.91" r="1.6" fill="#111111" />
+</svg>

@@ -1,0 +1,23 @@
+<Application x:Class="SalesHeatmap.App"
+       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+       xmlns:ut="using:Uno.Themes"
+       xmlns:utum="using:Uno.Toolkit.UI.Material">
+
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
+        <!-- Material with the Toolkit. The palette (Styles/ColorPaletteOverride.xaml) is the one place colours with
+             a Material role live; Studio's Themes tab edits it. The font override sets the prototype's three families. -->
+        <utum:MaterialToolkitTheme FontOverrideSource="ms-appx:///Styles/MaterialFontsOverride.xaml">
+          <utum:MaterialToolkitTheme.Colors>
+            <ut:ThemeColors OverrideSource="ms-appx:///Styles/ColorPaletteOverride.xaml" />
+          </utum:MaterialToolkitTheme.Colors>
+        </utum:MaterialToolkitTheme>
+        <ResourceDictionary Source="ms-appx:///Themes/SalesHeatmap.xaml" />
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+
+</Application>

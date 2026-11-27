@@ -1,0 +1,46 @@
+{
+  "$schema": "https://schemas.platform.uno/sample/v1",
+  "id": "snackbar",
+  "displayName": "Snackbar",
+  "description": "A Snackbar and SnackbarHost for Uno Platform, proposed for the Uno Toolkit and built to the Control Gallery prototype: three kinds (Confirm 4 s with no action, Undo 7 s with one action, Attention that stays with a warning icon, a close button and the action below), a 2 px track that drains while the countdown runs, a countdown that pauses on hover, keyboard focus or touch and resumes on blur, a 220 ms rise in and 160 ms fade out, replace semantics where the next message waits for the current one to leave, long messages that wrap at about 44 characters with the action moved below, polite status announcements, swipe and Escape to dismiss. Hanken Grotesk and Fraunces are bundled; the palette is warm paper and ink with a gold action, in Light and Dark with an in-app switch. The demo is the prototype's Drafts list: delete a draft and Undo, Save, Export.",
+  "platforms": [
+    "desktop",
+    "wasm",
+    "android"
+  ],
+  "sourcePath": "SnackbarDemo/SnackbarDemo.csproj",
+  "iconUrl": "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/snackbar/.studiolive/icon.png",
+  "screenshots": [
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/snackbar/.studiolive/screenshots/attention-dark-desktop.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/snackbar/.studiolive/screenshots/undo-light-desktop.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/snackbar/.studiolive/screenshots/attention-dark-phone.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/snackbar/.studiolive/screenshots/undo-light-phone.png"
+  ],
+  "showcase": {
+    "summary": "A Snackbar and SnackbarHost with Confirm, Undo and Attention kinds, a pausable countdown track and replace hand-off.",
+    "type": "showcase",
+    "status": "preview",
+    "owner": [
+      "noknowscode"
+    ],
+    "industry": "UI controls",
+    "goals": [
+      "A ContentControl host that docks one message at a time 20 px from the bottom of any content, up to 460 px wide",
+      "Kinds as a dependency property: Confirm (4 s, no action), Undo (7 s, one action), Attention (stays, icon, close button, action below)",
+      "A countdown with a draining 2 px track that pauses on hover, keyboard focus or touch (IsHeld) and resumes on blur",
+      "Replace semantics: a new message waits for the current one's 160 ms exit (IsReplacing, Replacing visual state) and never stacks",
+      "Visual state groups for layout, action, dismiss, icon, timer and hold, with the design's sizes and colours as theme tokens",
+      "Polite live-region announcements, a StatusBar automation peer, Escape and swipe to dismiss",
+      "Bundled static instances of Hanken Grotesk and Fraunces, mapped to Material's DefaultFontFamily through a weight manifest"
+    ],
+    "tags": [
+      "control",
+      "toolkit",
+      "material",
+      "theming",
+      "animation",
+      "accessibility",
+      "notifications"
+    ]
+  }
+}

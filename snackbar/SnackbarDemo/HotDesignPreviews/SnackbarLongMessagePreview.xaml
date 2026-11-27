@@ -1,0 +1,24 @@
+<hd:Preview x:Class="SnackbarDemo.HotDesignPreviews.SnackbarLongMessagePreview"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:hd="using:Uno.UI.HotDesign"
+            xmlns:utu="using:Uno.Toolkit.UI"
+            Width="460"
+            Height="200">
+  <Grid Background="{ThemeResource SurfaceBrush}" Padding="20">
+    <utu:Snackbar Kind="Attention"
+                  Message="Couldn’t reach the server. Your changes are kept on this device and will sync when you’re back online."
+                  ActionLabel="Try again"
+                  VerticalAlignment="Center">
+      <utu:Snackbar.Icon>
+        <!-- wifi-off, Tabler outline on the 24 px grid -->
+        <Path Data="M12 18l.01 0 M9.172 15.172a4 4 0 0 1 5.656 0 M6.343 12.343a7.963 7.963 0 0 1 3.864 -2.14m4.163 .155a7.965 7.965 0 0 1 3.287 2 M3.515 9.515a12 12 0 0 1 3.544 -2.455m3.101 -.92a12 12 0 0 1 10.325 3.374 M3 3l18 18"
+              Stroke="{ThemeResource OnSurfaceInverseBrush}"
+              StrokeThickness="1.75"
+              StrokeStartLineCap="Round"
+              StrokeEndLineCap="Round"
+              StrokeLineJoin="Round" />
+      </utu:Snackbar.Icon>
+    </utu:Snackbar>
+  </Grid>
+</hd:Preview>

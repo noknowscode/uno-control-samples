@@ -1,0 +1,63 @@
+<Page x:Class="SalesHeatmap.Presentation.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:controls="using:SalesHeatmap.Controls"
+      xmlns:mvux="using:Uno.Extensions.Reactive.UI"
+      xmlns:ut="using:Uno.Themes"
+      xmlns:utu="using:Uno.Toolkit.UI"
+      Background="{ThemeResource BackgroundBrush}">
+
+  <!-- A minimal host: the widget on the model's data, two buttons that simulate the Stale and Empty states, and the
+       theme switch. -->
+  <Grid utu:SafeArea.Insets="VisibleBounds">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <StackPanel Orientation="Horizontal"
+                Spacing="4"
+                HorizontalAlignment="Right"
+                Margin="{utu:Responsive Narrowest='8,4', Normal='24,12'}">
+      <Button Content="Stale data" Style="{StaticResource TextButtonStyle}" Command="{Binding SimulateStale}" />
+      <Button Content="No sales" Style="{StaticResource TextButtonStyle}" Command="{Binding SimulateEmpty}" />
+      <ToggleButton x:Name="ThemeToggle"
+                    Style="{StaticResource IconToggleButtonStyle}"
+                    AutomationProperties.Name="Dark theme"
+                    ToolTipService.ToolTip="Dark theme"
+                    Loaded="OnThemeToggleLoaded"
+                    Click="OnThemeToggleClick">
+        <ut:ControlExtensions.AlternateContent>
+          <FontIcon Glyph="&#xE708;" />
+        </ut:ControlExtensions.AlternateContent>
+        <FontIcon Glyph="&#xE708;" />
+      </ToggleButton>
+    </StackPanel>
+
+    <!-- FeedView hands the widget the snapshot (Data) once the feed has a value; until then the widget shows its
+         own Loading state. Parent reaches the model's other states from inside the templates. -->
+    <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+      <mvux:FeedView Source="{Binding Snapshot}"
+                     MaxWidth="992"
+                     Margin="{utu:Responsive Narrowest='8,0,8,16', Normal='32,0,32,32'}"
+                     VerticalAlignment="Center"
+                     HorizontalContentAlignment="Stretch">
+        <mvux:FeedView.ValueTemplate>
+          <DataTemplate>
+            <controls:SalesHeatmapWidget Snapshot="{Binding Data}"
+                                         State="{Binding Parent.Status}"
+                                         FilterText="{Binding Parent.Filter}"
+                                         RetryCommand="{Binding Parent.Retry}"
+                                         ClearFiltersCommand="{Binding Parent.ClearFilters}"
+                                         AutomationProperties.Name="Sales overview" />
+          </DataTemplate>
+        </mvux:FeedView.ValueTemplate>
+        <mvux:FeedView.ProgressTemplate>
+          <DataTemplate>
+            <controls:SalesHeatmapWidget State="Loading" AutomationProperties.Name="Sales overview, loading" />
+          </DataTemplate>
+        </mvux:FeedView.ProgressTemplate>
+      </mvux:FeedView>
+    </ScrollViewer>
+  </Grid>
+</Page>

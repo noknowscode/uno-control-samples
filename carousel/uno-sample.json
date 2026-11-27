@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schemas.platform.uno/sample/v1",
+  "id": "carousel",
+  "displayName": "Carousel",
+  "description": "A carousel control for Uno Platform, proposed for the Uno Toolkit, styled after the Control Gallery \"Carousel\" sheet: mounted plates (a mat, a hairline ring and a soft shadow) on a track that glides 700 ms with the next plate peeking in, the caption kept off the image beside the track (below it under 720 px), a thumbnail strip with auto-play progress bars, and previous / pause / next buttons with a status. Auto-play advances every 6 s and holds on hover and focus; arrows, Home, End and Space work from the keyboard, and swipe moves the track with the finger. Plates have Loading and Image failed states with a Try again button, titles clamp at two lines. Instrument Serif and Instrument Sans are bundled; Light is the sheet's paper palette and Dark keeps it on charcoal. Overlay mode with slide and fade transitions, vertical orientation and an automation peer remain.",
+  "platforms": [
+    "desktop",
+    "wasm",
+    "android"
+  ],
+  "sourcePath": "Carousel/Carousel.csproj",
+  "userConversation": {
+    "messages": [
+      {
+        "role": "user",
+        "content": "Build a carousel control for Uno Platform that could ship in the Uno Toolkit, matching our Control Gallery \"Carousel\" sheet:\n- mounted plates on a track that glides 700 ms with the next plate peeking in\n- the caption (\"PLATE 02 OF 05\", serif title, description, medium) beside the plates, thumbnails with a progress bar each, previous / pause / next and an \"Auto · 6 s\" status\n- auto-play every 6 s that holds on hover and focus; arrows, Home, End, Space pauses; swipe\n- Loading and Image failed states for a plate (Try again), long titles clamped to two lines\n- a phone layout at 390 px with the caption below and 56 × 48 thumbnails\n\nUse the sheet's palette and Instrument Serif / Instrument Sans, in Light and Dark with a switch, and add Hot Design previews of each state."
+      },
+      {
+        "role": "assistant",
+        "content": "The **Carousel** is restyled after the sheet and running: the Low Tide Series plates glide on a peeking track with the caption, thumbnails and transport beside them, and the plate states are in the Hot Design previews."
+      }
+    ],
+    "suggestedPrompts": [
+      "Add a fullscreen view that opens the current plate",
+      "Let thumbnails scroll when there are more plates than fit",
+      "Add a reduced-motion setting that drops the glide but keeps the fades",
+      "Show the plate's caption over the image in a compact mode"
+    ]
+  },
+  "agentContext": {
+    "messages": [
+      {
+        "role": "user",
+        "content": "This is the Carousel sample: a carousel control for Uno Platform styled after the Control Gallery \"Carousel\" sheet, and a minimal host page."
+      },
+      {
+        "role": "assistant",
+        "content": "Carousel is one Uno single project, `Carousel/Carousel.csproj` (Uno.Sdk 7.0.22 from `global.json`; heads net10.0-android, net10.0-browserwasm and net10.0-desktop; UnoFeatures Material, Toolkit, Logging, SkiaRenderer). There is no Navigation or MVUX: `App.xaml.cs` creates the window, navigates a Frame to `MainPage` and keeps the Frame as `App.AppRoot`.\n\n**Key files:**\n- `Controls/Carousel/` (namespace `Uno.Toolkit.UI`): `Carousel.cs` (template parts, overlay and track navigation, swipe, auto-play with hold and remaining time, thumbnail strip, caption cross-fade, placement, keyboard and focus), `Carousel.Properties.cs` (ItemsSource, ItemTemplate, SelectedIndex, SelectedItem, Orientation, IsLoopingEnabled, IsAutoPlayEnabled, AutoPlayInterval (TimeSpan, 6 s), ItemTransition, IndicatorVisibility, ItemPeek, ItemSpacing, InactiveItemOpacity, ThumbnailTemplate, ThumbnailStyle, ThumbnailWidth/Height, CaptionTemplate, CaptionPlacement (Auto/Side/Bottom), SidePlacementMinWidth (720), Header, ItemLabel, TransportVisibility, IsPaused, read-only PlaybackState), `CarouselPanel.cs` (overlay at 0,0 or a track when a peek or spacing is set), `CarouselPlate.cs` (mat + image, State Ready/Loading/Failed following the image's load events, Title/Subtitle caption, RetryRequested, Reload), `CarouselThumbnail.cs` (ToggleButton with a progress fill), `CarouselThumbnailPanel.cs` (space-between row), `CarouselIndicator.cs` (dots when there is no ThumbnailTemplate), `CarouselAutomationPeer.cs`, the transitions (overlay mode only).\n- `Controls/Carousel/Carousel.xaml`: tokens (Light and Default theme dictionaries: CarouselMatBrush, CarouselInkBrush...), font resources (`CarouselDisplayFontFamily` Instrument Serif, `CarouselStrongFontFamily`), caption text styles (`CarouselTitleTextStyle` clamps to 2 lines, `CarouselBodyTextStyle`, `CarouselMetaTextStyle`, `CarouselLabelTextStyle`), the transport/pill/thumbnail styles and the Carousel and CarouselPlate templates with VisualState groups PlacementStates (Side/Bottom), PlaybackStates (Off/Playing/Held/Paused), PlateStates (Ready/Loading/Failed), CaptionStates. Merged through `Themes/Generic.xaml`.\n- `Styles/ColorPaletteOverride.xaml` (33 roles, Light = the sheet's palette, rust #B5552F as Primary) and `Styles/MaterialFontsOverride.xaml` (Instrument Sans static instances for the Material type ramp), both wired on `MaterialToolkitTheme` in `App.xaml`.\n- `Assets/Fonts/` (Instrument Sans Regular/Medium/SemiBold, Instrument Serif, OFL files), `Assets/Plates/` (five PNGs rendered from the sheet's SVGs; sources and the Playwright script in `tools/`).\n- `MainPage.xaml` (+ `.cs`), `Plate.cs`: the host. One carousel configured like the sheet (`ItemLabel=\"Plate\"`, `Header`, auto-play), templates over `Plate`, `{utu:Responsive}` for peek, spacing and thumbnail size, a \"Fail this image\" button that breaks the current plate's image to show the failed state (Try again restores it through `RetryRequested`), and the Light/Dark toggle (`SystemThemeHelper.SetRootTheme(App.AppRoot, ...)`).\n- `HotDesignPreviews/`: Debug-only previews: CarouselPlatesPreview, CarouselNarrowPreview, CarouselPausedPreview, CarouselPlateLoadingPreview, CarouselPlateLongTitlePreview, CarouselPlateFailedPreview, CarouselVerticalPreview, CarouselFadePreview, CarouselEmptyPreview.\n\n**Conventions:** the control's look lives in its template and tokens, not in the page; new colours go into the palette or the control's theme dictionaries. Fonts are static TTFs per weight (Skia renders variable fonts at their default instance). `CharacterSpacing` is a no-op on Skia. Use `{utu:Responsive}` with Narrowest..Widest for window-width values.\n\n**Build:** `dotnet build Carousel/Carousel.csproj -f net10.0-desktop`.\n\nThe app is built and running. The user may ask me to modify it."
+      }
+    ]
+  }
+}

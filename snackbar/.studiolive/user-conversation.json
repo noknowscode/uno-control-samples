@@ -1,0 +1,18 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Bring my Snackbar in line with the Control Gallery prototype:\n- kinds Confirm (4 s, no action), Undo (7 s, one action) and Attention (stays until dismissed, can carry an action and close)\n- 220 ms rise in, 160 ms fade out; a new message waits 160 ms for the current one to leave and never stacks\n- pause on hover, keyboard focus or touch, resume on blur; a draining countdown track\n- docked at the bottom, content keeps its space; announce politely\n- long messages wrap at about 44 characters and the action moves below\n- the prototype's typeface (Hanken Grotesk, Fraunces) and paper-and-ink palette with a gold action, Light and Dark\n\nThe demo page should be the prototype's Drafts list with Save, Export and delete."
+    },
+    {
+      "role": "assistant",
+      "content": "The **Snackbar** now follows the prototype: Confirm, Undo and Attention kinds with their durations, a countdown track that pauses on hover, focus or touch, the 220/160 ms motion, replace hand-off, wrapped long messages with the action below, and the prototype's fonts and palette. The demo is the Drafts list: delete a draft and press Undo, or try Save and Export."
+    }
+  ],
+  "suggestedPrompts": [
+    "Add a Success kind with a check icon",
+    "Move the add button up while a tall Attention message is showing",
+    "Show queued messages one after another instead of replacing",
+    "Remember the chosen theme between launches"
+  ]
+}

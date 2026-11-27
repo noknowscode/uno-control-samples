@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schemas.platform.uno/sample/v1",
+  "id": "sales-heatmap",
+  "displayName": "Sales Heatmap",
+  "description": "Sales Heatmap is a sales overview control for Uno Platform: a 14-week daily revenue heatmap of one quarter in five steps of one hue, with closed, missing and future days marked apart, a period selector (three months and the quarter), the period's revenue and change, the selected day's figures and the top regions. Days can be hovered, clicked or reached with the arrow keys. Its State property drives Loading, Ready, Empty (no sales in the filter) and Stale (the last refresh failed) through visual states, and it switches to a phone layout below 860 px. An MVUX model feeds it the prototype's Q4 2026 data; Bricolage Grotesque, Figtree and Spline Sans Mono are bundled, with a runtime Light/Dark switch and Hot Design previews of every state.",
+  "platforms": [
+    "desktop",
+    "wasm",
+    "android"
+  ],
+  "sourcePath": "SalesHeatmap/SalesHeatmap.csproj",
+  "userConversation": {
+    "messages": [
+      {
+        "role": "user",
+        "content": "Build a sales overview control for Uno Platform (dark teal, Bricolage Grotesque, Figtree, Spline Sans Mono):\n- a daily revenue heatmap of Q4 2026, 14 weeks by 7 days, in five steps of one hue with the thresholds in the legend; closed days outlined, missing days hatched, future days dashed;\n- Oct / Nov / Dec / Q4: other months dim but stay in place;\n- the period's revenue and its change (arrow, sign and colour together), the selected day's revenue, orders and change against the daily average, and the top three regions;\n- hover or click a day; arrow keys move a day or a week;\n- states Loading (everything keeps its size), No sales in filter (says so, never draws zeros, Clear filters) and Stale data (keeps the grid, says how old, Retry);\n- a phone layout; a page with a Light/Dark switch and buttons to show the states; Hot Design previews of every state.\n\nStack: Uno Platform single project, MVUX, Navigation, Material, Toolkit."
+      },
+      {
+        "role": "assistant",
+        "content": "**Sales Heatmap** is built and running: the overview loads Q4 2026 with Tuesday, November 24 selected. Hover or click a day, use the arrow keys, switch periods, or try the Stale and No sales states."
+      }
+    ],
+    "suggestedPrompts": [
+      "Add a region filter that drives the Empty state",
+      "Add a fourth region to the list",
+      "Show weekly totals under each column",
+      "Add a Hot Design preview of the December period"
+    ]
+  },
+  "agentContext": {
+    "messages": [
+      {
+        "role": "user",
+        "content": "This is Sales Heatmap, a sales overview control with a daily revenue heatmap, fed by an MVUX model."
+      },
+      {
+        "role": "assistant",
+        "content": "Sales Heatmap is one Uno single project, `SalesHeatmap/SalesHeatmap.csproj` (Uno.Sdk 7.0.22 from `global.json`; heads net10.0-android, net10.0-browserwasm and net10.0-desktop; UnoFeatures Material, Hosting, Toolkit, Logging, MVUX, Navigation, SkiaRenderer). `App.xaml.cs` hosts Navigation with a `Shell` and the `Main` route, and keeps the window content as `App.AppRoot`.\n\n**Key files:**\n- `Controls/SalesHeatmap/SalesHeatmapWidget.cs`: the templated control. Dependency properties: `Snapshot` (`SalesSnapshot`), `State` (`SalesHeatmapState`: Loading, Ready, Empty, Stale), `PeriodIndex` (0–2 months, 3 quarter, -1 today's month), `SelectedDate`, `Thresholds` (4 values), `FilterText`, `RetryCommand`, `ClearFiltersCommand` (plus `RetryRequested`, `ClearFiltersRequested`), and read-only display texts (`Subtitle`, `PeriodTitle`, `TotalText`, `DeltaText`, `DeltaNote`, `SelectedDateText`, `SelectedRevenueText`, `SelectedOrdersText`, `SelectedVsText`, `UpdatedText`, `StaleText`, `RegionsTitle`, `RegionRows`, `ScaleLabels`). It builds 98 `SalesHeatmapCell`s in `PART_GridCanvas`, positions them (36 px pitch, or filling the width in Compact), handles hover, tap and the arrow keys on `PART_GridHost`, and picks `DataStates`, `DeltaStates` and `LayoutStates` (Compact below 860 px).\n- `Controls/SalesHeatmap/SalesHeatmapCell.cs`: one day; states KindStates (Void, Level1–5, Closed, NoData, Ahead, Skeleton), PeriodStates, SelectionStates, CommonStates.\n- `Controls/SalesHeatmap/SalesModels.cs`: `SalesDay`, `SalesDayKind`, `SalesRegionShare`, `SalesComparison`, `SalesSnapshot` (with `Q4Sample`, the prototype's data), `SalesHeatmapState`.\n- `Themes/SalesHeatmap.xaml`: both default styles, the control's Light/Dark tokens (heat ramp, hatch, closed, ahead, panels, up/down), text, segment and outline button styles.\n- `Styles/ColorPaletteOverride.xaml` (Dark is the prototype's: #0F1619, #131D21, #E8EEF0, #93A5AB, #24363C, #567079, #63D4E4) and `Styles/MaterialFontsOverride.xaml` (Figtree, Bricolage Grotesque at opsz 24, Spline Sans Mono; static TTFs in `Assets/Fonts/`, OFL).\n- `Presentation/MainModel.cs`: MVUX: `Snapshot` (an `IFeed`, loaded after 1.2 s), `Status` and `Filter` (`IState`), commands `SimulateStale`, `SimulateEmpty`, `Retry`, `ClearFilters`. `Presentation/MainPage.xaml`: a `FeedView` (ProgressTemplate = the widget in Loading; ValueTemplate binds `Data` and `Parent.*`), two simulate buttons and the theme switch.\n- `HotDesignPreviews/`: Debug-only previews of Loading, Ready, Empty, Stale and the 390 px layout, plus the page.\n\n**Conventions:** MVUX means `{Binding}` (no x:Bind) on the page; colours only from palette roles or the control's tokens; fonts through the override keys.\n\n**Build:** `dotnet build SalesHeatmap/SalesHeatmap.csproj -f net10.0-desktop` (or `-f net10.0-browserwasm`). There are no tests.\n\nThe app is built and running. The user may ask me to modify it."
+      }
+    ]
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schemas.platform.uno/sample/v1",
+  "id": "precision-dial",
+  "displayName": "Precision Dial",
+  "description": "A precision knob control for Uno Platform drawn with SkiaSharp: a brushed-metal knob with physics-based rotation, detents with haptic and audio clicks, and two modes on one control. A segmented switch flips it between a volume knob (a dashed arc with detent ticks, 0 to 100) and a radial menu dial (five Phosphor-icon items with a cone of light). Both modes take the keyboard (arrows, PgUp / PgDn, Home / End; Enter confirms a menu item) and expose an automation peer (a slider, or a spinner whose value is the selected item). The app starts in Dark and Light is complete.",
+  "platforms": [
+    "desktop",
+    "wasm",
+    "android"
+  ],
+  "sourcePath": "PrecisionDial/PrecisionDial.csproj",
+  "iconUrl": "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/precision-dial/.studiolive/icon.png",
+  "screenshots": [
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/precision-dial/.studiolive/screenshots/volume-dark-desktop.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/precision-dial/.studiolive/screenshots/menu-light-desktop.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/precision-dial/.studiolive/screenshots/volume-dark-phone.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/precision-dial/.studiolive/screenshots/menu-light-phone.png"
+  ],
+  "showcase": {
+    "summary": "Brushed-metal knobs with a brass-to-copper arc, a matching readout and segment bar, fine steps, keyboard control and locked states.",
+    "type": "showcase",
+    "status": "preview",
+    "owner": [
+      "noknowscode"
+    ],
+    "industry": "UI controls",
+    "goals": [
+      "A custom control drawn on an SKCanvasElement by small renderer classes, now with the sheet's continuous ring (ArcStyle) and hot range",
+      "PrecisionDialChannel: a templated control that keeps arc, pointer, digits and segments on one value, with VisualState groups for focus, Fine / Max and Disabled",
+      "Keyboard steps, Shift / Fine 0.1 steps on drag and keys, and a slider automation peer",
+      "Vertical or angular drag with a spring; detents with haptic and audio clicks; a radial menu mode on the same knob",
+      "Design tokens in Light and Default theme dictionaries, bundled static fonts, and the knob staying dark metal in both themes",
+      "Responsive host: three sizes on a panel from 800 px, one knob with steppers below",
+      "Hot Design previews of each channel state and of every dial variant"
+    ],
+    "tags": [
+      "control",
+      "skiasharp",
+      "knob",
+      "dial",
+      "animation",
+      "physics",
+      "material",
+      "theming"
+    ]
+  }
+}

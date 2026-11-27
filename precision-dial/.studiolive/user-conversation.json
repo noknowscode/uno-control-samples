@@ -1,0 +1,18 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Make the Precision Dial one control on one page: a switch between a volume knob with all the little dash ticks and a menu dial. Keep keyboard and screen-reader support in both modes."
+    },
+    {
+      "role": "assistant",
+      "content": "The **Precision Dial** is now one control: the switch flips `DialMode` between the volume knob and the menu dial, and both modes take the keyboard and expose an automation peer."
+    }
+  ],
+  "suggestedPrompts": [
+    "Add a bipolar mode for pan controls, centred at zero",
+    "Let the menu dial confirm on release with a spring",
+    "Show the continuous ring style as a third option",
+    "Add a long press that toggles the mode"
+  ]
+}

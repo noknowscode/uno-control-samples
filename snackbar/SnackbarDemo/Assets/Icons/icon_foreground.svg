@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="450" height="450" viewBox="0 0 50.369617 49.826836" version="1.1" xmlns="http://www.w3.org/2000/svg">
+  <!-- A snackbar: a screen with page content and a message bar (text and an action) along its bottom -->
+  <rect x="16.4" y="11.6" width="17.6" height="25.4" rx="2.2" fill="none" stroke="#FFFFFF" stroke-width="1.3" stroke-opacity="0.45" />
+  <rect x="19.4" y="15.4" width="11.6" height="1.6" rx="0.8" fill="#FFFFFF" fill-opacity="0.45" />
+  <rect x="19.4" y="19.0" width="8.0" height="1.6" rx="0.8" fill="#FFFFFF" fill-opacity="0.45" />
+  <rect x="12.4" y="28.4" width="25.6" height="6.6" rx="1.4" fill="#FFFFFF" />
+  <rect x="15.0" y="30.9" width="11.4" height="1.6" rx="0.8" fill="#161514" />
+  <rect x="30.0" y="30.9" width="5.4" height="1.6" rx="0.8" fill="#B8860B" />
+</svg>

@@ -1,0 +1,45 @@
+{
+  "$schema": "https://schemas.platform.uno/sample/v1",
+  "id": "adaptive-input",
+  "displayName": "Adaptive Input",
+  "description": "An adaptive text field for Uno Platform built to the Control Gallery prototype: it reads what you type as a date (with an optional time), a #colour, an @person or a #tag, shows a dashed suggestion with a Tab key in the field and a matching fixed-height picker under it (quick picks and a month, a swatch with HEX and RGB, people or tag rows), turns an accepted value into a token that Backspace in the empty field reverts, keeps text on Esc, says when text that starts like a date does not read as one, and on phones moves the suggestions into a bar above the keyboard. DM Sans and DM Mono are bundled; the palette is the prototype's near-black with a pink accent, with a derived Light theme and an in-app switch.",
+  "platforms": [
+    "desktop",
+    "wasm",
+    "android"
+  ],
+  "sourcePath": "AdaptiveInputDemo/AdaptiveInputDemo.csproj",
+  "iconUrl": "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/adaptive-input/.studiolive/icon.png",
+  "screenshots": [
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/adaptive-input/.studiolive/screenshots/colour-light-desktop.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/adaptive-input/.studiolive/screenshots/date-dark-desktop.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/adaptive-input/.studiolive/screenshots/accessory-dark-phone.png",
+    "https://raw.githubusercontent.com/noknowscode/uno-control-samples/studio/adaptive-input/.studiolive/screenshots/accessory-light-phone.png"
+  ],
+  "showcase": {
+    "summary": "A text field that recognises dates, colours, people and tags, suggests a token and shows the matching picker.",
+    "type": "showcase",
+    "status": "preview",
+    "owner": [
+      "noknowscode"
+    ],
+    "industry": "UI controls",
+    "goals": [
+      "A templated control whose State (Empty, Recognised, Plain, NotRecognised, Accepted) and DetectedType drive visual state groups",
+      "The prototype's detection rules for dates and times, #RGB/#RRGGBB colours, @people and #tags",
+      "Keyboard flow: Tab accepts, Esc keeps text, Backspace in the empty field undoes, Up/Down and Enter for rows",
+      "A fixed-height picker anchored under the field, and an accessory bar above the keyboard for phones",
+      "Polite announcements of the status line and picker",
+      "Bundled static DM Sans and DM Mono instances mapped to Material's DefaultFontFamily through weight manifests"
+    ],
+    "tags": [
+      "control",
+      "input",
+      "material",
+      "theming",
+      "animation",
+      "pickers",
+      "forms"
+    ]
+  }
+}

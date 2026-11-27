@@ -1,0 +1,12 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!--
+    DM Sans (SIL OFL 1.1, Assets/Fonts/OFL-DMSans.txt), the design's UI face. Every Material type style derives from
+    DefaultFontFamily. The prototype ships a variable font (optical size and weight); Skia needs static files, so
+    Regular (400), Medium (500) and SemiBold (600) are static instances at optical size 14, and
+    DMSans-Regular.ttf.manifest maps FontWeight to them. DM Mono is set inside the control.
+  -->
+  <FontFamily x:Key="DefaultFontFamily">ms-appx:///Assets/Fonts/DMSans-Regular.ttf</FontFamily>
+
+</ResourceDictionary>

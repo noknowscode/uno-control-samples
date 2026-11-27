@@ -1,0 +1,189 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+  <!--
+    The demo page's chrome: labels, the mode pill and the theme switch, in the prototype's .pill look
+    (36 px, outline OutlineBrush, checked plate PrimaryBrush). Colours are palette roles, so Light and Dark both work.
+  -->
+
+  <!-- Text: Material type styles; JetBrains Mono comes from the Material font override (Styles/MaterialFontsOverride.xaml). -->
+  <Style x:Key="HudLabelStyle" TargetType="TextBlock" BasedOn="{StaticResource LabelSmall}">
+    <Setter Property="FontSize" Value="11" />
+    <Setter Property="Foreground" Value="{ThemeResource OnSurfaceVariantBrush}" />
+  </Style>
+
+  <Style x:Key="HudButtonLabelStyle" TargetType="TextBlock" BasedOn="{StaticResource LabelSmall}">
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+  </Style>
+
+  <Style x:Key="HudTitleStyle" TargetType="TextBlock" BasedOn="{StaticResource LabelMedium}">
+    <Setter Property="FontFamily" Value="{StaticResource MonoMediumFontFamily}" />
+    <Setter Property="Foreground" Value="{ThemeResource OnBackgroundBrush}" />
+  </Style>
+
+  <!--
+    Segment pill (prototype .pill): 36 px tall, 14 px sides, 12 px label, CornerRadius = half the height (larger radii render as ovals on Skia).
+    CommonStates only touch the outline and the unchecked label; CheckStates only touch the checked
+    plate and its label. No property is set by both groups, so hovering a checked pill can't
+    repaint its text ink-on-ink.
+  -->
+  <Style x:Key="HudSegmentStyle" TargetType="RadioButton">
+    <Setter Property="Height" Value="36" />
+    <Setter Property="MinWidth" Value="0" />
+    <Setter Property="Padding" Value="14,0" />
+    <Setter Property="CornerRadius" Value="18" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="FontFamily" Value="{StaticResource MonoRegularFontFamily}" />
+    <Setter Property="UseSystemFocusVisuals" Value="True" />
+    <Setter Property="FocusVisualPrimaryBrush" Value="{ThemeResource PrimaryBrush}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="RadioButton">
+          <Grid x:Name="RootGrid" Background="Transparent">
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal" />
+                <VisualState x:Name="PointerOver">
+                  <VisualState.Setters>
+                    <Setter Target="Outline.Background" Value="{ThemeResource SurfaceVariantBrush}" />
+                    <Setter Target="Label.Foreground" Value="{ThemeResource OnBackgroundBrush}" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Pressed">
+                  <VisualState.Setters>
+                    <Setter Target="Outline.BorderBrush" Value="{ThemeResource PrimaryBrush}" />
+                    <Setter Target="Label.Foreground" Value="{ThemeResource OnBackgroundBrush}" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Disabled">
+                  <VisualState.Setters>
+                    <Setter Target="RootGrid.Opacity" Value="0.4" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+              <VisualStateGroup x:Name="CheckStates">
+                <VisualState x:Name="Unchecked" />
+                <VisualState x:Name="Indeterminate" />
+                <VisualState x:Name="Checked">
+                  <VisualState.Setters>
+                    <Setter Target="CheckedPlate.Visibility" Value="Visible" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+
+            <Border x:Name="Outline"
+                    CornerRadius="{TemplateBinding CornerRadius}"
+                    BorderThickness="1"
+                    BorderBrush="{ThemeResource OutlineBrush}" />
+            <ContentPresenter x:Name="Label"
+                              Margin="{TemplateBinding Padding}"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Content="{TemplateBinding Content}"
+                              Foreground="{ThemeResource OnSurfaceVariantBrush}" />
+            <Border x:Name="CheckedPlate"
+                    CornerRadius="{TemplateBinding CornerRadius}"
+                    Background="{ThemeResource PrimaryBrush}"
+                    Visibility="Collapsed">
+              <ContentPresenter Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Content="{TemplateBinding Content}"
+                                Foreground="{ThemeResource OnPrimaryBrush}" />
+            </Border>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!--
+    Theme switch: the same pill. ToggleButton combines pointer and check in one CommonStates group,
+    so the Checked* states keep the plate on and only the unchecked states touch the outline.
+  -->
+  <Style x:Key="HudToggleStyle" TargetType="ToggleButton">
+    <Setter Property="Height" Value="36" />
+    <Setter Property="MinWidth" Value="0" />
+    <Setter Property="Padding" Value="14,0" />
+    <Setter Property="CornerRadius" Value="18" />
+    <Setter Property="FontSize" Value="12" />
+    <Setter Property="FontFamily" Value="{StaticResource MonoRegularFontFamily}" />
+    <Setter Property="UseSystemFocusVisuals" Value="True" />
+    <Setter Property="FocusVisualPrimaryBrush" Value="{ThemeResource PrimaryBrush}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="ToggleButton">
+          <Grid x:Name="RootGrid" Background="Transparent">
+            <VisualStateManager.VisualStateGroups>
+              <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal" />
+                <VisualState x:Name="PointerOver">
+                  <VisualState.Setters>
+                    <Setter Target="Outline.Background" Value="{ThemeResource SurfaceVariantBrush}" />
+                    <Setter Target="Label.Foreground" Value="{ThemeResource OnBackgroundBrush}" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Pressed">
+                  <VisualState.Setters>
+                    <Setter Target="Outline.BorderBrush" Value="{ThemeResource PrimaryBrush}" />
+                    <Setter Target="Label.Foreground" Value="{ThemeResource OnBackgroundBrush}" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Disabled">
+                  <VisualState.Setters>
+                    <Setter Target="RootGrid.Opacity" Value="0.4" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Checked">
+                  <VisualState.Setters>
+                    <Setter Target="CheckedPlate.Visibility" Value="Visible" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="CheckedPointerOver">
+                  <VisualState.Setters>
+                    <Setter Target="CheckedPlate.Visibility" Value="Visible" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="CheckedPressed">
+                  <VisualState.Setters>
+                    <Setter Target="CheckedPlate.Visibility" Value="Visible" />
+                  </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="CheckedDisabled">
+                  <VisualState.Setters>
+                    <Setter Target="CheckedPlate.Visibility" Value="Visible" />
+                    <Setter Target="RootGrid.Opacity" Value="0.4" />
+                  </VisualState.Setters>
+                </VisualState>
+              </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+
+            <Border x:Name="Outline"
+                    CornerRadius="{TemplateBinding CornerRadius}"
+                    BorderThickness="1"
+                    BorderBrush="{ThemeResource OutlineBrush}" />
+            <ContentPresenter x:Name="Label"
+                              Margin="{TemplateBinding Padding}"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Content="{TemplateBinding Content}"
+                              Foreground="{ThemeResource OnSurfaceVariantBrush}" />
+            <Border x:Name="CheckedPlate"
+                    CornerRadius="{TemplateBinding CornerRadius}"
+                    Background="{ThemeResource PrimaryBrush}"
+                    Visibility="Collapsed">
+              <ContentPresenter Margin="{TemplateBinding Padding}"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                Content="{TemplateBinding Content}"
+                                Foreground="{ThemeResource OnPrimaryBrush}" />
+            </Border>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+</ResourceDictionary>

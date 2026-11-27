@@ -1,0 +1,199 @@
+<Page x:Class="SnackbarDemo.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:SnackbarDemo"
+      xmlns:utu="using:Uno.Toolkit.UI"
+      Background="{ThemeResource BackgroundBrush}">
+
+    <Page.Resources>
+        <!-- Toolbar button from the design: 36 px, 10 px radius, outline #8C8578, 13 px SemiBold, 16 px icon. -->
+        <Style x:Key="ToolbarButtonStyle" TargetType="Button" BasedOn="{StaticResource OutlinedButtonStyle}">
+            <Setter Property="Height" Value="36" />
+            <Setter Property="MinWidth" Value="36" />
+            <Setter Property="MinHeight" Value="0" />
+            <Setter Property="Padding" Value="10,0,12,0" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="BorderBrush" Value="{ThemeResource OutlineBrush}" />
+            <Setter Property="Foreground" Value="{ThemeResource OnSurfaceBrush}" />
+        </Style>
+        <Style x:Key="ToolbarIconStyle" TargetType="Path">
+            <Setter Property="Width" Value="24" />
+            <Setter Property="Height" Value="24" />
+            <Setter Property="Stroke" Value="{ThemeResource OnSurfaceBrush}" />
+            <Setter Property="StrokeThickness" Value="1.75" />
+            <Setter Property="StrokeStartLineCap" Value="Round" />
+            <Setter Property="StrokeEndLineCap" Value="Round" />
+            <Setter Property="StrokeLineJoin" Value="Round" />
+        </Style>
+    </Page.Resources>
+
+    <Grid RowSpacing="{utu:Responsive Narrowest=0, Normal=16}"
+          Padding="{utu:Responsive Narrowest='0', Normal='24'}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- The theme switch: a Toolkit filter chip (a ToggleButton) top right. -->
+        <utu:Chip x:Name="ThemeToggle"
+                  Content="Dark"
+                  Style="{StaticResource FilterChipStyle}"
+                  CanRemove="False"
+                  HorizontalAlignment="Right"
+                  Margin="{utu:Responsive Narrowest='0,12,20,4', Normal='0'}"
+                  Click="OnThemeToggleClick"
+                  AutomationProperties.Name="Dark theme" />
+
+        <!-- The drafts list from the design, with the snackbar docked inside it. Full-bleed on a phone. -->
+        <Border Grid.Row="1"
+                MaxWidth="{utu:Responsive Narrowest=100000, Normal=576}"
+                MaxHeight="{utu:Responsive Narrowest=100000, Normal=520}"
+                MinHeight="{utu:Responsive Narrowest=0, Normal=500}"
+                VerticalAlignment="{utu:Responsive Narrowest=Stretch, Normal=Top}"
+                Background="{ThemeResource SurfaceBrush}"
+                BorderBrush="{ThemeResource OutlineVariantBrush}"
+                BorderThickness="{utu:Responsive Narrowest=0, Normal=1}"
+                CornerRadius="{utu:Responsive Narrowest=0, Normal=32}">
+            <utu:SnackbarHost x:Name="SnackbarHost">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Padding="{utu:Responsive Narrowest='20,12,20,12', Normal='24,20,24,12'}" ColumnSpacing="12">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Orientation="Horizontal" Spacing="12" VerticalAlignment="Center">
+                            <TextBlock Text="Drafts"
+                                       Style="{StaticResource DisplayTitle}"
+                                       FontSize="{utu:Responsive Narrowest=32, Normal=26}"
+                                       LineHeight="{utu:Responsive Narrowest=38, Normal=32}" />
+                            <TextBlock x:Name="CountText"
+                                       Style="{StaticResource BodySmall}" CharacterSpacing="0"
+                                       FontSize="13"
+                                       Foreground="{ThemeResource OnSurfaceVariantBrush}"
+                                       VerticalAlignment="Bottom"
+                                       Margin="0,0,0,5" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                            <Button Style="{StaticResource ToolbarButtonStyle}"
+                                    Click="OnSaveClick"
+                                    AutomationProperties.Name="Save">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Viewbox Width="16" Height="16">
+                                        <Path Data="M5 12l5 5l10 -10" Style="{StaticResource ToolbarIconStyle}" />
+                                    </Viewbox>
+                                    <TextBlock Text="Save" Visibility="{utu:Responsive Narrowest=Collapsed, Normal=Visible}" />
+                                </StackPanel>
+                            </Button>
+                            <Button Style="{StaticResource ToolbarButtonStyle}"
+                                    Click="OnExportClick"
+                                    AutomationProperties.Name="Export">
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <Viewbox Width="16" Height="16">
+                                        <Path Data="M5 12h14 M13 18l6 -6 M13 6l6 6" Style="{StaticResource ToolbarIconStyle}" />
+                                    </Viewbox>
+                                    <TextBlock Text="Export" Visibility="{utu:Responsive Narrowest=Collapsed, Normal=Visible}" />
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Bottom padding keeps the last rows clear of the docked snackbar (content keeps its space). -->
+                    <ScrollViewer Grid.Row="1">
+                        <ItemsControl x:Name="DraftList"
+                                      Padding="{utu:Responsive Narrowest='20,0,20,168', Normal='24,0,24,84'}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel>
+                                        <StackPanel.ChildrenTransitions>
+                                            <TransitionCollection>
+                                                <RepositionThemeTransition />
+                                            </TransitionCollection>
+                                        </StackPanel.ChildrenTransitions>
+                                    </StackPanel>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="local:Draft">
+                                    <Grid Height="{utu:Responsive Narrowest=60, Normal=52}"
+                                          ColumnSpacing="16"
+                                          BorderBrush="{ThemeResource OutlineVariantBrush}"
+                                          BorderThickness="0,1,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="40" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{x:Bind Title}"
+                                                   Style="{StaticResource BodyLarge}" CharacterSpacing="0"
+                                                   FontSize="15"
+                                                   TextTrimming="CharacterEllipsis"
+                                                   VerticalAlignment="Center" />
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{x:Bind Date}"
+                                                   Style="{StaticResource BodySmall}" CharacterSpacing="0"
+                                                   FontSize="13"
+                                                   Foreground="{ThemeResource OnSurfaceVariantBrush}"
+                                                   VerticalAlignment="Center" />
+                                        <Button Grid.Column="2"
+                                                Width="40" Height="40"
+                                                Padding="0"
+                                                CornerRadius="10"
+                                                Style="{StaticResource TextButtonStyle}"
+                                                Tag="{x:Bind}"
+                                                Click="OnDeleteClick"
+                                                AutomationProperties.Name="{x:Bind DeleteLabel}">
+                                            <Viewbox Width="18" Height="18">
+                                                <Path Width="24" Height="24"
+                                                      Data="M4 7l16 0 M10 11l0 6 M14 11l0 6 M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12 M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"
+                                                      Stroke="{ThemeResource OnSurfaceVariantBrush}"
+                                                      StrokeThickness="1.75"
+                                                      StrokeStartLineCap="Round"
+                                                      StrokeEndLineCap="Round"
+                                                      StrokeLineJoin="Round" />
+                                            </Viewbox>
+                                        </Button>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+
+                    <!-- Phone only: the add button the snackbar clears. It sits 96 px from the bottom, above a one-line
+                         message, and rises to stay 16 px above a taller one (SnackbarHost.OccupiedHeight). -->
+                    <Button Grid.Row="1"
+                            Width="56" Height="56"
+                            Padding="0"
+                            CornerRadius="18"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            Margin="{x:Bind AddButtonMargin(SnackbarHost.OccupiedHeight), Mode=OneWay}"
+                            Style="{StaticResource FilledButtonStyle}"
+                            Visibility="{utu:Responsive Narrowest=Visible, Normal=Collapsed}"
+                            Click="OnAddClick"
+                            AutomationProperties.Name="New draft">
+                        <Button.Transitions>
+                            <TransitionCollection>
+                                <RepositionThemeTransition />
+                            </TransitionCollection>
+                        </Button.Transitions>
+                        <Viewbox Width="22" Height="22">
+                            <Path Width="24" Height="24"
+                                  Data="M12 5l0 14 M5 12l14 0"
+                                  Stroke="{ThemeResource OnPrimaryBrush}"
+                                  StrokeThickness="1.75"
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round" />
+                        </Viewbox>
+                    </Button>
+                </Grid>
+            </utu:SnackbarHost>
+        </Border>
+    </Grid>
+</Page>

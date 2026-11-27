@@ -1,0 +1,10 @@
+{
+  "background_color": "#ffffff",
+  "description": "Liveline",
+  "display": "standalone",
+  "name": "Liveline",
+  "short_name": "Liveline",
+  "start_url": "/index.html",
+  "theme_color": "#ffffff",
+  "scope": "/"
+}

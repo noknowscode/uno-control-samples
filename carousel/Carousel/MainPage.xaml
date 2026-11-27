@@ -1,0 +1,72 @@
+<Page x:Class="CarouselDemo.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:CarouselDemo"
+      xmlns:utu="using:Uno.Toolkit.UI"
+      xmlns:ut="using:Uno.Themes"
+      Background="{ThemeResource BackgroundBrush}">
+
+  <Page.Resources>
+    <DataTemplate x:Key="PlateTemplate" x:DataType="local:Plate">
+      <utu:CarouselPlate Source="{x:Bind Image, Mode=OneWay}"
+                         AutomationProperties.Name="{x:Bind Alt}"
+                         RetryRequested="OnPlateRetryRequested" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="PlateThumbnailTemplate" x:DataType="local:Plate">
+      <Image Source="{x:Bind Thumbnail}" Stretch="UniformToFill" />
+    </DataTemplate>
+
+    <DataTemplate x:Key="PlateCaptionTemplate" x:DataType="local:Plate">
+      <StackPanel Spacing="12">
+        <TextBlock Text="{x:Bind Title}" Style="{StaticResource CarouselTitleTextStyle}" />
+        <TextBlock Text="{x:Bind Description}" Style="{StaticResource CarouselBodyTextStyle}" />
+        <TextBlock Text="{x:Bind Medium}" Style="{StaticResource CarouselMetaTextStyle}" />
+      </StackPanel>
+    </DataTemplate>
+  </Page.Resources>
+
+  <Grid Padding="{utu:Responsive Narrowest='20,12,20,20', Normal='32,16,32,32', Wide='48,24,48,48'}"
+        RowSpacing="{utu:Responsive Narrowest=12, Wide=24}">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <!-- Host chrome: a way to exercise the image-failed state, and the theme switch. -->
+    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Spacing="8">
+      <Button Content="Fail this image"
+              Style="{StaticResource TextButtonStyle}"
+              ToolTipService.ToolTip="Breaks the current plate's image to show the failed state"
+              Click="OnFailImageClick" />
+      <ToggleButton x:Name="ThemeToggle"
+                    Style="{StaticResource IconToggleButtonStyle}"
+                    AutomationProperties.Name="Dark theme"
+                    ToolTipService.ToolTip="Dark theme"
+                    Loaded="OnThemeToggleLoaded"
+                    Click="OnThemeToggleClick">
+        <ut:ControlExtensions.AlternateContent>
+          <FontIcon Glyph="&#xE708;" />
+        </ut:ControlExtensions.AlternateContent>
+        <FontIcon Glyph="&#xE708;" />
+      </ToggleButton>
+    </StackPanel>
+
+    <utu:Carousel x:Name="Plates"
+                  Grid.Row="1"
+                  MaxWidth="1064"
+                  MaxHeight="{utu:Responsive Narrowest=900, Wide=540}"
+                  VerticalAlignment="{utu:Responsive Narrowest=Stretch, Wide=Center}"
+                  Header="Low Tide Series"
+                  ItemLabel="Plate"
+                  AutomationProperties.Name="Low Tide Series"
+                  IsAutoPlayEnabled="True"
+                  ItemPeek="{utu:Responsive Narrowest=24, Wide=52}"
+                  ItemSpacing="{utu:Responsive Narrowest=14, Wide=24}"
+                  ThumbnailWidth="{utu:Responsive Narrowest=56, Wide=44}"
+                  ThumbnailHeight="{utu:Responsive Narrowest=48, Wide=44}"
+                  ItemTemplate="{StaticResource PlateTemplate}"
+                  ThumbnailTemplate="{StaticResource PlateThumbnailTemplate}"
+                  CaptionTemplate="{StaticResource PlateCaptionTemplate}" />
+  </Grid>
+</Page>

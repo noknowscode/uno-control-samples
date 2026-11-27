@@ -1,0 +1,11 @@
+<hd:Preview x:Class="AdaptiveInputDemo.HotDesignPreviews.InputMentionPreview"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:hd="using:Uno.UI.HotDesign"
+            xmlns:controls="using:AdaptiveInputDemo.Controls"
+            Width="640"
+            Height="440">
+  <Grid Background="{ThemeResource BackgroundBrush}" Padding="16">
+    <controls:AdaptiveInputControl x:Name="Input" Header="Task details" Value="@ad"  />
+  </Grid>
+</hd:Preview>

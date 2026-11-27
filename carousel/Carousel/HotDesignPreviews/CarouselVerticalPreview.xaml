@@ -1,0 +1,20 @@
+<hd:Preview x:Class="CarouselDemo.HotDesignPreviews.CarouselVerticalPreview"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:hd="using:Uno.UI.HotDesign"
+            xmlns:utu="using:Uno.Toolkit.UI"
+            Width="560"
+            Height="380">
+
+  <hd:Preview.Resources>
+    <ResourceDictionary Source="ms-appx:///HotDesignPreviews/PreviewResources.xaml" />
+  </hd:Preview.Resources>
+
+  <Grid Background="{ThemeResource BackgroundBrush}"
+        Padding="16">
+    <utu:Carousel ItemsSource="{Binding}"
+                  ItemTemplate="{StaticResource PreviewPlateTemplate}"
+                  CornerRadius="12"
+                  Orientation="Vertical" />
+  </Grid>
+</hd:Preview>

@@ -1,0 +1,18 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Build a horizontal week calendar control for Uno Platform, matching our Control Gallery \"Horizontal Calendar\" sheet:\n- a week of days with the weekday, the day number and one tick per event (up to four)\n- a cobalt selection pill that slides 380 ms, a navy ring on today, hatched unavailable days that can be focused but not selected\n- previous / next week and Today; ← → for days, PgUp / PgDn for weeks, T for today\n- the selected day's agenda below, with empty-day, loading and load-error (Retry) states\n- a 390 px phone layout with 46 px days and Add event docked at the bottom\n\nUse the sheet's palette and Schibsted Grotesk / Azeret Mono, in Light and Dark with a switch, and add Hot Design previews of each state."
+    },
+    {
+      "role": "assistant",
+      "content": "The **Horizontal Calendar** is rebuilt after the sheet and running: this week is shown with today selected, Friday closed, ticks for each event and the day's agenda below; the empty, loading and error states are in the Hot Design previews and the agenda-state picker."
+    }
+  ],
+  "suggestedPrompts": [
+    "Add a month picker flyout to the month title",
+    "Let the agenda rows open an event detail sheet",
+    "Show all-day events as a band above the rows",
+    "Add a reduced-motion setting that drops the slides"
+  ]
+}
